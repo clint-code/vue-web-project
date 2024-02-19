@@ -1,0 +1,117 @@
+<template>
+    <TopNav back="/get-quote" variation="white" />
+
+    <div>
+        <div class="px-4">
+            <p class="font-bold">
+                COMPREHENSIVE PRIVATE Car POLICY TERMS AND CONDITIONS.
+            </p>
+
+            <div class="custom-terms-section">
+                <p class="font-bold">
+                    Definitions
+                </p>
+
+                <p>
+                    You will find the following words or phrases in this policy and wherever
+                    they appear will have the meaning described below:
+                </p>
+
+                <p>
+                    <span class="font-bold">Accident:</span>
+                    A sudden, unplanned and unforeseen mishap not under your control or that of the authorized driver.
+                </p>
+
+                <p>
+                    <span class="font-bold">Certificate of insurance:</span>
+                    The document in prescribed form and is to be displayed on the vehicle as
+                    required by law as evidence that you have taken out the insurance and displayed as required by law.
+                </p>
+
+                <p>
+                    <span class="font-bold">Claim:</span>
+                    Demand by you for indemnity or benefit under the Policy.
+                </p>
+
+                <p>
+                    <span class="font-bold">Claim:</span>
+                    Demand by you for indemnity or benefit under the Policy.
+                </p>
+
+                <p>
+                    <span class="font-bold">Excess:</span>
+                    The first amount of each claim borne by you.
+                </p>
+
+                <p>
+                    <span class="font-bold">Indemnity:</span>
+                    Restoring you to the financial position you were in immediately before the accident.
+                </p>
+
+                <p>
+                    <span class="font-bold">Legal liability:</span>
+                    Financial responsibilities attaching to you because of your failure to observe an obligation imposed by
+                    law.
+                </p>
+
+                <p>
+                    <span class="font-bold">Market Value:</span>
+                    The cost of replacing your vehicle with one of similar type and condition.
+                </p>
+
+                <p>
+                    <span class="font-bold">Members of your Household:</span>
+                    Persons you normally live with in your residence.
+                </p>
+
+                <p>
+                    <span class="font-bold">Period of Insurance:</span>
+                    The period shown in the schedule and any subsequent period for which you will pay and we
+                    accept a renewal premium.
+                </p>
+            </div>
+
+            <div class="flex justify-content-between border-2 custom-dark-gray-border border-round-2xl p-2 mt-4">
+                <label class="text-xs font-bold">Read All Terms and Conditions</label>
+                <i class="fas fa-circle-arrow-right text-black-alpha-90"></i>
+            </div>
+        </div>
+
+        <div class="border-top-1 custom-dark-gray-border my-4 px-4 bottom-0 absolute w-full">
+            <div class="flex gap-2">
+                <div class="w-3 border-round-2xl bg-black-alpha-90 border-1 border-black-alpha-90 custom-px-12 py-2 mt-4" @click="getQuote()">
+                    <div class="flex justify-content-between align-items-center">
+                        <i class="far fa-times-circle text-white text-xs"></i>
+                        <label class="text-xs text-white font-bold">Cancel</label>                        
+                    </div>
+                </div>
+
+                <div class="w-9 border-round-2xl bg-yellow-500 border-1 border-yellow-500 px-2 py-2 mt-4"
+                    @click="acceptTerms()">
+                    <div class="flex justify-content-between align-items-center">
+                        <label class="text-xs font-bold">Accept Terms & Conditions</label>
+                        <i class="fas fa-circle-arrow-right text-black-alpha-90"></i>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</template>
+
+<script setup>
+import TopNav from '@/components/TopNav.vue'
+
+import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+onMounted(() => {
+
+})
+
+const acceptTerms = () => {
+    router.push('/personal-details')
+}
+</script>
