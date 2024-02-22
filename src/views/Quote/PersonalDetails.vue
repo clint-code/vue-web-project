@@ -1,16 +1,16 @@
 <template>
     <TopNav back="/get-quote" variation="white-yellow-icons" />
 
-    <div class="custom-overlay-content">
-        <div class="px-3 mt-4" :style="{ 'margin-bottom' : marginBottom }">
+    <div>
+        <div class="px-3 pt-4" :style="{ 'margin-bottom' : marginBottom }">
             <div class="flex justify-content-between">
                 <label class="font-bold text-xs">Motor Car Insurance</label>
                 <label class="font-bold text-xs">Step 1 of 4</label>
             </div>
 
-            <ProgressBar class="custom-progress-bar  mt-2" :value="25" :showValue="false"></ProgressBar>
+            <ProgressBar class="custom-progress-bar mt-2" :value="25" :showValue="false"></ProgressBar>
 
-            <div class="relative bg-yellow-500 border-round-2xl px-3 py-2 mt-4 z-2" @click="acceptTerms()">
+            <div class="relative bg-yellow-500 border-round-2xl px-3 py-2 mt-3 z-2">
                 <label class="text-xs font-bold">Your Personal Details</label>
             </div>
 
@@ -80,7 +80,7 @@
                     </div>
 
                     <div class="w-full border-round-2xl bg-yellow-500 border-1 border-yellow-500 px-3 py-2 mt-2"
-                        @click="getQuote()">
+                        @click="submit()">
                         <div class="flex justify-content-between align-items-center">
                             <label class="font-bold text-sm">Save and Continue</label>
                             <i class="fas fa-circle-arrow-right text-black-alpha-90"></i>
@@ -90,8 +90,10 @@
             </div>
         </div>
 
+        <div :class="overlay"></div>
+
         <div class="bottom-0 left-0 w-full absolute" id="bottomCard">
-            <BottomSummary />
+            <BottomSummary @showOverlay="displayOverlay"/>
         </div>       
     </div>
 </template>
@@ -117,6 +119,7 @@ const identificationDocuments = ref([
 ])
 const uploadTxt = ref('Upload')
 const marginBottom = ref(null)
+const overlay = ref(null)
 
 onMounted(() => {
     var bottomCard = document.getElementById('bottomCard')
@@ -124,7 +127,21 @@ onMounted(() => {
     marginBottom.value = bottomCardHeight + 'px'    
 })
 
+const displayOverlay = (value) => {
+    if(value) {
+        overlay.value = 'custom-overlay'
+    }
+    else {
+        overlay.value = null
+    }
+}
+
 const uploadFile = (e) => {
-    uploadTxt.value = e.target.files[0].name
+    // uploadTxt.value = e.target.files[0].name
+    uploadTxt.value = "Uploaded"
+}
+
+const submit = () => {
+    router.push('/vehicle-details')
 }
 </script>

@@ -1,48 +1,49 @@
 <template>
     <div class="relative bg-white z-5">
-        <div class="relative p-3 mb-4">
-            <div class="flex justify-content-center mb-3">
-                <div class="bg-yellow-500 custom-gray-border custom-overlap border-round-2xl" id="benefitsButton"
-                    :style="{ top: buttonBottom }" @click="showQuote()">
-                    <div class="flex justify-content-between p-2">
-                        <label class="text-sm font-bold">
-                            Close
-                        </label>
+        <div class="relative p-3 mb-4" v-if="editDetails">
+            <div >
+                <div class="flex justify-content-center mb-3">
+                    <div class="bg-yellow-500 custom-gray-border custom-overlap border-round-2xl"
+                        :style="{ top: buttonBottom }" @click="editQuoteDetails()">
+                        <div class="flex justify-content-between p-2">
+                            <label class="text-sm font-bold">
+                                Close
+                            </label>
 
-                        <i class="far fa-times-circle" @click="goBack()"></i>
+                            <i class="far fa-times-circle" @click="goBack()"></i>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="flex justify-content-between align-items-center">
-                <img src="@/assets/img/madison.png" height="20px" width="auto" />
-            </div>
-
-            <hr class="custom-gray" />
-
-            <div class="flex justify-content-between">
-                <div class="flex flex-column">
-                    <label class="font-bold text-sm">Lipa in full</label>
-                    <label class="font-light text-sm mt-1">Inc. of Tax & Levies</label>
+                <div class="flex justify-content-between align-items-center">
+                    <img src="@/assets/img/madison.png" height="20px" width="auto" />
                 </div>
 
-                <label class="font-bold">KES 50,000</label>
-            </div>
-            <hr class="custom-gray" />
+                <hr class="custom-gray" />
 
-            <div class="flex justify-content-between">
-                <div class="flex flex-column">
-                    <label class="font-bold text-sm">Lipa Pole Pole Deposit</label>
-                    <label class="font-light text-sm mt-1">Lipa Pole Pole Monthly Installment</label>
+                <div class="flex justify-content-between">
+                    <div class="flex flex-column">
+                        <label class="font-bold text-sm">Lipa in full</label>
+                        <label class="font-light text-sm mt-1">Inc. of Tax & Levies</label>
+                    </div>
+
+                    <label class="font-bold">KES 50,000</label>
                 </div>
+                <hr class="custom-gray" />
 
-                <label class="font-bold">KES 50,000</label>
+                <div class="flex justify-content-between">
+                    <div class="flex flex-column">
+                        <label class="font-bold text-sm">Lipa Pole Pole Deposit</label>
+                        <label class="font-light text-sm mt-1">Lipa Pole Pole Monthly Installment</label>
+                    </div>
+
+                    <label class="font-bold">KES 50,000</label>
+                </div>
             </div>
-        </div>
+        </div>        
 
-        <div class="bg-yellow-500 px-4 py-3 relative">
+        <div class="bg-yellow-500 px-4 py-3 relative" v-if="editDetails">
             <div class="flex justify-content-center mb-3">
-                <div class="custom-light-gray-bg custom-gray-border custom-overlap border-round-2xl" id="benefitsButton"
+                <div class="custom-light-gray-bg custom-gray-border custom-overlap border-round-2xl"
                     :style="{ top: buttonBottom }" @click="showQuote()">
                     <div class="flex justify-content-center py-2">
                         <span class="text-sm font-bold">
@@ -53,8 +54,7 @@
             </div>
 
             <label class="text-sm font-bold">Fill in the details below:</label>
-            <GetQuoteForm />
-
+            <GetQuoteForm />            
         </div>
 
         <div class="custom-dark-gray-bg px-4 py-3">
@@ -62,7 +62,7 @@
                 <label class="font-bold text-yellow-500">Showing quotes for: </label>
 
                 <div class="border-round-2xl bg-yellow-500 border-yellow-500 text-black-alpha-90 font-bold text-xs px-3 py-1"
-                    size="small">
+                    @click="editQuoteDetails()" v-if="!editDetails">
                     Edit
                 </div>
             </div>
@@ -89,9 +89,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, defineEmits } from 'vue'
 
 import GetQuoteForm from '@/components/Quote/GetQuoteForm.vue'
+
+const emits = defineEmits()
 
 const selectedInsuranceClass = ref(null)
 const insuranceClasses = ref([
@@ -151,12 +153,29 @@ const models = ref([
 
 const showQuoteText = ref('View Benefits')
 const buttonBottom = ref(null)
+const editDetails = ref(false)
 
 onMounted(() => {
-    var button = document.getElementById('benefitsButton')
-    var butHeight = button.offsetHeight
-    var halvedButton = butHeight / 2
+    
+    // var button = document.getElementById('benefitsButton')
+    // var butHeight = button.offsetHeight
+    // var halvedButton = butHeight / 2
 
-    buttonBottom.value = '-' + halvedButton + 'px'
+    // buttonBottom.value = '-' + halvedButton + 'px'
+
+    // console.log(buttonBottom.value)
+
+    buttonBottom.value = '-17px'
 })
+
+const editQuoteDetails = () => {
+    if(editDetails.value) {
+        editDetails.value = false
+        emits('showOverlay', false)
+    }
+    else {
+        editDetails.value = true        
+        emits('showOverlay', true)
+    }
+}
 </script>

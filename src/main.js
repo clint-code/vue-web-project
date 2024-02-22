@@ -33,6 +33,9 @@ import Checkbox from 'primevue/checkbox'
 import ProgressBar from 'primevue/progressbar'
 import FileUpload from 'primevue/fileupload'
 import Sidebar from 'primevue/sidebar'
+import MultiSelect from 'primevue/multiselect'
+import Dialog from 'primevue/dialog'
+import Listbox from 'primevue/listbox'
 
 const app = createApp(App)
 
@@ -57,5 +60,8 @@ app.component('Checkbox', Checkbox)
 app.component('ProgressBar', ProgressBar)
 app.component('FileUpload', FileUpload)
 app.component('Sidebar', Sidebar)
+app.component('MultiSelect', MultiSelect)
+app.component('Dialog', Dialog)
+app.component('Listbox', Listbox)
 
 app.mount('#app')

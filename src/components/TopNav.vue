@@ -111,7 +111,7 @@
 <script setup>
     import { ref, onMounted, defineProps, defineEmits } from 'vue'
     import { useRouter } from 'vue-router'
-
+    
     const emits = defineEmits()
     const props = defineProps({
         variation: String,

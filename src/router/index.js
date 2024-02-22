@@ -6,6 +6,10 @@ import GetQuote from '../views/Quote/GetQuote.vue'
 import Quote from '@/views/Quote/Quote.vue'
 import AcceptTerms from '@/views/Quote/AcceptTerms.vue'
 import PersonalDetails from '@/views/Quote/PersonalDetails.vue'
+import VehicleDetails from '@/views/Quote/VehicleDetails.vue'
+import Summary from '@/views/Quote/Summary.vue'
+import Payment from '@/views/Quote/Payment.vue'
+import PaymentSummary from '@/views/Quote/PaymentSummary.vue'
 
 const routes = [
   { 
@@ -32,6 +36,26 @@ const routes = [
   { 
     path: '/personal-details', 
     component: PersonalDetails 
+  },
+
+  { 
+    path: '/vehicle-details', 
+    component: VehicleDetails 
+  },
+
+  { 
+    path: '/summary', 
+    component: Summary 
+  },
+
+  { 
+    path: '/payment', 
+    component: Payment 
+  },
+  
+  { 
+    path: '/payment-summary', 
+    component: PaymentSummary 
   },
 ];
 

@@ -59,3 +59,52 @@
     background-color: #FFC402;
     border-radius: 12px;
 }
+
+.p-dialog-header {
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.p-dialog .p-dialog-content:last-of-type {
+    border-radius: 20px;
+}
+
+.p-datepicker table td.p-datepicker-today > span {
+    background-color: white;
+}
+
+.p-datepicker:not(.p-disabled) table td span:not(.p-highlight):not(.p-disabled):hover {
+    background-color: rgb(255, 196, 2);
+    color: #8B8B8B;
+    font-weight: bold;
+}
+
+.p-datepicker table td > span.p-highlight {
+    background-color: rgb(255, 196, 2);
+    color: #8B8B8B;
+    font-weight: bold;
+}
+
+.p-datepicker table td > span:focus {
+    box-shadow: 0 0 0 0.2rem rgba(255, 196, 2, 0.5);
+}
+
+.p-inputtext:enabled:focus {
+    box-shadow: 0 0 0 0.2rem rgba(255, 196, 2, 0.5);
+    border-color: #8B8B8B;
+}
+
+.p-listbox {
+    border: none;
+    background-color: transparent;
+}
+
+.p-listbox .p-listbox-list .p-listbox-item {
+    border-bottom: #C4C4C4 1px solid;
+    padding-bottom: 8px;
+}
+
+.p-dropdown:not(.p-disabled).p-focus {
+    box-shadow: 0 0 0 0.2rem rgba(255, 196, 2, 0.5);
+    border-color: #8B8B8B;
+}
