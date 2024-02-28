@@ -1,7 +1,7 @@
 <template>
     <TopNav back="/get-quote" variation="white" />
 
-    <div>
+    <div class="custom-width-80">
         <div class="px-4">
             <p class="font-bold">
                 COMPREHENSIVE PRIVATE Car POLICY TERMS AND CONDITIONS.
@@ -71,13 +71,23 @@
                 </p>
             </div>
 
-            <div class="flex justify-content-between border-2 custom-dark-gray-border border-round-2xl p-2 mt-4">
-                <label class="text-xs font-bold">Read All Terms and Conditions</label>
-                <i class="fas fa-circle-arrow-right text-black-alpha-90"></i>
+            <div class="custom-mobile-view">
+                <div class="flex justify-content-between border-2 custom-dark-gray-border border-round-2xl p-2 mt-4">
+                    <label class="text-xs font-bold">Read All Terms and Conditions</label>
+                    <i class="fas fa-circle-arrow-right text-black-alpha-90"></i>
+                </div>
             </div>
+
+            <div class="custom-desktop-view px-4 mb-2">
+                <div class="flex justify-content-between border-2 custom-dark-gray-border border-round-3xl p-3 mt-4">
+                    <label class="font-bold">Read All Terms and Conditions</label>
+                    <i class="fas fa-circle-arrow-right text-black-alpha-90"></i>
+                </div>
+            </div>
+            
         </div>
 
-        <div class="border-top-1 custom-dark-gray-border my-4 px-4 bottom-0 absolute w-full">
+        <div class="border-top-1 custom-dark-gray-border my-4 px-4 bottom-0 absolute w-full custom-mobile-view">
             <div class="flex gap-2">
                 <div class="w-3 border-round-2xl bg-black-alpha-90 border-1 border-black-alpha-90 custom-px-12 py-2 mt-4" @click="getQuote()">
                     <div class="flex justify-content-between align-items-center">
@@ -93,8 +103,21 @@
                         <i class="fas fa-circle-arrow-right text-black-alpha-90"></i>
                     </div>
                 </div>
-            </div>
-            
+            </div>            
+        </div>
+
+        <div class="border-top-1 custom-dark-gray-border my-4 px-4 w-full custom-desktop-view">
+            <div class="flex justify-content-between mt-4">
+                <div class="flex align-items-center bg-black-alpha-90 border-round-3xl gap-2 px-3 py-2">
+                    <label class="font-bold text-white">Cancel</label>
+                    <i class="far fa-times-circle text-white"></i>
+                </div>
+
+                <div class="flex justify-content-end align-items-center bg-yellow-500 border-round-3xl gap-2 px-3 py-2" @click="acceptTerms()">
+                    <label class="font-bold">Accept Terms & Conditions</label>
+                    <i class="far fa-circle-arrow-right"></i>
+                </div>
+            </div>            
         </div>
     </div>
 </template>

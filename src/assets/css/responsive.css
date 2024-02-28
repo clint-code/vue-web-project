@@ -2,10 +2,24 @@
     .custom-desktop-view {
         display: none;
     }
+
+    .custom-dialog {
+        width: 94%;
+        max-height: 90%;
+    }
 }
 
 @media only screen and (min-width: 600px) {
     .custom-mobile-view {
         display: none;
+    }
+
+    .custom-width-80 {
+        width: 70%;
+        margin: auto;
+    }
+
+    .custom-dialog {
+        width: 40%;
     }
 }

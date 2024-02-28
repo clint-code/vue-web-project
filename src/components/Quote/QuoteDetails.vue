@@ -75,6 +75,7 @@
             <label class="text-xs font-bold text-right w-8">KES 582</label>
         </div>
     </div>
+    
     <template v-if="props.quoteType == 'Lipa Full'">
         <div class="flex justify-content-between custom-gray-border-bottom py-2 mb-2">
             <label class="text-xs w-4">Total Premium </label>
