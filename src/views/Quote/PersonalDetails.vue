@@ -91,10 +91,6 @@
         </div>
 
         <div :class="overlay"></div>
-
-        <div class="bottom-0 left-0 w-full absolute" id="bottomCard">
-            <BottomSummary @showOverlay="displayOverlay" />
-        </div>
     </div>
 
     <div class="custom-desktop-view custom-width-80">
@@ -198,7 +194,6 @@
 
 <script setup>
 import TopNav from '@/components/TopNav.vue'
-import BottomSummary from '@/components/Quote/BottomSummary.vue'
 import Footer from '@/components/Footer.vue'
 import Steps from "@/components/Steps.vue"
 
@@ -256,6 +251,7 @@ const uploadFile = (e) => {
 }
 
 const submit = () => {
+    console.log("submit ")
     router.push('/vehicle-details')
 }
 </script>

@@ -118,7 +118,7 @@
         <div :class="overlay"></div>
 
         <div class="bottom-0 left-0 w-full absolute" id="bottomCard">
-            <BottomSummary @showOverlay="displayOverlay" />
+            <BottomSummaryMobile @showOverlay="displayOverlay" />
         </div>
     </div>
 
@@ -448,7 +448,7 @@
 import debounce from 'lodash/debounce'
 
 import TopNav from '@/components/TopNav.vue'
-import BottomSummary from '@/components/Quote/BottomSummary.vue'
+import BottomSummaryMobile from '@/components/Mobile/BottomSummary/BottomSummary.vue'
 import BottomSummaryDesktop from '@/components/Desktop/BottomSummary/BottomSummary.vue'
 
 import Steps from "@/components/Steps.vue"
@@ -501,6 +501,7 @@ const topNavHeight = ref(null)
 const bottomCardHeight = ref(null)
 
 onMounted(() => {
+    console.log("vehicle details")
     timesArray.value = times
 })
 

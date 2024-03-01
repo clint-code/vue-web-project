@@ -11,6 +11,13 @@ import Summary from '@/views/Quote/Summary.vue'
 import Payment from '@/views/Quote/Payment.vue'
 import PaymentSummary from '@/views/Quote/PaymentSummary.vue'
 
+import ContactUs from '@/views/ContactUs/ContactUs.vue'
+
+import LipaPolePole from '@/views/LipaPolePole/LipaPolePole.vue'
+
+import MyPolicies from '@/views/MyPolicies/MyPolicies.vue'
+import PolicyDetails from '@/views/MyPolicies/PolicyDetails.vue'
+
 const routes = [
   { 
     path: '/', 
@@ -57,6 +64,26 @@ const routes = [
     path: '/payment-summary', 
     component: PaymentSummary 
   },
+
+
+  {
+    path: '/contact-us',
+    component: ContactUs,
+  },
+
+  {
+    path: '/lipa-pole-pole',
+    component: LipaPolePole
+  },
+
+  {
+    path: '/my-policies',
+    component: MyPolicies
+  },
+  {
+    path: '/policy-details',
+    component: PolicyDetails
+  }
 ];
 
 const router = createRouter({

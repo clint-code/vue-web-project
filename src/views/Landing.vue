@@ -1,13 +1,13 @@
 <template>
     <div>
-        <TopNav variation="fullLogo" @calculatedHeight="adjustHeight" />
+        <TopNav variation="fullLogo" :page="page" @calculatedHeight="adjustHeight" />
 
         <div class="custom-parent-container">
             <div class="custom-desktop-view relative">
                 <div class="custom-city-bg" :style="{ height: sectionHeight }" id="section">
                     <div class="custom-width-80">
                         <div class="flex flex-column">
-                            <div class="flex flex-column p-2">
+                            <div class="flex flex-column">
                                 <h1 class="font-bold">Instant Insurance, <span class="bg-yellow-500 px-1">anywhere,
                                         anytime!</span></h1>
 
@@ -15,7 +15,7 @@
                                         Pole Pole</span> financing option.</label>
                             </div>
 
-                            <div class="grid mt-4 p-2">
+                            <div class="grid mt-4">
                                 <div class="col-2">
                                     <div class="border-round-2xl py-4"
                                         :class="{ 'bg-yellow-500': motorCarActive, 'bg-white': !motorCarActive }">
@@ -89,7 +89,7 @@
                                 </div>
                             </div>
 
-                            <div class="px-2" v-if="motorCarActive">
+                            <div v-if="motorCarActive">
                                 <div class="w-full bg-white p-4 border-round-3xl">
                                     <div class="flex justify-content-between">
                                         <label class="font-bold text-sm">
@@ -127,30 +127,30 @@
                                         <div class="custom-w-2">
                                             <Dropdown v-model="selectedMake" :options="makes" optionLabel="name"
                                                 placeholder="Make E.g BMW"
-                                                class="w-full border-round-3xl custom-yellow-dropdown custom-dark-gray-border" />
+                                                class="w-full border-round-3xl custom-yellow-dropdown custom-dark-gray-border custom-small-dropdown-1" />
                                         </div>
 
                                         <div class="custom-w-2">
                                             <Dropdown v-model="selectedMake" :options="makes" optionLabel="name"
                                                 placeholder="Model E.g X3"
-                                                class="w-full border-round-3xl custom-yellow-dropdown custom-dark-gray-border" />
+                                                class="w-full border-round-3xl custom-yellow-dropdown custom-dark-gray-border custom-small-dropdown-1" />
                                         </div>
 
                                         <div class="custom-w-2">
                                             <InputGroup class="custom-amount-input-1">
                                                 <InputGroupAddon class="border-round-3xl custom-dark-gray-border p-1">
-                                                    <div class="bg-yellow-500 border-round-xl flex">
-                                                        <label class="font-bold text-black-alpha-90 px-2 py-1">KES</label>
+                                                    <div class="bg-yellow-500 border-round-2xl flex">
+                                                        <label class="text-sm font-bold text-black-alpha-90 p-2 py-1">KES</label>
                                                     </div>
                                                 </InputGroupAddon>
-                                                <InputText class="border-round-3xl custom-dark-gray-border"
+                                                <InputText class="border-round-3xl custom-dark-gray-border text-sm"
                                                     placeholder="Estimate value" />
                                             </InputGroup>
                                         </div>
 
                                         <div class="custom-w-2">
                                             <Calendar v-model="yom" placeholder="Year of Manufacture"
-                                                class="w-full custom-rounded-calendar-1" showIcon iconDisplay="input">
+                                                class="w-full custom-sm-rd-calendar" showIcon iconDisplay="input">
                                                 <template #inputicon="{ clickCallback }">
                                                     <i class="fas fa-calendar-days text-yellow-500"
                                                         @click="clickCallback"></i>
@@ -162,7 +162,7 @@
                                             <div class="w-full border-round-3xl bg-yellow-500 border-1 border-yellow-500 p-2"
                                                 @click="showQuote()">
                                                 <div class="flex justify-content-between align-items-center">
-                                                    <label class="font-bold">Get Quote</label>
+                                                    <label class="font-bold text-sm">Get Quote</label>
                                                     <i class="fas fa-circle-arrow-right"></i>
                                                 </div>
                                             </div>
@@ -261,7 +261,7 @@
                             <div class="flex gap-4">
                                 <div class="w-6 shadow-2 border-round-3xl p-4">
                                     <div class="flex">
-                                        <img src="@/assets/img/person.png" width="200px" />
+                                        <img src="@/assets/img/person.png" width="180px" height="auto" />
 
                                         <div>
                                             <h1>
@@ -504,6 +504,8 @@ import { useRouter } from 'vue-router'
 import TopNav from '@/components/TopNav.vue'
 import Footer from '@/components/Footer.vue'
 import Quotes from '@/components/Quote/Quotes.vue'
+
+const page = ref("Home")
 
 const navbarHeight = ref(0)
 const sectionHeight = ref(null)

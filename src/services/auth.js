@@ -2,7 +2,8 @@ import axios from 'axios'
 import config from '@/util/config.js'
 import sha256 from 'js-sha256';
 
-let getToken = function() {
+export default {
+  getToken () {
     var key = 'JBSWY3DPEHPK3PXP'
     var timestamp = Date.now()
 
@@ -18,13 +19,12 @@ let getToken = function() {
           'APP-ID': token,
         },
       });
-  
+
       return response.data;
 
     } catch (error) {
       console.error('Error:', error.message);
       throw error;
-    }    
+    }
+  }
 }
-
-export default getToken

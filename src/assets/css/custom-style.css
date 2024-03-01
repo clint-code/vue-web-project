@@ -1,23 +1,19 @@
 @font-face {
     font-family: 'Roboto';
-    src: url('@/assets/fonts/Roboto-Regular.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Roboto';
-    src: url('@/assets/fonts/Roboto-Bold.ttf') format('truetype');
-    font-weight: bold;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Roboto';
-    src: url('@/assets/fonts/Roboto-Italic.ttf') format('truetype');
-    font-weight: normal;
-    font-style: italic;
-}
+    src: url('/assets/fonts/Roboto-Regular.ttf') format('truetype'),
+         url('/assets/fonts/Roboto-Black.ttf') format('truetype'),
+         url('/assets/fonts/Roboto-BlackItalic.ttf') format('truetype'),
+         url('/assets/fonts/Roboto-Bold.ttf') format('truetype'),
+         url('/assets/fonts/Roboto-BoldItalic.ttf') format('truetype'),
+         url('/assets/fonts/Roboto-Italic.ttf') format('truetype'),
+         url('/assets/fonts/Roboto-Light.ttf') format('truetype'),
+         url('/assets/fonts/Roboto-LightItalic.ttf') format('truetype'),
+         url('/assets/fonts/Roboto-Medium.ttf') format('truetype'),
+         url('/assets/fonts/Roboto-MediumItalic.ttf') format('truetype'),
+         url('/assets/fonts/Roboto-Regular.ttf') format('truetype'),
+         url('/assets/fonts/Roboto-Thin.ttf') format('truetype'),
+         url('/assets/fonts/Roboto-ThinItalic.ttf') format('truetype');
+  }
 
 * {
     font-family: Roboto;
@@ -85,6 +81,10 @@ body {
     max-width: 1rem;
 }
 
+.custom-bottom-border-3 {
+    border-bottom: #FFC402 1px solid;
+}
+
 .custom-gray-city-bg {
     background-image: url("../img/bg-city-alt.png");
 }
@@ -139,6 +139,13 @@ body {
 .custom-rounded-calendar .p-inputtext {
     border-radius: 1.5rem;
     /* box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.02), 0px 0px 2px rgba(0, 0, 0, 0.05), 0px 1px 4px rgba(0, 0, 0, 0.08) !important; */
+}
+
+.custom-sm-rd-calendar .p-inputtext {
+    font-size: 14px;
+    border-radius: 1.5rem;
+    border-radius: 1.5rem;
+    border: #4A4A4A 1px solid;
 }
 
 .custom-rounded-calendar::placeholder {
@@ -415,6 +422,26 @@ body {
     background-color: #F5F5F5;
 }
 
+.custom-contact-us-bg {
+    margin: 0;
+    padding: 0;
+    height: 140px;
+    background: url("@/assets/img/contact-us.png");
+    background-size: cover;
+    background-position: center bottom; 
+    background-repeat: no-repeat;
+}
+
+.custom-lipa-pole-pole-bg {
+    margin: 0;
+    padding: 0;
+    height: 140px;
+    background: url("@/assets/img/lipa-pole-pole.png");
+    background-size: cover;
+    background-position: center bottom; 
+    background-repeat: no-repeat;
+}
+
 .custom-negative-bottom {
     bottom: -10;
 }
@@ -437,9 +464,8 @@ body {
 
 .custom-full-width {
     width: 70vw; 
-    padding-right: 32px;
     position: absolute;
-    left: 0;
+    right: 0;
 }
 
 .custom-w-5 {
@@ -454,4 +480,16 @@ body {
 
 .custom-right-drop-shadow {
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.08);
+}
+
+.custom-brown-border-bottom {
+    border-bottom: #BA8F04 1px solid;
+}
+
+.custom-brown-border-top {
+    border-top: #BA8F04 1px solid;
+}
+
+.custom-light-blue-bg {
+    background-color: #E3E7EE;
 }

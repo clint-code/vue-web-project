@@ -1,6 +1,6 @@
 <template>
     <div class="custom-desktop-view custom-width-80">
-        <div class="px-3 py-4" :style="{ 'margin-bottom': marginBottom }">
+        <div class="py-4" :style="{ 'margin-bottom': marginBottom }">
             <div class="flex align-items-center">
                 <i class="fas fa-message-smile text-yellow-500 text-4xl my-1"></i>
 
@@ -14,7 +14,7 @@
 
             <div class="mt-4">
                 <div class="grid relative">
-                    <div class="lg:col-4">
+                    <div class="lg:col-4 mb-4">
                         <div class="custom-card border-round-2xl relative p-3">
                             <div class="flex justify-content-between align-items-center">
                                 <img src="@/assets/img/madison.png" height="20px" width="auto" />

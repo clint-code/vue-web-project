@@ -164,14 +164,14 @@
         </div>
 
         <div class="fixed bottom-0 left-0 w-full" id="bottomCard">
-            <BottomSummary />
+            <BottomSummaryMobile />
         </div>
     </div>
 </template>
 
 <script setup>
 import TopNav from '@/components/TopNav.vue'
-import BottomSummary from '@/components/Quote/BottomSummary.vue'
+import BottomSummaryMobile from '@/components/Mobile/BottomSummary/BottomSummary.vue'
 
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'

@@ -37,6 +37,7 @@ import MultiSelect from 'primevue/multiselect'
 import Dialog from 'primevue/dialog'
 import Listbox from 'primevue/listbox'
 import Steps from 'primevue/steps'
+import Textarea from 'primevue/textarea'
 
 const app = createApp(App)
 
@@ -65,5 +66,6 @@ app.component('MultiSelect', MultiSelect)
 app.component('Dialog', Dialog)
 app.component('Listbox', Listbox)
 app.component('Steps', Steps)
+app.component('Textarea', Textarea)
 
 app.mount('#app')
