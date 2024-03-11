@@ -16,6 +16,9 @@ import './assets/css/responsive.css'
 
 import './assets/icons/fontawesome-web/css/all.css'
 
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/css/index.css'
+
 import Button from 'primevue/button'
 import Card from 'primevue/card'
 import FloatLabel from 'primevue/floatlabel'
@@ -38,13 +41,14 @@ import Dialog from 'primevue/dialog'
 import Listbox from 'primevue/listbox'
 import Steps from 'primevue/steps'
 import Textarea from 'primevue/textarea'
+import Toast from 'primevue/toast'
+import ToastService from 'primevue/toastservice'
+import Ripple from 'primevue/ripple'
+import StyleClass from 'primevue/styleclass'
 
 const app = createApp(App)
 
-app.use(store)
-app.use(router)
-app.use(PrimeVue)
-
+app.component('Loading', Loading)
 app.component('Button', Button)
 app.component('Card', Card)
 app.component('FloatLabel', FloatLabel)
@@ -67,5 +71,14 @@ app.component('Dialog', Dialog)
 app.component('Listbox', Listbox)
 app.component('Steps', Steps)
 app.component('Textarea', Textarea)
+app.component('Toast', Toast)
+
+app.use(store)
+app.use(router)
+app.use(PrimeVue , { ripple: true })
+app.use(ToastService)
+
+app.directive('ripple', Ripple)
+app.directive('styleclass', StyleClass)
 
 app.mount('#app')

@@ -1,12 +1,13 @@
 import axios from 'axios'
 
-import { config } from '@/util/config.js'
+import config from '@/util/config.js';
 import { useRouter } from 'vue-router'
+import auth from '@/services/auth.js'
 
 const router = useRouter()
 
-let APIM = function() {
-  let baseAPI  = axios.create({
+let APIM = function () {
+  let baseAPI = axios.create({
     baseURL: config.backendURL,
     headers: {
       'Accept': 'application/json',
@@ -14,21 +15,31 @@ let APIM = function() {
     }
   })
 
-  const user = JSON.parse(localStorage.getItem('user'))
-
-  if (user && user.token) {
-    baseAPI.defaults.headers.common['Authorization'] = `Bearer ${user.token}`;
-  }
+  baseAPI.interceptors.request.use(
+    async (request) => {
+      try {
+        const token = await auth.getToken()
+        request.headers['Authorization'] = `Bearer ${token}`
+        
+        return request;
+      } 
+      
+      catch (error) {
+        console.error('Error adding token to request:', error.message)
+        return Promise.reject(error)
+      }
+    },
+    (error) => {
+      console.error('Error intercepting request:', error.message)
+      return Promise.reject(error);
+    }
+  );
 
   baseAPI.interceptors.response.use(
     response => response,
     error => {
-      console.log(error.response.status)
-
-      if (error.response.status === 401) {  
-        if(router.currentRoute.fullPath != '/login') {
-          router.push('/login')
-        }        
+      if (error.response.status === 401) {
+        //
       }
       return Promise.reject(error)
     }

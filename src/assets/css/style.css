@@ -148,3 +148,12 @@
 .p-radiobutton .p-radiobutton-box .p-radiobutton-icon {
     display: none;
 }
+
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight.p-focus {
+    background-color: #FFC402;
+}
+
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
+    background-color: #FFC402;
+    color: #4A4A4A;
+}

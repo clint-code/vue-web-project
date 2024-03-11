@@ -94,12 +94,12 @@
 
                     <div>
                         <div class="flex">
-                            <div class="custom-icon-bg bg-black-alpha-90 mr-3" @click="navigate('/my-policies')">
-                                <i class="fas fa-user text-white text-sm"></i>
+                            <div class="custom-icon-bg bg-black-alpha-90 mr-3" :class="{ 'bg-yellow-500' : !menuDetails, 'bg-white' : menuDetails }" @click="navigate('/my-policies')">
+                                <i class="fas fa-user text-sm" :class="{ 'text-white' : !menuDetails }" @click="navigate('/my-policies')"></i>
                             </div>
 
-                            <div class="custom-icon-bg bg-black-alpha-90">
-                                <i class="fas fa-bars text-white text-sm"></i>
+                            <div class="custom-icon-bg bg-black-alpha-90" @click="showMenuDetails()" :class="{ 'bg-yellow-500' : !menuDetails, 'bg-white' : menuDetails }">
+                                <i class="fas fa-bars text-sm" :class="{ 'text-white' : !menuDetails }"></i>
                             </div>
                         </div>
                     </div>
@@ -238,7 +238,7 @@ const props = defineProps({
     variation: String,
     back: String,
     page: String
-});
+})
 const router = useRouter()
 
 const menuDetails = ref(false)
@@ -248,7 +248,7 @@ const navbarHeight = ref(0)
 onMounted(() => {
     if (navbar.value) {
         navbarHeight.value = navbar.value.clientHeight
-        emits('calculatedHeight', navbarHeight.value);
+        emits('calculatedHeight', navbarHeight.value)
     }
 })
 

@@ -145,7 +145,7 @@ body {
     font-size: 14px;
     border-radius: 1.5rem;
     border-radius: 1.5rem;
-    border: #4A4A4A 1px solid;
+    border: #4A4A4A 1.5px solid;
 }
 
 .custom-rounded-calendar::placeholder {
@@ -187,7 +187,7 @@ body {
 
 .custom-amount-input-1 .p-inputtext {
     font-size: 16px;
-    border-left: 2px #FFF solid;
+    border-left: 1.5px #FFF solid;
     border-top-left-radius: 0px !important;
     border-bottom-left-radius: 0px !important;
 }
@@ -245,6 +245,10 @@ body {
 
 .custom-shadow {
     box-shadow: 0 3px 6px #E8E9E9;
+}
+
+.p-inputtext .custom-dark-gray-border {
+    border-left: #141718 2px solid;
 }
 
 .custom-dark-gray-border {
@@ -458,6 +462,10 @@ body {
     width: 20%;
 }
 
+.custom-w-12rem {
+    width: 10rem;
+}
+
 .custom-border-round-5 {
     border-radius: 5rem;
 }
@@ -466,6 +474,7 @@ body {
     width: 70vw; 
     position: absolute;
     right: 0;
+    z-index: 2;
 }
 
 .custom-w-5 {
@@ -492,4 +501,42 @@ body {
 
 .custom-light-blue-bg {
     background-color: #E3E7EE;
+}
+
+.custom-bg-light {
+    background-color: #F5F5F5;
+}
+
+.overlay-menu {
+      height: 100vh;
+      width: 100vh;
+      z-index: 999;
+      position: fixed;
+}
+
+.custom-full-height-img {
+    width: auto;
+    height: 100%;
+    object-fit: cover; 
+}
+
+.custom-img-container {
+    position: relative;
+    height: 300px; 
+}
+
+.custom-img-filter {
+    filter: hue-rotate(190deg) invert(123%);
+}
+
+.custom-border-1-5 {
+    border-width: 1.5px;
+}
+
+.custom-mb-60 {
+    margin-bottom: 60px;
+}
+
+.custom-box-shadow {
+    box-shadow: inset 0 0 0 2px #4A4A4A;
 }
