@@ -101,7 +101,7 @@
                                     <label class="text-sm font-medium">Date of Birth</label>
                                     <Calendar v-model="dob" placeholder="Choose Date"
                                         class="w-full custom-rounded-calendar custom-small-dropdown-1" showIcon
-                                        iconDisplay="input">
+                                        iconDisplay="input" :maxDate="maxDate">
                                         <template #inputicon="{ clickCallback }">
                                             <i class="fas fa-calendar-days text-black-alpha-90 text-sm"
                                                 @click="clickCallback"></i>
@@ -149,9 +149,11 @@ import TopNav from '@/components/TopNav.vue'
 import Steps from '@/components/Steps.vue'
 
 import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
 
-import detailsService from '@/services/detailsService.js'
+import additionalDetailsService from '@/services/additionalDetailsService.js'
+
+import { useRouter } from 'vue-router'
+const router = useRouter()
 
 import useToastMessages from "@/composables/useToastMessages"
 const { showSuccessToast, showErrorToast } = useToastMessages()
@@ -190,6 +192,8 @@ const verificationStatus = ref(false)
 const email = ref(null)
 const phoneNumber = ref(null)
 
+const maxDate = ref(new Date())
+
 const isLoading = ref(false)
 const fullPage = ref(true)
 const opacity = ref(0.7)
@@ -204,14 +208,14 @@ const verifyCustomer = () => {
 
     isLoading.value = true
 
-    detailsService.verifyCustomer(data)
+    additionalDetailsService.verifyCustomer(data)
         .then((response) => {
             isLoading.value = false
 
             if (response.data.response_code == 200) {
                 verificationStatus.value = true
                 kraPIN.value = response.data.data.kraPin
-                customerName = response.data.data.iprsCustomerName
+                customerName.value = response.data.data.iprsCustomerName
             }
             else {
                 isLoading.value = false
@@ -236,24 +240,26 @@ const submit = () => {
     data.phoneNumber = phoneNumber.value
     data.quoteRef = quoteRef
 
-    isLoading.value = false
+    navigate("/vehicle-details")
 
-    detailsService.createCustomer(data)
-        .then((response) => {
-            isLoading.value = false
+    // isLoading.value = true
 
-            if (response.data.response_code == 200) {
-                navigate("/vehicle-details")
-            }
-            else {
-                isLoading.value = false
-                showErrorToast("Error", response.data)
-            }
-        })
-        .catch((error) => {
-            showErrorToast("Error", error.response.data)
-            isLoading.value = false
-        })
+    // additionalDetailsService.createCustomer(data)
+    //     .then((response) => {
+    //         isLoading.value = false
+
+    //         if (response.data.response_code == 200) {
+    //             navigate("/vehicle-details")
+    //         }
+    //         else {
+    //             isLoading.value = false
+    //             showErrorToast("Error", response.data)
+    //         }
+    //     })
+    //     .catch((error) => {
+    //         showErrorToast("Error", error.response.data)
+    //         isLoading.value = false
+    //     })
 }
 
 const navigate = (path) => {

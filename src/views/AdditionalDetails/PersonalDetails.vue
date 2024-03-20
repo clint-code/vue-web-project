@@ -102,7 +102,7 @@
 import TopNav from '@/components/TopNav.vue'
 import Footer from '@/components/Footer.vue'
 import Steps from '@/components/Steps.vue'
-import DesktopPersonalDetails from '@/components/Desktop/PersonalDetails/PersonalDetails.vue'
+import DesktopPersonalDetails from '@/components/Desktop/AdditionalDetails/PersonalDetails.vue'
 
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'

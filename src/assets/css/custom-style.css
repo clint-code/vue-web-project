@@ -344,7 +344,7 @@ body {
 }
 
 .custom-file-input {
-    position: fixed;
+    position: absolute;
     opacity: 0;
     cursor: pointer;
 }
