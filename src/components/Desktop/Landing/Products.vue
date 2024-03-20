@@ -193,7 +193,7 @@
 
         <template v-else>
             <template v-if="quotes.length">
-                <Quotes :insuranceClass="quoteDetails.productCategory" :quotes="quotes" />
+                <Quotes :insuranceClass="quoteDetails.productCategory" :quotes="quotes" :quoteRef="quoteRef" />
             </template>            
         </template>
 
@@ -224,7 +224,7 @@ const { showSuccessToast, showErrorToast } = useToastMessages()
 
 const quoteDetails = ref(null)
 const quotes = ref([])
-const formattedQuotes = ref([])
+const quoteRef = ref(null)
 
 const isLoading = ref(false)
 const fullPage = ref(true)
@@ -293,12 +293,11 @@ const getQuote = (value) => {
             isLoading.value = false
 
             if(response.data.response_code == 200) {
-                //quotes.value = response.data.data.quotes  
+                quoteRef.value = response.data.data.quoteRef  
                 quotes.value = response.data.data.quotes.map(quote => (
                     {
                         ...quote, 
                         active: false, 
-                        quoteRef: response.data.data.quoteRef,
                         buttonText: 'View Benefits' 
                     }
                 ))              
@@ -309,7 +308,7 @@ const getQuote = (value) => {
             }            
         })
         .catch((error) => {
-            showErrorToast("Error", "An error occurred with the request.")
+            showErrorToast("Error", error)
             isLoading.value = false
         })
 }

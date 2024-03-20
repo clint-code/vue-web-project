@@ -21,7 +21,7 @@
                                 <img :src="quote.UnderwriterIcon" height="20px" width="auto" />
 
                                 <div class="border-round-2xl bg-yellow-500 border-yellow-500 text-black-alpha-90 font-bold p-2 text-sm"
-                                    size="small" @click="getQuote()">
+                                    size="small" @click="buyQuote(quote)">
                                     Buy Now
                                 </div>
                             </div>
@@ -78,8 +78,7 @@
                                     <div class="flex justify-content-between">
                                         <label class="text-xs font-medium">Base Premium</label>
                                         <template v-if="quote.BasicPremium != null">
-                                            <label class="text-xs text-right font-bold">KES {{
-            quote.BasicPremium.toLocaleString() }}</label>
+                                            <label class="text-xs text-right font-bold">KES {{ quote.BasicPremium.toLocaleString() }}</label>
                                         </template>
                                     </div>
 
@@ -99,8 +98,7 @@
                                             <div class="flex justify-content-between mt-2">
                                                 <label class="text-xs">{{ tax.name }}</label>
                                                 <template v-if="tax.amount != null">
-                                                    <label class="text-xs text-right font-bold">KES {{
-            tax.amount.toLocaleString() }}</label>
+                                                    <label class="text-xs text-right font-bold">KES {{ tax.amount.toLocaleString() }}</label>
                                                 </template>
 
                                             </div>
@@ -157,10 +155,14 @@
                                             </div>
 
                                             <div class="w-full border-round-2xl bg-yellow-500 border-1 border-yellow-500 px-3 py-2 mt-4"
-                                                @click="getQuote()">
+                                                @click="buyQuote(quote)">
                                                 <div class="flex justify-content-between align-items-center">
                                                     <label class="font-bold">Buy Now</label>
-                                                    <label class="font-bold">KES 42,000</label>
+
+                                                    <template v-if="quote.LipaFullAmount != null">
+                                                        <label class="font-bold">KES {{ quote.LipaFullAmount.toLocaleString() }}</label>
+                                                    </template>
+                                                   
                                                     <i class="fas fa-circle-arrow-right text-black-alpha-90"></i>
                                                 </div>
                                             </div>
@@ -188,7 +190,7 @@
                                             </template>
 
                                             <div class="w-full border-round-2xl bg-yellow-500 border-1 border-yellow-500 px-3 py-2 px-1 mt-4"
-                                                @click="getQuote()">
+                                                @click="buyQuote(quote)">
                                                 <div class="flex justify-content-between align-items-center">
                                                     <label class="font-bold">Buy Now</label>
 
@@ -218,18 +220,20 @@
 
 import { ref, toRef, onMounted, defineProps } from 'vue'
 import { useRouter } from 'vue-router'
+const router = useRouter()
 
 import quoteService from '@/services/quoteService.js'
 
 import useToastMessages from "@/composables/useToastMessages"
-import { forEach } from 'lodash';
 const { showSuccessToast, showErrorToast } = useToastMessages()
 
-const router = useRouter()
+import { useStore } from "vuex"
+const store = useStore()
 
 const props = defineProps({
     insuranceClass: String,
-    quotes: Array
+    quotes: Array,
+    quoteRef: String
 })
 
 const isLoading = ref(false)
@@ -285,18 +289,36 @@ const formatBenefits = (additionalBenefits) => {
     formattedBenefits.value = null
 
     if(additionalBenefits.length) {
-        formattedBenefits.value = additionalBenefits.map(benefit => (
-            {
-                ...benefit,
-                active: false,
-                benefitValue: null
-            }
-        ))
-
         if(activeQuote.value.addedBenefits && activeQuote.value.addedBenefits.length) {
-            activeQuote.value.addedBenefits.forEach((activeBenefit) => {
-                
-            })            
+            const formattedBenefitsArray = []
+
+            formattedBenefits.value = additionalBenefits.map(benefit => {
+                const formattedBenefit = benefit
+
+                const index = activeQuote.value.addedBenefits.findIndex(addedBenefit => addedBenefit.name === benefit.name);
+
+                if(index !== -1) {
+                    formattedBenefit.active = true
+                    formattedBenefit.benefitValue = benefit.limitInput ? activeQuote.value.addedBenefits[index].limitAmount : null
+                }
+                else {
+                    formattedBenefit.benefitValue = null
+                    formattedBenefit.active = false
+                }
+
+                formattedBenefitsArray.push(formattedBenefit)
+            }) 
+
+            formattedBenefits.value = formattedBenefitsArray
+        }
+        else {
+            formattedBenefits.value = additionalBenefits.map(benefit => (
+                {
+                    ...benefit,
+                    active: false,
+                    benefitValue: null
+                }
+            ))
         }
     }    
 }
@@ -306,7 +328,7 @@ const changeBenefit = (benefit, index) => {
         let status = benefit.active ? "add" : "remove" 
 
         let data = {}
-        data.quoteRef = activeQuote.value.quoteRef
+        data.quoteRef = props.quoteRef
         data.action = status
         data.benefitName = benefit.name    
         data.underWriter = activeQuote.value.underwriterName
@@ -319,7 +341,7 @@ const changeBenefit = (benefit, index) => {
 const changeBenefitWithLimit = (benefit) => {
     if(benefit.benefitValue > benefit.minimumLimit && benefit.benefitValue < benefit.maximumLimit) {
         let data = {}
-        data.quoteRef = activeQuote.value.quoteRef
+        data.quoteRef = props.quoteRef
         data.action = "add"
         data.benefitName = benefit.name    
         data.underWriter = activeQuote.value.underwriterName
@@ -347,11 +369,14 @@ const addOrRemoveBenefit = (data) => {
         })
         .catch((error) => {
             isLoading.value = false
-            showErrorToast("Error", response.data.message)
+            showErrorToast("Error", error.data.message)            
         })
 }
 
-const getQuote = () => {
+const buyQuote = (value) => {
+    store.commit("setSelectedQuote", value)
+    store.commit("setQuoteRef", props.quoteRef)
+
     router.push('/accept-terms')
 }
 </script>

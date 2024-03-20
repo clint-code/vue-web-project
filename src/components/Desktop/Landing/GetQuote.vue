@@ -11,7 +11,7 @@
             <div class="flex flex-wrap gap-3 mt-2">
                 <div class="flex align-items-center" v-for="insuranceClass in insuranceClasses"
                     :key="insuranceClass.name">
-                    <RadioButton v-model="selectedInsuranceClass" :value="insuranceClass.value"/>
+                    <RadioButton v-model="selectedInsuranceClass" :value="insuranceClass.value" />
                     <label for="ingredient1" class="ml-1 text-xs font-bold">{{ insuranceClass.name }}</label>
                 </div>
             </div>
@@ -34,12 +34,14 @@
             </div>
 
             <div class="col-3">
-                <Dropdown v-model="selectedMake" :options="makes" optionLabel="name" placeholder="Make E.g BMW"
+                <Dropdown v-model="selectedMake" :options="makes" filter :loading="makesLoader" optionLabel="vehicle_name" placeholder="Make E.g BMW"
+                    filterPlaceholder="Search make" @filter="searchVehicleMakes" @change="changeVehicleMake"
                     class="w-full border-round-3xl custom-yellow-dropdown custom-dark-gray-border custom-border-1-5 custom-small-dropdown-1" />
             </div>
 
             <div class="col-3">
-                <Dropdown v-model="selectedModel" :options="models" optionLabel="name" placeholder="Model E.g X3"
+                <Dropdown v-model="selectedModel" :options="models" filter :loading="modelsLoader" optionLabel="vehicle_model" placeholder="Model E.g X3"
+                    filterPlaceholder="Search model" @filter="searchVehicleModels" @change="changeVehicleModel"
                     class="w-full border-round-3xl custom-yellow-dropdown custom-dark-gray-border custom-border-1-5 custom-small-dropdown-1" />
             </div>
 
@@ -67,34 +69,35 @@
 
             <template v-if="selectedInsuranceClass != 'PRIVATE'">
                 <div class="col-3">
-                    <Dropdown v-model="selectedPersonCovered" :options="personsCovered" optionLabel="name" optionValue="name"
-                        placeholder="Person Covered"
+                    <Dropdown v-model="selectedPersonCovered" :options="personsCovered" optionLabel="name"
+                        optionValue="name" placeholder="Person Covered"
                         class="w-full border-round-3xl custom-yellow-dropdown custom-dark-gray-border custom-border-1-5 custom-small-dropdown-1" />
                 </div>
 
-                <div class="col-3"> 
+                <div class="col-3">
                     <Dropdown v-model="selectedPassengers" :options="passengers" optionLabel="name" optionValue="value"
                         placeholder="No. of passengers"
                         class="w-full border-round-3xl custom-yellow-dropdown custom-dark-gray-border custom-border-1-5 custom-small-dropdown-1" />
                 </div>
 
                 <div class="col-3">
-                    <Dropdown v-model="selectedVehicleTonnage" :options="vehicleTonnage" optionLabel="name" optionValue="value"
-                        placeholder="Vehicle Tonnage"
+                    <Dropdown v-model="selectedVehicleTonnage" :options="vehicleTonnage" optionLabel="name"
+                        optionValue="value" placeholder="Vehicle Tonnage"
                         class="w-full border-round-3xl custom-yellow-dropdown custom-dark-gray-border custom-border-1-5 custom-small-dropdown-1" />
                 </div>
 
                 <template v-if="selectedInsuranceClass == 'COMMERCIAL'">
                     <div class="col-3">
-                        <Dropdown v-model="selectedVehicleUse" :options="vehicleUses" optionLabel="name" optionValue="name"
-                            placeholder="Vehicle Use"
+                        <Dropdown v-model="selectedVehicleUse" :options="vehicleUses" optionLabel="name"
+                            optionValue="name" placeholder="Vehicle Use"
                             class="w-full border-round-3xl custom-yellow-dropdown custom-dark-gray-border custom-border-1-5 custom-small-dropdown-1" />
                     </div>
-                </template>                
+                </template>
             </template>
 
             <div class="col-3">
-                <div v-ripple class="p-ripple w-full border-round-3xl bg-yellow-500 border-1 border-yellow-500 p-2" @click="getQuote()">
+                <div v-ripple class="p-ripple w-full border-round-3xl bg-yellow-500 border-1 border-yellow-500 p-2"
+                    @click="getQuote()">
                     <div class="flex justify-content-between align-items-center">
                         <label class="font-bold text-sm">Get Quote</label>
                         <i class="fas fa-circle-arrow-right"></i>
@@ -103,11 +106,21 @@
             </div>
         </div>
     </div>
+    <loading v-model:active="isLoading" :is-full-page="fullPage" color="#FFC402" loader="dots" :opacity="opacity"/>
+    <Toast />
 </template>
 
 <script setup>
 import { ref, onMounted, defineEmits } from 'vue'
-import { store } from '@/state/store.js'
+import debounce from 'lodash/debounce'
+
+import quoteService from '@/services/quoteService.js'
+
+import useToastMessages from "@/composables/useToastMessages"
+const { showSuccessToast, showErrorToast } = useToastMessages()
+
+import { useStore } from "vuex"
+const store = useStore()
 
 const emits = defineEmits()
 
@@ -160,19 +173,17 @@ const insuranceTypes = ref([
     }
 ])
 
+const isLoading = ref(false)
+
 const selectedMake = ref(null)
-const makes = ref([
-    {
-        "name": "Nissan"
-    }
-])
+const makes = ref([])
+const makeId = ref(null)
+const makeName = ref(null)
 
 const selectedModel = ref(null)
-const models = ref([
-    {
-        "name": "Tiida"
-    }
-])
+const models = ref([])
+const modelId = ref(null)
+const modelName = ref(null)
 
 const selectedPersonCovered = ref(null)
 const personsCovered = ref([
@@ -219,13 +230,110 @@ const vehicleUses = ref([
 ])
 
 onMounted(() => {
-
+    //
 })
+
+const changeVehicleMake = (value) => {
+    if(value.value.id) {
+        makeId.value = value.value.id
+        makeName.value = value.value.vehicle_name
+    }
+    else {
+        makeId.value = null
+        makeName.value = null
+    }
+}
+
+const searchVehicleMakes = debounce(async (searchTerm) => {
+    if(searchTerm.value != "") {
+        await getMakes(searchTerm.value)
+    }    
+}, 1000)
+
+const getMakes = async (searchTerm) => {
+    let data = {}
+    data.searchTerm = searchTerm
+    data.productId = 1
+
+    isLoading.value = true
+
+    const vehicleMakes = []
+
+    quoteService.getMakes(data)
+        .then((response) => {
+            isLoading.value = false
+
+            if (response.data.response_code == 200) {
+                makes.value = response.data.data
+            }
+            else {
+                isLoading.value = false
+                showErrorToast("Error", response.data)
+            }
+        })
+        .catch((error) => {
+            showErrorToast("Error", error.response.data)
+            isLoading.value = false
+        })
+
+    return vehicleMakes
+}
+
+const changeVehicleModel = (value) => {
+    if(value.value.id) {
+        modelId.value = value.value.id
+        modelName.value = value.value.vehicle_model
+    }
+    else {
+        modelId.value = null
+        modelName.value = null
+    }
+}
+
+const searchVehicleModels = debounce(async (searchTerm) => {
+    if(makeId.value == null) {
+        showErrorToast("Error", "Vehicle make not selected.")        
+    }
+    else {
+        if(searchTerm.value != "") {
+            await getModels(searchTerm.value)
+        }
+    }    
+}, 1000)
+
+const getModels = async (searchTerm) => {
+    let data = {}
+    data.searchTerm = searchTerm
+    data.makeId = makeId.value
+
+    isLoading.value = true
+
+    const vehicleModels = []
+
+    quoteService.getModels(data)
+        .then((response) => {
+            isLoading.value = false
+
+            if (response.data.response_code == 200) {
+                models.value = response.data.data
+            }
+            else {
+                isLoading.value = false
+                showErrorToast("Error", response.data)
+            }
+        })
+        .catch((error) => {
+            showErrorToast("Error", error.response.data)
+            isLoading.value = false
+        })
+
+    return vehicleModels
+}
 
 const getQuote = () => {
     let data = {}
-    data.make = selectedMake.value.name
-    data.model = selectedModel.value.name
+    data.make = makeName.value
+    data.model = modelName.value
     data.yearOfManufacture = new Date(yearOfManufacture.value).getFullYear()
     data.productId = props.productId
     data.productCategory = selectedInsuranceClass.value
@@ -246,7 +354,7 @@ const getQuote = () => {
         data.customerType = selectedPersonCovered.value
     }
 
-    store.setGetQuoteDetails(data)
+    store.commit("setQuoteDetails", data)
     emits('getQuote', data)
 }
 </script>

@@ -2,12 +2,12 @@
     <TopNav back="/get-quote" variation="white" />
 
     <div class="custom-width-80">
-        <div class="px-4">
+        <div class="">
             <p class="font-bold">
                 COMPREHENSIVE PRIVATE Car POLICY TERMS AND CONDITIONS.
             </p>
 
-            <div class="custom-terms-section">
+            <div class="custom-terms-section border-bottom-1 custom-dark-gray-border">
                 <p class="font-bold">
                     Definitions
                 </p>
@@ -79,7 +79,7 @@
             </div>
 
             <div class="custom-desktop-view px-4 mb-2">
-                <div class="flex justify-content-between border-2 custom-dark-gray-border border-round-3xl p-3 mt-4">
+                <div class="flex justify-content-between border-2 custom-dark-gray-border border-round-3xl p-2 mt-4">
                     <label class="font-bold">Read All Terms and Conditions</label>
                     <i class="fas fa-circle-arrow-right text-black-alpha-90"></i>
                 </div>
@@ -87,39 +87,46 @@
             
         </div>
 
-        <div class="border-top-1 custom-dark-gray-border my-4 px-4 bottom-0 absolute w-full custom-mobile-view">
-            <div class="flex gap-2">
-                <div class="w-3 border-round-2xl bg-black-alpha-90 border-1 border-black-alpha-90 custom-px-12 py-2 mt-4" @click="getQuote()">
-                    <div class="flex justify-content-between align-items-center">
-                        <i class="far fa-times-circle text-white text-xs"></i>
-                        <label class="text-xs text-white font-bold">Cancel</label>                        
+        <div class="custom-mobile-view">
+            <div class="border-top-1 custom-dark-gray-border my-4 px-4 bottom-0 absolute w-full">
+                <div class="flex gap-2">
+                    <div class="w-3 border-round-2xl bg-black-alpha-90 border-1 border-black-alpha-90 custom-px-12 py-2 mt-4" @click="navigate('/')">
+                        <div class="flex justify-content-between align-items-center">
+                            <i class="far fa-times-circle text-white text-xs"></i>
+                            <label class="text-xs text-white font-bold">Cancel</label>                        
+                        </div>
                     </div>
-                </div>
 
-                <div class="w-9 border-round-2xl bg-yellow-500 border-1 border-yellow-500 px-2 py-2 mt-4"
-                    @click="acceptTerms()">
-                    <div class="flex justify-content-between align-items-center">
-                        <label class="text-xs font-bold">Accept Terms & Conditions</label>
-                        <i class="fas fa-circle-arrow-right text-black-alpha-90"></i>
+                    <div class="w-9 border-round-2xl bg-yellow-500 border-1 border-yellow-500 px-2 py-2 mt-4"
+                        @click="acceptTerms()">
+                        <div class="flex justify-content-between align-items-center">
+                            <label class="text-xs font-bold">Accept Terms & Conditions</label>
+                            <i class="fas fa-circle-arrow-right text-black-alpha-90"></i>
+                        </div>
                     </div>
-                </div>
-            </div>            
-        </div>
+                </div>            
+            </div>
+        </div>       
 
-        <div class="border-top-1 custom-dark-gray-border my-4 px-4 w-full custom-desktop-view">
-            <div class="flex justify-content-between mt-4">
-                <div class="flex align-items-center bg-black-alpha-90 border-round-3xl gap-2 px-3 py-2">
-                    <label class="font-bold text-white">Cancel</label>
-                    <i class="far fa-times-circle text-white"></i>
-                </div>
+        <div class="custom-desktop-view">
+            <div class="border-top-1 custom-dark-gray-border my-4 px-4 w-full">
+                <div class="flex justify-content-between mt-4">
+                    <div class="flex align-items-center bg-black-alpha-90 border-round-3xl gap-2 px-3 py-2" @click="navigate('/')">
+                        <label class="font-bold text-white">Cancel</label>
+                        <i class="far fa-times-circle text-white"></i>
+                    </div>
 
-                <div class="flex justify-content-end align-items-center bg-yellow-500 border-round-3xl gap-2 px-3 py-2" @click="acceptTerms()">
-                    <label class="font-bold">Accept Terms & Conditions</label>
-                    <i class="far fa-circle-arrow-right"></i>
-                </div>
-            </div>            
-        </div>
+                    <div class="flex justify-content-end align-items-center bg-yellow-500 border-round-3xl gap-2 px-3 py-2" @click="acceptTerms()">
+                        <label class="font-bold">Accept Terms & Conditions</label>
+                        <i class="far fa-circle-arrow-right"></i>
+                    </div>
+                </div>            
+            </div>
+        </div>        
     </div>
+
+    <loading v-model:active="isLoading" :is-full-page="fullPage" color="#FFC402" loader="dots" :opacity="opacity"/>
+    <Toast />
 </template>
 
 <script setup>
@@ -128,13 +135,55 @@ import TopNav from '@/components/TopNav.vue'
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 
+import { useStore } from "vuex"
+
+import quoteService from '@/services/quoteService.js'
+
+import useToastMessages from "@/composables/useToastMessages"
+const { showSuccessToast, showErrorToast } = useToastMessages()
+
+const store = useStore()
+
+const selectedQuote = store.getters.getSelectedQuote
+const quoteRef = store.getters.getQuoteRef
+
 const router = useRouter()
 
-onMounted(() => {
+const isLoading = ref(false)
+const fullPage = ref(true)
+const opacity = ref(0.7)
 
+onMounted(() => {
+    //
 })
 
 const acceptTerms = () => {
-    router.push('/personal-details')
+    let data = {}
+
+    data.quoteRef = quoteRef
+    data.tscAccepted = 1
+    data.underwriter = selectedQuote.policyName
+
+    isLoading.value = true
+
+    quoteService.selectQuoteUnderwriter(data)
+        .then((response) => {
+            isLoading.value = false
+
+            if(response.data.response_code == 200) {
+                navigate("/personal-details")
+            }
+            else {
+                showErrorToast("Error", response.data.message)
+            }  
+        })
+        .catch((error) => {
+            isLoading.value = false
+            showErrorToast("Error", error)
+        })
+}
+
+const navigate = (path) => {
+    router.push(path)
 }
 </script>
