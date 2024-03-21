@@ -294,6 +294,7 @@ const getQuote = (value) => {
 
             if(response.data.response_code == 200) {
                 quoteRef.value = response.data.data.quoteRef  
+                console.log(response.data.data);
                 quotes.value = response.data.data.quotes.map(quote => (
                     {
                         ...quote, 
