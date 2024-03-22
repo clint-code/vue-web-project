@@ -309,8 +309,6 @@ const submit = () => {
   data.phoneNumber = phoneNumber.value;
   data.quoteRef = quoteRef;
 
-  navigate("/vehicle-details");
-
   isLoading.value = true;
 
   additionalDetailsService

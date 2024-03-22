@@ -7,5 +7,17 @@ export default {
 
     createCustomer(data) {
         return apim().post('/createCustomer', data)
+    },
+
+    verifyVehicle(data) {
+        return apim().post('/verifyVehicle', data)
+    },
+
+    postValuation(data) {
+        return apim().post('/postValuation', data)
+    },
+
+    getQuoteSummary(data) {
+        return apim().post('/getQuoteSummary', data)
     }
 }

@@ -42,8 +42,9 @@
                             <div class="col-12">
                                 <div class="flex flex-column gap-2">
                                     <label class="text-xs font-medium">Choose Security Device</label>
-                                    <MultiSelect v-model="selectedSecurityDevices" display="chip" :options="securityDevices"
-                                        optionLabel="name" placeholder="Select Security Device"
+                                    <MultiSelect v-model="selectedSecurityDevices" display="chip"
+                                        :options="securityDevices" optionLabel="name"
+                                        placeholder="Select Security Device"
                                         class="w-full md:w-20rem text-xs border-round-3xl" />
                                 </div>
                             </div>
@@ -118,15 +119,18 @@
         <div :class="overlay"></div>
 
         <div class="bottom-0 left-0 w-full absolute" id="bottomCard">
-            <BottomSummaryMobile @showOverlay="displayOverlay" />
+            <BottomSummaryMobile @showOverlay="displayOverlay"/>
         </div>
     </div>
 
     <div class="custom-desktop-view">
-        <DesktopVehicleDetails :sectionHeight="sectionHeight" />
+        <template v-if="topNavHeight != null">
+            <DesktopVehicleDetails :topNavHeight="topNavHeight" />
+        </template>        
     </div>
 
-    <Dialog v-model:visible="modal" modal :closable="false" :showHeader="false" :showFooter="false" class="custom-dialog">
+    <Dialog v-model:visible="modal" modal :closable="false" :showHeader="false" :showFooter="false"
+        class="custom-dialog">
         <div class="custom-mobile-view">
             <div class="flex flex-column align-items-center">
                 <h3 class="text-center px-4">
@@ -173,11 +177,6 @@
                 </div>
             </div>
         </div>
-
-        <div class="custom-desktop-view">
-            <MainDialogModal @showValuationDateTimeModal="showCalendarModal" @showGooglePlacesModal="showPlacesModal"
-                @closeMainModal="closeMainModal" />
-        </div>
     </Dialog>
 
     <Dialog v-model:visible="calendarModal" modal :closable="false" :showHeader="false" :showFooter="false"
@@ -211,11 +210,6 @@
                 </div>
             </div>
         </div>
-
-        <div class="custom-desktop-view">
-            <DateTimeModal @showGooglePlacesModal="showPlacesModal" @changeValuationDate="changeValuationDate"
-                @changeValuationTime="changeValuationTime" @closeDateTimeModal="closeDateTimeModal" />
-        </div>
     </Dialog>
 
     <Dialog v-model:visible="timeModal" modal :closable="false" :showHeader="false" :showFooter="false"
@@ -238,8 +232,8 @@
                     <label class="font-bold">{{ valuationTime.name }}</label>
                 </div>
 
-                <Listbox class="mt-4 h-13rem overflow-auto custom-listbox" listStyle="custom-list" v-model="valuationTime"
-                    :options="timesArray" optionLabel="name" />
+                <Listbox class="mt-4 h-13rem overflow-auto custom-listbox" listStyle="custom-list"
+                    v-model="valuationTime" :options="timesArray" optionLabel="name" />
 
             </div>
 
@@ -280,8 +274,8 @@
                         @input="debouncedSearch" placeholder="Search location" />
                 </div>
 
-                <Listbox class="mt-4 h-13rem overflow-auto custom-listbox px-3" listStyle="custom-list" v-model="searchTerm"
-                    :options="valuationLocations" optionLabel="name" optionValue="name" />
+                <Listbox class="mt-4 h-13rem overflow-auto custom-listbox px-3" listStyle="custom-list"
+                    v-model="searchTerm" :options="valuationLocations" optionLabel="name" optionValue="name" />
 
             </div>
 
@@ -301,11 +295,6 @@
                 </div>
             </div>
         </div>
-
-        <div class="custom-desktop-view">
-            <PlacesModal @showValuationDateTimeModal="showCalendarModal"
-                @setValuationLocation="setValuationLocationFromModal" @closePlacesModal="closePlacesModal" />
-        </div>
     </Dialog>
 </template>
 
@@ -314,11 +303,6 @@ import debounce from 'lodash/debounce'
 
 import TopNav from '@/components/TopNav.vue'
 import BottomSummaryMobile from '@/components/Mobile/BottomSummary/BottomSummary.vue'
-
-
-import MainDialogModal from "@/components/Desktop/Valuation/MainDialog.vue"
-import DateTimeModal from "@/components/Desktop/Valuation/DateTime.vue"
-import PlacesModal from "@/components/Desktop/Valuation/Places.vue"
 
 import DesktopVehicleDetails from "@/components/Desktop/AdditionalDetails/VehicleDetails.vue"
 
@@ -362,7 +346,7 @@ const securityDevices = ref([
 const uploadTxt = ref('Upload')
 
 onMounted(() => {
-    
+
 })
 
 const adjustHeight = (value) => {
@@ -376,7 +360,10 @@ const adjustHeight = (value) => {
     var difference = viewportHeightInPixels - (navbarHeight + bottomCardHeight + 12)
 
     sectionHeight.value = difference + 'px'
+    topNavHeight.value = navbarHeight
+    console.log("top nav bar height" + topNavHeight.value)
 }
+
 
 const debouncedSearch = debounce(async (term) => {
     valuationLocations.value = [];

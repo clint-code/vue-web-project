@@ -16,7 +16,7 @@
                     Please enter your valuation location
                 </h3>
 
-                <div class="custom-bottom-border-1 w-8"></div>               
+                <div class="custom-bottom-border-1 w-8"></div>
 
                 <div class="mt-4 w-full">
                     <div
@@ -27,7 +27,7 @@
                     </div>
 
                     <Listbox class="mt-4 h-6rem overflow-auto custom-listbox px-3" listStyle="custom-list"
-                        v-model="searchTerm" :options="valuationLocations" optionLabel="name" optionValue="name" />
+                        v-model="selectedLocation" :options="valuationLocations" optionLabel="name" optionValue="name" />
 
                     <div class="flex justify-content-between bg-yellow-500 custom-border-radius px-4 h-3rem align-items-center gap-3 my-4"
                         @click="setValuationLocation()">
@@ -43,32 +43,42 @@
 <script setup>
 import debounce from 'lodash/debounce'
 import { ref, onMounted, defineEmits } from 'vue'
+import valuationService from '@/services/valuationService.js'
+import { useStore } from "vuex"
+
+
+import useToastMessages from "@/composables/useToastMessages"
+const { showSuccessToast, showErrorToast } = useToastMessages()
 
 const emits = defineEmits()
 
+const store = useStore()
 const searchTerm = ref(null)
+const selectedLocation = ref(null)
 const valuationLocations = ref([])
 
 const debouncedSearch = debounce(async (term) => {
-    valuationLocations.value = [];
+    valuationLocations.value = []
 
-    const results = await performSearch(term);
-    valuationLocations.value = results;
+    await performSearch(term)
 }, 1000)
 
 const performSearch = async () => {
-    //validation.getPlaces(searchTerm.value)
+    // valuationService.getPlaces(searchTerm.value)
+    //     .then((response) => {
+    //         valuationLocations.value = response.data
+    //     })
+    //     .catch((error) => {
+    //         showErrorToast("Error", error)
+    //     })
 
-    return new Promise((resolve) => {
-        const results = [
-            { name: 'New York', code: 'NY' },
-            { name: 'Rome', code: 'RM' },
-            { name: 'London', code: 'LDN' },
-            { name: 'Istanbul', code: 'IST' },
-            { name: 'Paris', code: 'PRS' }
-        ]
-        resolve(results)
-    })
+    valuationLocations.value = [
+        { name: 'New York', code: 'NY' },
+        { name: 'Rome', code: 'RM' },
+        { name: 'London', code: 'LDN' },
+        { name: 'Istanbul', code: 'IST' },
+        { name: 'Paris', code: 'PRS' }
+    ]
 }
 
 const showValuationDateTimeModal = () => {
@@ -76,7 +86,10 @@ const showValuationDateTimeModal = () => {
 }
 
 const setValuationLocation = () => {
-    emits('setValuationLocation', searchTerm.value)
+    store.commit("setValuationLocation", selectedLocation)
+    store.commit("setValuationStatus", true)
+
+    emits('closePlacesModal')
 }
 
 const closeModal = () => {

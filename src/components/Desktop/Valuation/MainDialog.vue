@@ -38,11 +38,16 @@
 
 <script setup>
 import { ref, onMounted, defineEmits } from 'vue'
+import { useStore } from "vuex"
 
 const emits = defineEmits()
 
-const valuationDate = ref('Book date & time of valuation')
-const valuationLocation = ref('Enter location for your valuation')
+const store = useStore()
+
+const valuationDate = store.getters.getValuationDate
+const valuationTime = store.getters.getValuationTime
+const valuationLocation = store.getters.getValuationLocation
+const valuationStatus = store.getters.getValuationStatus
 
 const showValuationDateTimeModal = () => {
     emits('showValuationDateTimeModal')
