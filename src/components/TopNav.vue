@@ -5,7 +5,7 @@
                 <img class="py-2" src="@/assets/img/logo.png" height="60px" width="auto">
 
                 <div class="flex justify-content-betweeen gap-4 mx-auto">
-                    <div class="custom-bottom-border-1 pb-1">
+                    <div class="custom-bottom-border-1 pb-1" @click="navigate('/')">
                         <label class="font-bold text-sm">Home</label>
                     </div>
 

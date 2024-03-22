@@ -112,6 +112,10 @@ body {
     height: 20px;
 }
 
+/* .custom-dark-dropdown-1.p-dropdown .p-dropdown-label.p-placeholder {
+    color: #4A4A4A !important;
+} */
+
 .custom-yellow-dropdown .p-dropdown-trigger-icon {
     background-color: #FFC402;
     color: white;
@@ -337,8 +341,6 @@ body {
     position: relative;
 }
 
-
-
 .custom-light-gray-border {
     border-color: #ced4da;
 }
@@ -539,4 +541,8 @@ body {
 
 .custom-box-shadow {
     box-shadow: inset 0 0 0 2px #4A4A4A;
+}
+
+.custom-button-minus-18 {
+    bottom: -18px;
 }

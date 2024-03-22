@@ -204,9 +204,10 @@
 
 <script setup>
 import { ref, onMounted, defineProps, defineEmits } from 'vue'
-import useToastMessages from "@/composables/useToastMessages"
-
 import { useRouter } from 'vue-router'
+
+import useToastMessages from "@/composables/useToastMessages"
+import useDateFormatter from "@/composables/useDateFormatter"
 
 import quoteService from '@/services/quoteService.js'
 
@@ -221,6 +222,7 @@ const props = defineProps({
 })
 
 const { showSuccessToast, showErrorToast } = useToastMessages()
+const { format } = useDateFormatter()
 
 const quoteDetails = ref(null)
 const quotes = ref([])

@@ -1,6 +1,6 @@
 <template>
     <template v-if="quoteDetails != null">
-        <div class="relative bg-white border-round-top-3xl z-5" ref="bottomSummary">
+        <div class="relative bg-white border-round-top-3xl z-5 px-2 py-0" ref="bottomSummary">
             <template v-if="editDetails">
                 <div class="relative">
                     <div class="grid">
@@ -70,8 +70,8 @@
                 </div>
             </template>
 
-            <div class="custom-light-gray-bg-1 custom-dark-gray-border border-1 border-round-top-3xl p-3">
-                <div class="flex justify-content-between mb-3">
+            <div class="custom-light-gray-bg-1 custom-dark-gray-border border-1 border-round-top-3xl p-3 mt-2">
+                <div class="flex justify-content-between">
                     <div class="flex align-items-center">
                         <label class="text-sm font-bold px-1">
                             Showing quotes for:
@@ -100,17 +100,21 @@
                         </label>
                     </div>
 
-                    <div class="flex align-items-center bg-yellow-500 border-round-3xl gap-2 px-3 py-2"
-                        @click="editQuoteDetails()" v-if="!editDetails">
-                        <label class="text-sm font-bold">Edit</label>
-                        <i class="fas fa-arrow-circle-right"></i>
-                    </div>
+                    <template v-if="!editDetails">
+                        <div class="flex align-items-center bg-yellow-500 border-round-3xl gap-2 px-2 py-1"
+                            @click="editQuoteDetails()">
+                            <label class="text-sm font-bold">Edit</label>
+                            <i class="fas fa-arrow-circle-right"></i>
+                        </div>
+                    </template>
 
-                    <div class="flex align-items-center bg-yellow-500 border-round-3xl gap-2 px-3 py-2"
-                        @click="editQuoteDetails()" v-if="editDetails">
-                        <label class="text-sm font-bold">Update</label>
-                        <i class="fas fa-arrow-circle-right"></i>
-                    </div>
+                    <template v-else>
+                        <div class="flex align-items-center bg-yellow-500 border-round-3xl gap-2 px-2 py-1"
+                            @click="editQuoteDetails()">
+                            <label class="text-sm font-bold">Update</label>
+                            <i class="fas fa-arrow-circle-right"></i>
+                        </div>
+                    </template>
                 </div>
             </div>
         </div>
@@ -129,14 +133,19 @@ import { useStore } from "vuex"
 import debounce from 'lodash/debounce'
 
 import quoteService from '@/services/quoteService.js'
+import useToastMessages from "@/composables/useToastMessages"
+
 
 const store = useStore()
 const quoteDetails = store.getters.getQuoteDetails
 const selectedQuote = store.getters.getSelectedQuote
 
-const emits = defineEmits()
-
 const isLoading = ref(false)
+const opacity = ref(0.7)
+
+const { showSuccessToast, showErrorToast } = useToastMessages()
+
+const emits = defineEmits()
 
 const selectedMake = ref(null)
 const makes = ref([])
@@ -148,21 +157,30 @@ const models = ref([])
 const modelId = ref(null)
 const modelName = ref(null)
 
-const buttonBottom = ref(null)
 const editDetails = ref(false)
 
 const bottomSummary = ref(null)
 const bottomCardHeight = ref(0)
 
+const isInitialMakeLoad = ref(true)
+const isInitialModelLoad = ref(true)
 
 onMounted(() => {
-    if (bottomSummary.value) {
-        bottomCardHeight.value = bottomSummary.value.clientHeight
-        emits('calculatedCardHeight', bottomCardHeight.value)
-    }
+    bottomCardHeight.value = bottomSummary.value.clientHeight
+    emits('calculatedCardHeight', bottomCardHeight.value)
 
-    buttonBottom.value = '-17px'
+    if (quoteDetails != null) {
+        getSelectedMake()
+    }
 })
+
+const getSelectedMake = async () => {
+    await getMakes(quoteDetails.make)
+}
+
+const getSelectedModel = async () => {
+    await getModels(quoteDetails.model)
+}
 
 const editQuoteDetails = () => {
     if (editDetails.value) {
@@ -211,6 +229,15 @@ const getMakes = async (searchTerm) => {
 
             if (response.data.response_code == 200) {
                 makes.value = response.data.data
+
+                if (isInitialMakeLoad) {
+                    selectedMake.value = makes.value[0]
+                    makeId.value = selectedMake.value.id
+                    makeName.value = selectedMake.value.vehicle_name
+                    isInitialMakeLoad.value = false
+
+                    getSelectedModel()
+                }
             }
             else {
                 isLoading.value = false
@@ -218,7 +245,7 @@ const getMakes = async (searchTerm) => {
             }
         })
         .catch((error) => {
-            showErrorToast("Error", error.response.data)
+            showErrorToast("Error", error)
             isLoading.value = false
         })
 
@@ -262,6 +289,13 @@ const getModels = async (searchTerm) => {
 
             if (response.data.response_code == 200) {
                 models.value = response.data.data
+
+                if (isInitialModelLoad) {
+                    selectedModel.value = models.value[0]
+                    modelId.value = selectedModel.value.id
+                    modelName.value = selectedModel.vehicle_model
+                    isInitialModelLoad.value = false
+                }
             }
             else {
                 isLoading.value = false
@@ -269,7 +303,7 @@ const getModels = async (searchTerm) => {
             }
         })
         .catch((error) => {
-            showErrorToast("Error", error.response.data)
+            showErrorToast("Error", error)
             isLoading.value = false
         })
 

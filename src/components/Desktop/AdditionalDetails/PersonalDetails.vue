@@ -241,6 +241,7 @@ const submit = () => {
     data.quoteRef = quoteRef
 
     navigate("/vehicle-details")
+    store.commit("setPersonalDetails", data)
 
     // isLoading.value = true
 
