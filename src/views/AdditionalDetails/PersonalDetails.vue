@@ -341,6 +341,7 @@ const submit = () => {
       isLoading.value = false;
 
       if (response.data.response_code == 200) {
+        store.commit("setPersonalDetails", data);
         navigate("/vehicle-details");
       } else {
         isLoading.value = false;
