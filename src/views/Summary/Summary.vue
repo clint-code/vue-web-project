@@ -162,9 +162,9 @@
             <div class="grid">
                 <div class="lg:col-10 relative">
                     <div class="mb-4">
-                        <div class="mt-6">
+                        <div class="mt-3">
                             <div
-                                class="flex justify-content-between align-items-center custom-dark-gray-bg border-round-3xl gap-1 px-3 py-2 custom-w-5">
+                                class="flex justify-content-between align-items-center custom-dark-gray-bg border-round-3xl gap-1 px-3 py-2 custom-w-5" @click="navigate('/vehicle-details')">
                                 <i class="fas fa-angle-double-left text-white"></i>
                                 <label class="text-sm font-bold text-white justify-content-end">Back</label>
                             </div>
@@ -173,12 +173,15 @@
                             <div class="custom-bottom-border-1 w-2"></div>
                         </div>
 
-                        <div class="mt-6">
+                        <div class="mt-5">
                             <div class="w-full border-round-3xl bg-yellow-500 px-3 custom-py-10 custom-accordion-1"
                                 v-if="!summaryDetails" @click="toggleSummaryDetails()">
                                 <div class="flex justify-content-between">
                                     <label class="font-bold text-sm ">Lipa Full</label>
-                                    <label class="font-bold text-sm ">KES 127,427</label>
+
+                                    <template v-if="quoteSummary.LipaFullAmount">
+                                        <label class="font-bold text-sm ">KES {{ quoteSummary.LipaFullAmount.toLocaleString() }}</label>
+                                    </template>                                    
                                     <i class="fas fa-circle-chevron-down"></i>
                                 </div>
                             </div>
@@ -192,9 +195,11 @@
                                         <div @click="submit()"
                                             class="flex justify-content-between border-round-2xl bg-yellow-500 px-3 py-2 align-items-center">
                                             <label class="font-bold text-sm text-alpha-90">Pay Now</label>
-                                            <label class="font-bold text-sm text-alpha-90">KES 127,360</label>
-                                            <i
-                                                class="fas fa-circle-arrow-right text-black-alpha-90 text-sm text-alpha-90"></i>
+
+                                            <template v-if="quoteSummary.LipaFullAmount">
+                                                <label class="font-bold text-sm ">KES {{ quoteSummary.LipaFullAmount.toLocaleString() }}</label>
+                                            </template>      
+                                            <i class="fas fa-circle-arrow-right text-black-alpha-90 text-sm text-alpha-90"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -203,7 +208,9 @@
                                     @click="toggleSummaryDetails()">
                                     <div class="flex justify-content-between">
                                         <label class="font-bold text-sm ">Lipa Full</label>
-                                        <label class="font-bold text-sm ">KES 127,427</label>
+                                        <template v-if="quoteSummary.LipaFullAmount">
+                                            <label class="font-bold text-sm ">KES {{ quoteSummary.LipaFullAmount.toLocaleString() }}</label>
+                                        </template>     
                                         <i class="fas fa-circle-chevron-up"></i>
                                     </div>
                                 </div>
@@ -266,7 +273,9 @@
                                             <div @click="submit()"
                                                 class="flex justify-content-between border-round-2xl bg-yellow-500 px-3 py-2 align-items-center">
                                                 <label class="font-bold text-sm text-alpha-90">Pay Now</label>
-                                                <label class="font-bold text-sm text-alpha-90">KES 28,360</label>
+                                                <template v-if="quoteSummary.LipaPolePoleDeposit">
+                                                    <label class="text-xs font-bold text-right w-8">KES {{ quoteSummary.LipaPolePoleDeposit.toLocaleString() }}</label>
+                                                </template> 
                                                 <i
                                                     class="fas fa-circle-arrow-right text-black-alpha-90 text-sm text-alpha-90"></i>
                                             </div>
@@ -278,7 +287,9 @@
                                     @click="togglePaymentPlan()">
                                     <div class="flex justify-content-between">
                                         <label class="font-bold text-sm w-6">Lipa Pole Pole</label>
-                                        <label class="font-bold text-sm w-6">KES 25,432</label>
+                                        <template v-if="quoteSummary.LipaPolePoleDeposit">
+                                                    <label class="text-xs font-bold text-right w-8">KES {{ quoteSummary.LipaPolePoleDeposit.toLocaleString() }}</label>
+                                                </template> 
                                         <i class="fas fa-circle-chevron-up"></i>
                                     </div>
                                 </div>
@@ -296,17 +307,20 @@
 </template>
 
 <script setup>
+import { ref, onMounted } from 'vue'
+
 import TopNav from '@/components/TopNav.vue'
 import Footer from '@/components/Footer.vue'
 import QuoteDetails from '@/components/Quote/QuoteDetails.vue'
 import Steps from "@/components/Steps.vue"
 
-import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { useStore } from "vuex"
 
 import { installments } from '@/util/installments.js'
 
 const router = useRouter()
+const store = useStore()
 
 const step = ref("Summary")
 const level = ref(3)
@@ -319,9 +333,11 @@ const selectedInstallmentPeriod = ref(null)
 
 const summaryDetails = ref(true)
 const paymentPlan = ref(false)
+const quoteSummary = store.getters.getQuoteSummary
 
 onMounted(() => {
     installmentsArray.value = installments
+    console.log(store.getters.getQuoteSummary)
 })
 
 const toggleLipaFullDetails = () => {
@@ -344,8 +360,8 @@ const toggleLipaPolePoleDetails = () => {
     }
 }
 
-const submit = () => {
-    router.push("/payment")
+const navigate = (path) => {
+    router.push(path)
 }
 
 const toggleSummaryDetails = () => {

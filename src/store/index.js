@@ -6,6 +6,7 @@ const store = createStore({
         quoteDetails: null,
         selectedQuote: null,
         quoteRef: null,
+        quoteSummary: null,
         
         valuationLocationObject: null,
         valuationLocation: "Choose location",
@@ -31,6 +32,10 @@ const store = createStore({
 
         setQuoteRef(state, value) {
             state.quoteRef = value
+        },
+
+        setQuoteSummary(state, value) {
+            state.quoteSummary = value
         },
 
 
@@ -64,6 +69,7 @@ const store = createStore({
         getQuoteDetails: state => state.quoteDetails,
         getSelectedQuote: state => state.selectedQuote,
         getQuoteRef: state => state.quoteRef,
+        getQuoteSummary: state => state.quoteSummary,
 
         setValuationLocationObject: state => state.valuationLocationObject,
         getValuationLocation: state => state.valuationLocation,

@@ -14,7 +14,6 @@ export default function useToastMessages() {
 
   const showErrorToast = (summary, error) => {
     let content = ""
-    console.log(error)
 
     if (typeof error === "string") {
       content = error
@@ -25,8 +24,7 @@ export default function useToastMessages() {
       if (error.errors) {
         error.errors.forEach(error => {
           
-          content = error.message
-          console.log(content)
+          content = error.message + "- " + error.field
           showError(summary, content)
         })
       }
@@ -40,7 +38,17 @@ export default function useToastMessages() {
               showError(summary, content)
             })
           }
+          else if(error.response.data.message) {
+            content = error.response.data.message
+            showError(summary, content)
+          }
         }
+      }
+
+      else if(error.data) {        
+        if(error.data.data) {
+          showError(error.data.message, error.data.data.errorMessage)
+        }     
       }
 
       else {

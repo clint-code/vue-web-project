@@ -56,7 +56,7 @@
                                             <label class="text-sm font-medium">Choose Policy Start Date</label>
 
                                             <Calendar placeholder="Choose Date" dateFormat="dd/mm/yy"
-                                                v-model="coverStartDate"
+                                                v-model="coverStartDate" :minDate="minDate"
                                                 class="w-full custom-rounded-calendar custom-small-dropdown-1" showIcon
                                                 iconDisplay="input">
                                                 <template #inputicon="{ clickCallback }">
@@ -127,7 +127,7 @@
                 </div>
 
                 <div class="bottom-0 left-0 w-full absolute">
-                    <BottomSummaryDesktop @showOverlay="displayOverlay" @calculatedCardHeight="resetHeight" />
+                    <BottomSummaryDesktop @showOverlay="displayOverlay" @calculatedCardHeight="resetHeight" @reverifyVehicle="reverifyVehicle"/>
                 </div>
             </div>
 
@@ -232,6 +232,8 @@ const placesModal = ref(false)
 const searchTerm = ref(null)
 const bottomCardHeight = ref(null)
 const newSectionHeight = ref(null)
+
+const minDate = ref(new Date());
 
 onMounted(() => {
    //
@@ -393,6 +395,7 @@ const getQuoteSummary = () => {
     additionalDetailsService.getQuoteSummary(data)
         .then((response) => {
             if (response.data.response_code == 200) {
+                store.commit("setQuoteSummary", response.data.data)
                 navigate("/summary")
             }
             else {
@@ -407,6 +410,38 @@ const getQuoteSummary = () => {
 
 const navigate = (path) => {
     router.push(path)
+}
+
+const reverifyVehicle = () => {
+    if(registrationNumber.value != null) {
+        let data = {}
+
+        data.quoteRef = store.getters.getQuoteRef
+        data.make = store.getters.getQuoteDetails.make
+        data.model = store.getters.getQuoteDetails.model
+        data.registrationNo = registrationNumber.value
+
+        isLoading.value = true
+
+        additionalDetailsService.reverifyVehicle(data)
+            .then((response) => {
+                if (response.data.response_code == 200) {
+                    isLoading.value = false
+                    showSuccessToast("Success", "Vehicle verified successfully")
+                }
+                else {
+                    isLoading.value = false
+                    showErrorToast("Error", response)
+                }
+            })
+            .catch((error) => {
+                isLoading.value = false
+                showErrorToast("Error", error)
+            })
+    }
+    else {
+        showErrorToast("Error", "Please enter vehicle registration number.")
+    }    
 }
 
 </script>

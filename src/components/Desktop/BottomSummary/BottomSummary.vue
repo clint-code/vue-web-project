@@ -1,6 +1,6 @@
 <template>
     <template v-if="quoteDetails != null">
-        <div class="relative bg-white border-round-top-3xl z-5 px-2 py-0" ref="bottomSummary">
+        <div class="relative bg-white border-round-top-3xl z-5 py-0" ref="bottomSummary">
             <template v-if="editDetails">
                 <div class="relative">
                     <div class="grid">
@@ -11,7 +11,7 @@
 
                             <div class="grid mt-1">
                                 <div class="col-6">
-                                    <Dropdown v-model="selectedMake" :options="makes" filter :loading="makesLoader"
+                                    <Dropdown v-model="selectedMake" :options="makes" filter
                                         optionLabel="vehicle_name" placeholder="Make E.g BMW"
                                         filterPlaceholder="Search make" @filter="searchVehicleMakes"
                                         @change="changeVehicleMake"
@@ -19,7 +19,7 @@
                                 </div>
 
                                 <div class="col-6">
-                                    <Dropdown v-model="selectedModel" :options="models" filter :loading="modelsLoader"
+                                    <Dropdown v-model="selectedModel" :options="models" filter 
                                         optionLabel="vehicle_model" placeholder="Model E.g X3"
                                         filterPlaceholder="Search model" @filter="searchVehicleModels"
                                         @change="changeVehicleModel"
@@ -70,7 +70,7 @@
                 </div>
             </template>
 
-            <div class="custom-light-gray-bg-1 custom-dark-gray-border border-1 border-round-top-3xl p-3 mt-2">
+            <div class="custom-light-gray-bg-1 custom-dark-gray-border border-1 border-round-top-3xl p-3 w-full">
                 <div class="flex justify-content-between">
                     <div class="flex align-items-center">
                         <label class="text-sm font-bold px-1">
@@ -103,15 +103,15 @@
                     <template v-if="!editDetails">
                         <div class="flex align-items-center bg-yellow-500 border-round-3xl gap-2 px-2 py-1"
                             @click="editQuoteDetails()">
-                            <label class="text-sm font-bold">Edit</label>
+                            <label class="text-xs font-bold">Edit</label>
                             <i class="fas fa-arrow-circle-right"></i>
                         </div>
                     </template>
 
                     <template v-else>
                         <div class="flex align-items-center bg-yellow-500 border-round-3xl gap-2 px-2 py-1"
-                            @click="editQuoteDetails()">
-                            <label class="text-sm font-bold">Update</label>
+                            @click="updateQuote()">
+                            <label class="text-xs font-bold">Update</label>
                             <i class="fas fa-arrow-circle-right"></i>
                         </div>
                     </template>
@@ -145,7 +145,7 @@ const opacity = ref(0.7)
 
 const { showSuccessToast, showErrorToast } = useToastMessages()
 
-const emits = defineEmits()
+const emits = defineEmits(['showOverlay', 'calculatedCardHeight', 'reverifyVehicle'])
 
 const selectedMake = ref(null)
 const makes = ref([])
@@ -206,6 +206,10 @@ const changeVehicleMake = (value) => {
         makeId.value = null
         makeName.value = null
     }
+    let quoteDetails = store.getters.getQuoteDetails
+    quoteDetails.make = makeName.value 
+
+    store.commit("setQuoteDetails", quoteDetails);
 }
 
 const searchVehicleMakes = debounce(async (searchTerm) => {
@@ -230,7 +234,7 @@ const getMakes = async (searchTerm) => {
             if (response.data.response_code == 200) {
                 makes.value = response.data.data
 
-                if (isInitialMakeLoad) {
+                if (isInitialMakeLoad.value) {
                     selectedMake.value = makes.value[0]
                     makeId.value = selectedMake.value.id
                     makeName.value = selectedMake.value.vehicle_name
@@ -261,6 +265,11 @@ const changeVehicleModel = (value) => {
         modelId.value = null
         modelName.value = null
     }
+
+    let quoteDetails = store.getters.getQuoteDetails
+    quoteDetails.model = modelName.value 
+
+    store.commit("setQuoteDetails", quoteDetails);
 }
 
 const searchVehicleModels = debounce(async (searchTerm) => {
@@ -290,7 +299,7 @@ const getModels = async (searchTerm) => {
             if (response.data.response_code == 200) {
                 models.value = response.data.data
 
-                if (isInitialModelLoad) {
+                if (isInitialModelLoad.value) {
                     selectedModel.value = models.value[0]
                     modelId.value = selectedModel.value.id
                     modelName.value = selectedModel.vehicle_model
@@ -308,5 +317,9 @@ const getModels = async (searchTerm) => {
         })
 
     return vehicleModels
+}
+
+const updateQuote = () => {
+    emits('reverifyVehicle')
 }
 </script>

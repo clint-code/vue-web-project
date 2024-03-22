@@ -28,7 +28,7 @@
                 <img :src="quote.UnderwriterIcon" height="20px" width="auto" />
 
                 <div
-                  class="border-round-2xl bg-yellow-500 border-yellow-500 text-black-alpha-90 font-bold p-2 text-sm"
+                  class="border-round-2xl bg-yellow-500 border-yellow-500 text-black-alpha-90 font-bold px-2 py-1 text-xs"
                   size="small"
                   @click="buyQuote(quote)"
                 >
