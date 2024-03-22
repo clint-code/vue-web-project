@@ -184,29 +184,27 @@ onMounted(() => {
 const acceptTerms = () => {
   let data = {};
 
-  data.quoteRef = quoteRef;
+  data.quoteRef = store.getters.getQuoteRef;
   data.tscAccepted = 1;
-  data.underwriter = selectedQuote.underwriterName;
+  data.underwriter = store.getters.getSelectedQuote.underwriterName;
 
-  // isLoading.value = true;
+  isLoading.value = true;
 
-  // quoteService
-  //   .selectQuoteUnderwriter(data)
-  //   .then((response) => {
-  //     isLoading.value = false;
+  quoteService
+    .selectQuoteUnderwriter(data)
+    .then((response) => {
+      isLoading.value = false;
 
-  //     if (response.data.response_code == 200) {
-  //       navigate("/personal-details");
-  //     } else {
-  //       showErrorToast("Error", response.data.message);
-  //     }
-  //   })
-  //   .catch((error) => {
-  //     isLoading.value = false;
-  //     showErrorToast("Error", error);
-  //   });
-
-  navigate("/personal-details")
+      if (response.data.response_code == 200) {
+        navigate("/personal-details");
+      } else {
+        showErrorToast("Error", response.data.message);
+      }
+    })
+    .catch((error) => {
+      isLoading.value = false;
+      showErrorToast("Error", error);
+    })
 };
 
 const navigate = (path) => {

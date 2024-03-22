@@ -2,6 +2,7 @@ import { createStore } from "vuex";
 
 const store = createStore({
     state: {
+        quotes: null,
         quoteDetails: null,
         selectedQuote: null,
         quoteRef: null,
@@ -16,6 +17,10 @@ const store = createStore({
     },
 
     mutations: {
+        setQuotes(state, value) {
+            state.quotes = value
+        },
+
         setQuoteDetails(state, value) {
             state.quoteDetails = value
         },
@@ -55,6 +60,7 @@ const store = createStore({
     },
 
     getters: {
+        getQuotes: state => state.quotes,
         getQuoteDetails: state => state.quoteDetails,
         getSelectedQuote: state => state.selectedQuote,
         getQuoteRef: state => state.quoteRef,

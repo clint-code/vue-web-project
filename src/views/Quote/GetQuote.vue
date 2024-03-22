@@ -5,63 +5,37 @@
     <div class="custom-mobile-view">
       <div class="bg-yellow-500 relative p-3" id="section">
         <div class="flex justify-content-center">
-          <label class="font-bold text-center text-sm"
-            >Motor Car - Fill in the details below to get a quote:
+          <label class="font-bold text-center text-sm">Motor Car - Fill in the details below to get a quote:
           </label>
         </div>
 
         <div class="grid mt-2">
           <div class="col-6">
-            <Dropdown
-              v-model="selectedInsuranceClass"
-              :options="insuranceClasses"
-              optionLabel="name"
-              optionValue="value"
-              placeholder="Insurance Class"
-              @change="changeInsuranceClass()"
-              class="w-full border-round-3xl custom-dark-dropdown custom-small-dropdown shadow-1"
-            />
+            <Dropdown v-model="selectedInsuranceClass" :options="insuranceClasses" optionLabel="name"
+              optionValue="value" placeholder="Insurance Class" @change="changeInsuranceClass()"
+              class="w-full border-round-3xl custom-dark-dropdown custom-small-dropdown shadow-1" />
           </div>
 
           <div class="col-6">
-            <Dropdown
-              v-model="selectedInsuranceType"
-              :options="insuranceTypes"
-              optionLabel="name"
-              optionValue="name"
+            <Dropdown v-model="selectedInsuranceType" :options="insuranceTypes" optionLabel="name" optionValue="name"
               placeholder="Insurance Type"
-              class="w-full border-round-3xl custom-dark-dropdown shadow-1 custom-small-dropdown"
-            />
+              class="w-full border-round-3xl custom-dark-dropdown shadow-1 custom-small-dropdown" />
           </div>
         </div>
 
         <div class="grid mt-2">
           <div class="col-6">
-            <Dropdown
-              v-model="selectedCoverDuration"
-              :options="coverDurations"
-              optionLabel="name"
+            <Dropdown v-model="selectedCoverDuration" :options="coverDurations" optionLabel="name"
               placeholder="Cover Duration"
-              class="w-full border-round-3xl custom-dark-dropdown custom-small-dropdown shadow-1"
-            />
+              class="w-full border-round-3xl custom-dark-dropdown custom-small-dropdown shadow-1" />
           </div>
 
           <div class="col-6">
-            <Calendar
-              v-model="yom"
-              placeholder="Year of Manufacture"
-              class="w-full custom-rounded-calendar custom-small-dropdown"
-              showIcon
-              iconDisplay="input"
-              dateFormat="yy"
-              view="year"
-              :maxDate="maxDate"
-            >
+            <Calendar v-model="yom" placeholder="Year of Manufacture"
+              class="w-full custom-rounded-calendar custom-small-dropdown" showIcon iconDisplay="input" dateFormat="yy"
+              view="year" :maxDate="maxDate">
               <template #inputicon="{ clickCallback }">
-                <i
-                  class="fas fa-calendar-days text-black-alpha-90 text-sm"
-                  @click="clickCallback"
-                ></i>
+                <i class="fas fa-calendar-days text-black-alpha-90 text-sm" @click="clickCallback"></i>
               </template>
             </Calendar>
           </div>
@@ -69,33 +43,17 @@
 
         <div class="grid mt-2">
           <div class="col-6">
-            <Dropdown
-              v-model="selectedMake"
-              :options="makes"
-              optionLabel="vehicle_name"
-              filter
-              :loading="makesLoader"
-              placeholder="Make E.g BMW"
-              filterPlaceholder="Search make"
-              @filter="searchVehicleMakes"
+            <Dropdown v-model="selectedMake" :options="makes" optionLabel="vehicle_name" filter :loading="makesLoader"
+              placeholder="Make E.g BMW" filterPlaceholder="Search make" @filter="searchVehicleMakes"
               @change="changeVehicleMake"
-              class="w-full border-round-3xl custom-dark-dropdown custom-small-dropdown shadow-1"
-            />
+              class="w-full border-round-3xl custom-dark-dropdown custom-small-dropdown shadow-1" />
           </div>
 
           <div class="col-6">
-            <Dropdown
-              v-model="selectedModel"
-              :options="models"
-              filter
-              :loading="modelsLoader"
-              optionLabel="vehicle_model"
-              placeholder="Model E.g X3"
-              filterPlaceholder="Search model"
-              @filter="searchVehicleModels"
-              @change="changeVehicleModel"
-              class="w-full border-round-3xl custom-dark-dropdown shadow-1 custom-small-dropdown"
-            />
+            <Dropdown v-model="selectedModel" :options="models" filter :loading="modelsLoader"
+              optionLabel="vehicle_model" placeholder="Model E.g X3" filterPlaceholder="Search model"
+              @filter="searchVehicleModels" @change="changeVehicleModel"
+              class="w-full border-round-3xl custom-dark-dropdown shadow-1 custom-small-dropdown" />
           </div>
         </div>
 
@@ -106,29 +64,18 @@
                 <InputGroup class="custom-amount-input">
                   <InputGroupAddon class="border-round-3xl p-1">
                     <div class="bg-yellow-500 border-round-xl flex">
-                      <label
-                        class="text-xs font-bold text-black-alpha-90 px-2 py-1"
-                        >KES</label
-                      >
+                      <label class="text-xs font-bold text-black-alpha-90 px-2 py-1">KES</label>
                     </div>
                   </InputGroupAddon>
-                  <InputText
-                    class="border-round-3xl"
-                    placeholder="Estimate value"
-                    v-model="estimatedValue"
-                  />
+                  <InputText class="border-round-3xl" placeholder="Estimate value" v-model="estimatedValue" />
                 </InputGroup>
               </div>
 
               <div class="col-6">
-                <div
-                  class="w-full border-round-2xl bg-black-alpha-90 border-1 border-black-alpha-90 p-2"
-                  @click="getQuote()"
-                >
+                <div class="w-full border-round-2xl bg-black-alpha-90 border-1 border-black-alpha-90 p-2"
+                  @click="getQuote()">
                   <div class="flex justify-content-between align-items-center">
-                    <label class="text-xs text-white font-bold"
-                      >View Quote</label
-                    >
+                    <label class="text-xs text-white font-bold">View Quote</label>
                     <i class="fas fa-circle-arrow-right text-white text-xs"></i>
                   </div>
                 </div>
@@ -139,45 +86,29 @@
           <template v-if="selectedInsuranceClass == 'COMMERCIAL'">
             <div class="grid mt-2">
               <div class="col-6">
-                <Dropdown
-                  v-model="selectedVehicleTonnage"
-                  :options="vehicleTonnage"
-                  optionLabel="name"
+                <Dropdown v-model="selectedVehicleTonnage" :options="vehicleTonnage" optionLabel="name"
                   placeholder="Vehicle Tonnage"
-                  class="w-full border-round-3xl custom-dark-dropdown custom-small-dropdown shadow-1"
-                />
+                  class="w-full border-round-3xl custom-dark-dropdown custom-small-dropdown shadow-1" />
               </div>
 
               <div class="col-6">
-                <Dropdown
-                  v-model="selectedPassengers"
-                  :options="passengers"
-                  optionLabel="name"
+                <Dropdown v-model="selectedPassengers" :options="passengers" optionLabel="name"
                   placeholder="No. of passengers"
-                  class="w-full border-round-3xl custom-dark-dropdown custom-small-dropdown shadow-1"
-                />
+                  class="w-full border-round-3xl custom-dark-dropdown custom-small-dropdown shadow-1" />
               </div>
             </div>
 
             <div class="grid mt-2">
               <div class="col-6">
-                <Dropdown
-                  v-model="selectedPersonCovered"
-                  :options="personsCovered"
-                  optionLabel="name"
+                <Dropdown v-model="selectedPersonCovered" :options="personsCovered" optionLabel="name"
                   placeholder="Person Covered"
-                  class="w-full border-round-3xl custom-dark-dropdown custom-small-dropdown shadow-1"
-                />
+                  class="w-full border-round-3xl custom-dark-dropdown custom-small-dropdown shadow-1" />
               </div>
 
               <div class="col-6">
-                <Dropdown
-                  v-model="selectedVehicleUse"
-                  :options="vehicleUses"
-                  optionLabel="name"
+                <Dropdown v-model="selectedVehicleUse" :options="vehicleUses" optionLabel="name"
                   placeholder="Vehicle Use"
-                  class="w-full border-round-3xl custom-dark-dropdown custom-small-dropdown shadow-1"
-                />
+                  class="w-full border-round-3xl custom-dark-dropdown custom-small-dropdown shadow-1" />
               </div>
             </div>
 
@@ -186,29 +117,18 @@
                 <InputGroup class="custom-amount-input">
                   <InputGroupAddon class="border-round-3xl p-1">
                     <div class="bg-yellow-500 border-round-xl flex">
-                      <label
-                        class="text-xs font-bold text-black-alpha-90 px-2 py-1"
-                        >KES</label
-                      >
+                      <label class="text-xs font-bold text-black-alpha-90 px-2 py-1">KES</label>
                     </div>
                   </InputGroupAddon>
-                  <InputText
-                    class="border-round-3xl"
-                    placeholder="Estimate value"
-                    v-model="estimatedValue"
-                  />
+                  <InputText class="border-round-3xl" placeholder="Estimate value" v-model="estimatedValue" />
                 </InputGroup>
               </div>
 
               <div class="col-6">
-                <div
-                  class="w-full border-round-2xl bg-black-alpha-90 border-1 border-black-alpha-90 p-2"
-                  @click="getQuote()"
-                >
+                <div class="w-full border-round-2xl bg-black-alpha-90 border-1 border-black-alpha-90 p-2"
+                  @click="getQuote()">
                   <div class="flex justify-content-between align-items-center">
-                    <label class="text-xs text-white font-bold"
-                      >View Quote</label
-                    >
+                    <label class="text-xs text-white font-bold">View Quote</label>
                     <i class="fas fa-circle-arrow-right text-white text-xs"></i>
                   </div>
                 </div>
@@ -219,66 +139,43 @@
           <template v-if="selectedInsuranceClass == 'PSV'">
             <div class="grid mt-2">
               <div class="col-6">
-                <Dropdown
-                  v-model="selectedPersonCovered"
-                  :options="personsCovered"
-                  optionLabel="name"
+                <Dropdown v-model="selectedPersonCovered" :options="personsCovered" optionLabel="name"
                   placeholder="Person Covered"
-                  class="w-full border-round-3xl custom-dark-dropdown custom-small-dropdown shadow-1"
-                />
+                  class="w-full border-round-3xl custom-dark-dropdown custom-small-dropdown shadow-1" />
               </div>
 
               <div class="col-6">
-                <Dropdown
-                  v-model="selectedPassengers"
-                  :options="passengers"
-                  optionLabel="name"
+                <Dropdown v-model="selectedPassengers" :options="passengers" optionLabel="name"
                   placeholder="No. of passengers"
-                  class="w-full border-round-3xl custom-dark-dropdown custom-small-dropdown shadow-1"
-                />
+                  class="w-full border-round-3xl custom-dark-dropdown custom-small-dropdown shadow-1" />
               </div>
             </div>
 
             <div class="grid mt-2">
               <div class="col-6">
-                <Dropdown
-                  v-model="selectedVehicleTonnage"
-                  :options="vehicleTonnage"
-                  optionLabel="name"
+                <Dropdown v-model="selectedVehicleTonnage" :options="vehicleTonnage" optionLabel="name"
                   placeholder="Vehicle Tonnage"
-                  class="w-full border-round-3xl custom-dark-dropdown custom-small-dropdown shadow-1"
-                />
+                  class="w-full border-round-3xl custom-dark-dropdown custom-small-dropdown shadow-1" />
               </div>
 
               <div class="col-6">
                 <InputGroup class="custom-amount-input">
                   <InputGroupAddon class="border-round-3xl p-1">
                     <div class="bg-yellow-500 border-round-xl flex">
-                      <label
-                        class="text-xs font-bold text-black-alpha-90 px-2 py-1"
-                        >KES</label
-                      >
+                      <label class="text-xs font-bold text-black-alpha-90 px-2 py-1">KES</label>
                     </div>
                   </InputGroupAddon>
-                  <InputText
-                    class="border-round-3xl"
-                    placeholder="Estimate value"
-                    v-model="estimatedValue"
-                  />
+                  <InputText class="border-round-3xl" placeholder="Estimate value" v-model="estimatedValue" />
                 </InputGroup>
               </div>
             </div>
 
             <div class="grid mt-2">
               <div class="col-12">
-                <div
-                  class="w-full border-round-2xl bg-black-alpha-90 border-1 border-black-alpha-90 p-2"
-                  @click="getQuote()"
-                >
+                <div class="w-full border-round-2xl bg-black-alpha-90 border-1 border-black-alpha-90 p-2"
+                  @click="getQuote()">
                   <div class="flex justify-content-between align-items-center">
-                    <label class="text-xs text-white font-bold"
-                      >View Quote</label
-                    >
+                    <label class="text-xs text-white font-bold">View Quote</label>
                     <i class="fas fa-circle-arrow-right text-white text-xs"></i>
                   </div>
                 </div>
@@ -287,10 +184,7 @@
           </template>
         </div>
 
-        <img
-          class="custom-bottom-image-alt z-1"
-          src="@/assets/img/bg-city-yellow.png"
-        />
+        <img class="custom-bottom-image-alt z-1" src="@/assets/img/bg-city-yellow.png" />
       </div>
 
       <div class="p-3">
@@ -376,13 +270,7 @@
     </div>
   </div>
 
-  <loading
-    v-model:active="isLoading"
-    :is-full-page="fullPage"
-    color="#FFC402"
-    loader="dots"
-    :opacity="opacity"
-  />
+  <loading v-model:active="isLoading" :is-full-page="fullPage" color="#FFC402" loader="dots" :opacity="opacity" />
   <Toast />
 </template>
 
@@ -627,7 +515,7 @@ const getData = () => {
   data.coverDuration = selectedCoverDuration.value?.value || null;
   data.vehicleUse = selectedVehicleUse.value?.name || null;
   data.tonnage = selectedVehicleTonnage.value?.value || null;
-  data.passengers = selectedPassengers.value?.value || null;
+  data.passangers = selectedPassengers.value?.value || null;
   data.productPolicyId = 0;
 
   if (selectedInsuranceClass.value == "PRIVATE") {
@@ -644,8 +532,6 @@ const getQuote = () => {
 
   const clientData = getData();
 
-  console.log(clientData);
-
   store.commit("setQuoteDetails", clientData);
 
   quoteService
@@ -661,12 +547,12 @@ const getQuote = () => {
         }));
 
         store.commit("setQuotes", quotes);
-        //store.commit("setQuoteRef", response.data.data.quoteRef);
-        console.log(quotes);
+        store.commit("setQuoteRef", response.data.data.quoteRef);
+
         router.push("/quote");
       } else {
         showErrorToast("Error", response.data.message);
-        console.log(response.data.message);
+
       }
     })
     .catch((error) => {

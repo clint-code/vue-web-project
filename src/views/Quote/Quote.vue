@@ -300,6 +300,8 @@ const { showErrorToast } = useToastMessages();
 const isLoading = ref(false);
 
 onMounted(() => {
+  console.log(store.getters.getQuoteRef)
+
   var button = document.getElementById("benefitsButton");
   var butHeight = button.offsetHeight;
   var halvedButton = butHeight / 2;
@@ -428,7 +430,6 @@ const addOrRemoveBenefit = (data) => {
 
 const buyQuote = (quote) => {
   store.commit("setSelectedQuote", quote);
-  console.log(quote);
   router.push("/accept-terms");
 };
 </script>

@@ -315,10 +315,12 @@ const submit = () => {
     .createCustomer(data)
     .then((response) => {
       isLoading.value = false;
+      store.commit("setPersonalDetails", data);
 
       if (response.data.response_code == 200) {
         navigate("/vehicle-details");
-      } else {
+      } 
+      else {
         isLoading.value = false;
         showErrorToast("Error", response.data);
       }
