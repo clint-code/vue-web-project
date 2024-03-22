@@ -428,6 +428,7 @@ const addOrRemoveBenefit = (data) => {
 
 const buyQuote = (quote) => {
   store.commit("setSelectedQuote", quote);
+  console.log(quote);
   router.push("/accept-terms");
 };
 </script>

@@ -16,7 +16,7 @@
               v-model="selectedInsuranceClass"
               :options="insuranceClasses"
               optionLabel="name"
-              optionValue="name"
+              optionValue="value"
               placeholder="Insurance Class"
               @change="changeInsuranceClass()"
               class="w-full border-round-3xl custom-dark-dropdown custom-small-dropdown shadow-1"
@@ -100,7 +100,7 @@
         </div>
 
         <div class="custom-mb-60 z-2">
-          <template v-if="selectedInsuranceClass == 'Private'">
+          <template v-if="selectedInsuranceClass == 'PRIVATE'">
             <div class="grid mt-2">
               <div class="col-6">
                 <InputGroup class="custom-amount-input">
@@ -136,7 +136,7 @@
             </div>
           </template>
 
-          <template v-if="selectedInsuranceClass == 'Commercial'">
+          <template v-if="selectedInsuranceClass == 'COMMERCIAL'">
             <div class="grid mt-2">
               <div class="col-6">
                 <Dropdown
@@ -419,7 +419,7 @@ const coverDurations = ref([
   },
 ]);
 
-const selectedInsuranceClass = ref("PRIVATE");
+const selectedInsuranceClass = ref();
 const insuranceClasses = ref([
   {
     name: "Private",
@@ -630,7 +630,7 @@ const getData = () => {
   data.passengers = selectedPassengers.value?.value || null;
   data.productPolicyId = 0;
 
-  if (selectedInsuranceClass.value == "Private") {
+  if (selectedInsuranceClass.value == "PRIVATE") {
     data.customerType = "Individual";
   } else {
     data.customerType = selectedPersonCovered.value?.name || null;
@@ -661,7 +661,7 @@ const getQuote = () => {
         }));
 
         store.commit("setQuotes", quotes);
-        store.commit("setQuoteRef", response.data.data.quoteRef);
+        //store.commit("setQuoteRef", response.data.data.quoteRef);
         console.log(quotes);
         router.push("/quote");
       } else {
