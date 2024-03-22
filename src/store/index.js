@@ -1,4 +1,4 @@
-import { createStore } from "vuex"
+import { createStore } from "vuex";
 
 const store = createStore({
     state: {
@@ -68,5 +68,18 @@ const store = createStore({
         getPersonalDetails: state => state.personalDetails
     }
 })
+
+    setQuotes(state, value) {
+      state.quotes = value;
+    },
+  },
+
+  getters: {
+    getQuoteDetails: (state) => state.quoteDetails,
+    getSelectedQuote: (state) => state.selectedQuote,
+    getQuoteRef: (state) => state.quoteRef,
+    getQuotes: (state) => state.quotes,
+  },
+});
 
 export default store;
