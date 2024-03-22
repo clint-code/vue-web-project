@@ -19,5 +19,9 @@ export default {
 
     getQuoteSummary(data) {
         return apim().post('/getQuoteSummary', data)
+    },
+
+    reverifyVehicle (data) {
+        return apim().post('/reverifyVehicle', data)
     }
 }

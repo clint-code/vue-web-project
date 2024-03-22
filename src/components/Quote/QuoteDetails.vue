@@ -1,102 +1,96 @@
 <template>
-    <div>
+    <template v-if="quoteDetails != null">
         <div class="flex justify-content-between mt-3 custom-gray-border-bottom py-2 mb-2">
-            <label class="text-xs w-6">Policy/Reference Number</label>
-            <label class="text-xs font-bold text-right w-6">018337678437515</label>
+            <label class="text-xs w-6">Quote Reference</label>
+            <label class="text-xs font-bold text-right w-6">{{ quoteDetails.quoteRef }}</label>
         </div>
 
         <div class="flex justify-content-between custom-gray-border-bottom py-2 mb-2">
             <label class="text-xs w-4">Insurance Class</label>
-            <label class="text-xs font-bold text-right w-8">Motor Private Comprehensive</label>
+            <label class="text-xs font-bold text-right w-8">{{ quoteDetails.insuranceType }}</label>
         </div>
 
         <div class="flex justify-content-between custom-gray-border-bottom py-2 mb-2">
             <label class="text-xs w-4">Insurance Type</label>
-            <label class="text-xs font-bold text-right w-8">Saloon</label>
+            <label class="text-xs font-bold text-right w-8">{{ quoteDetails.insuranceClass }}</label>
         </div>
 
         <div class="flex justify-content-between custom-gray-border-bottom py-2 mb-2">
             <label class="text-xs w-4">Sum Insured</label>
-            <label class="text-xs font-bold text-right w-8">KES 1,500,000</label>
+            <label class="text-xs font-bold text-right w-8">KES {{ quoteDetails.sumInsured }}</label>
         </div>
 
         <div class="flex justify-content-between custom-gray-border-bottom py-2 mb-2">
             <label class="text-xs w-4">Make and Model</label>
-            <label class="text-xs font-bold text-right w-8">Toyota Corolla</label>
+            <label class="text-xs font-bold text-right w-8">{{ quoteDetails.make }} {{ quoteDetails.model }}</label>
         </div>
 
         <div class="flex justify-content-between custom-gray-border-bottom py-2 mb-2">
             <label class="text-xs w-4">Registration No.</label>
-            <label class="text-xs font-bold text-right w-8">KBU617A</label>
+            <label class="text-xs font-bold text-right w-8">{{ quoteDetails.vehicleRegistrationNo }}</label>
         </div>
 
         <div class="flex justify-content-between custom-gray-border-bottom py-2 mb-2">
             <label class="text-xs w-4">Policy Underwriter</label>
-            <label class="text-xs font-bold text-right w-8">Madison Insurance</label>
+            <label class="text-xs font-bold text-right w-8">{{ quoteDetails.underwriterName }}</label>
         </div>
 
         <div class="flex justify-content-between custom-gray-border-bottom py-2 mb-2">
             <label class="text-xs w-4">Cover Start Date</label>
-            <label class="text-xs font-bold text-right w-8">June 16th 2024</label>
+            <label class="text-xs font-bold text-right w-8">{{ quoteDetails.coverStartDate }}</label>
         </div>
 
         <div class="flex justify-content-between custom-gray-border-bottom py-2 mb-2">
             <label class="text-xs w-4">Cover End Date</label>
-            <label class="text-xs font-bold text-right w-8">June 15th 2024</label>
+            <label class="text-xs font-bold text-right w-8">{{ quoteDetails.coverEndDate }}</label>
         </div>
 
         <div class="flex justify-content-between custom-gray-border-bottom py-2 mb-2">
             <label class="text-xs w-4">Base Premium</label>
-            <label class="text-xs font-bold text-right w-8">KES 120,000</label>
+            <template v-if="quoteDetails.BasicPremium">
+                <label class="text-xs font-bold text-right w-8">KES {{ quoteDetails.BasicPremium.toLocaleString() }}</label>
+            </template>            
         </div>
 
-        <div class="flex justify-content-between custom-gray-border-bottom py-2 mb-2">
-            <label class="text-xs w-4">Valuation Services</label>
-            <label class="text-xs font-bold text-right w-8">KES 580</label>
-        </div>
-
-        <div class="flex justify-content-between custom-gray-border-bottom py-2 mb-2">
-            <label class="text-xs w-4">Training Levy</label>
-            <label class="text-xs font-bold text-right w-8">KES 100</label>
-        </div>
-
-        <div class="flex justify-content-between custom-gray-border-bottom py-2 mb-2">
-            <label class="text-xs w-4">PHCF</label>
-            <label class="text-xs font-bold text-right w-8">KES 125</label>
-        </div>
-
-        <div class="flex justify-content-between custom-gray-border-bottom py-2 mb-2">
-            <label class="text-xs w-4">Stamp Duty</label>
-            <label class="text-xs font-bold text-right w-8">KES 40</label>
-        </div>
-
-        <div class="flex justify-content-between custom-gray-border-bottom py-2 mb-2">
-            <label class="text-xs w-4">Transaction Fee</label>
-            <label class="text-xs font-bold text-right w-8">KES 582</label>
-        </div>
-    </div>
+        <div v-for="(charge, index) in quoteDetails.taxesAndCharges">
+            <div class="flex justify-content-between custom-gray-border-bottom py-2 mb-2">
+                <label class="text-xs w-4">{{ charge.name }}</label>
+                <template v-if="quoteDetails.BasicPremium">
+                    <label class="text-xs font-bold text-right w-8">KES {{ charge.amount.toLocaleString() }}</label>
+                </template> 
+            </div>
+        </div>  
+    </template>
     
     <template v-if="props.quoteType == 'Lipa Full'">
         <div class="flex justify-content-between custom-gray-border-bottom py-2 mb-2">
             <label class="text-xs w-4">Total Premium </label>
-            <label class="text-xs font-bold text-right w-8">KES 127,427</label>
+            <template v-if="quoteDetails.LipaFullAmount">
+                <label class="text-xs font-bold text-right w-8">KES {{ quoteDetails.LipaFullAmount.toLocaleString() }}</label>
+            </template> 
         </div>
     </template>
 
     <template v-if="props.quoteType == 'Lipa Pole Pole'">
         <div class="flex justify-content-between custom-gray-border-bottom py-2 mb-2">
             <label class="text-xs w-4">Total Amount Payable </label>
-            <label class="text-xs font-bold text-right w-8">KES 127,427</label>
+            <template v-if="quoteDetails.LipaFullAmount">
+                <label class="text-xs font-bold text-right w-8">KES {{ quoteDetails.LipaFullAmount.toLocaleString() }}</label>
+            </template> 
         </div>
 
         <div class="flex justify-content-between custom-gray-border-bottom py-2 mb-2">
             <label class="text-xs w-4">Deposit Amount Due</label>
-            <label class="text-xs font-bold text-right w-8">KES 28,360</label>
+            <template v-if="quoteDetails.LipaPolePoleDeposit">
+                <label class="text-xs font-bold text-right w-8">KES {{ quoteDetails.LipaPolePoleDeposit.toLocaleString() }}</label>
+            </template> 
         </div>
 
         <div class="flex justify-content-between custom-gray-border-bottom py-2 mb-2">
             <label class="text-xs w-4">Monthly Installmenents</label>
-            <label class="text-xs font-bold text-right w-8">KES 3,712</label>
+            <template v-if="quoteDetails.LipaPolePoleInstallment">
+                <label class="text-xs font-bold text-right w-8">KES {{ quoteDetails.LipaPolePoleInstallment.toLocaleString() }}</label>
+            </template> 
         </div>
 
         <div class="flex justify-content-between custom-gray-border-bottom py-2 mb-2">
@@ -108,9 +102,13 @@
 
 <script setup>
 import { ref, onMounted, defineProps } from 'vue'
+import { useStore } from "vuex"
 
+const store = useStore()
 const props = defineProps({
     quoteType: String,
     quoteState: String
 });
+
+const quoteDetails = store.getters.getQuoteSummary
 </script>
