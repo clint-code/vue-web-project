@@ -56,9 +56,11 @@
 import { ref, onMounted, defineEmits } from "vue";
 import { times } from "@/util/times.js";
 import { useStore } from "vuex";
+import useDateFormatter from "@/composables/useDateFormatter";
 
 import useToastMessages from "@/composables/useToastMessages";
 const { showSuccessToast, showErrorToast } = useToastMessages();
+const { format } = useDateFormatter();
 
 const emits = defineEmits();
 
@@ -84,7 +86,9 @@ const showPlacesModal = () => {
         ? valuationDate.value.toLocaleDateString()
         : valuationDate.value;
 
-    store.commit("setValuationDate", formattedDate);
+    console.log(formattedDate);
+
+    store.commit("setValuationDate", format(valuationDate.value));
     store.commit("setValuationTime", valuationTime.value);
     store.commit("setValuationStatus", true);
 
@@ -96,6 +100,8 @@ const showPlacesModal = () => {
 
 const changeDate = () => {
   emits("changeValuationDate", valuationDate.value.toLocaleDateString());
+  console.log(valuationDate.value.toLocaleDateString());
+  console.log("Formatted Date: ", format(valuationDate.value));
 };
 
 const changeTime = () => {

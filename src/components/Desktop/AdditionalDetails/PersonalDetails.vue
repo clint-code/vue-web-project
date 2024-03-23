@@ -84,6 +84,7 @@
                     class="text-sm border-round-3xl"
                     placeholder="PIN number"
                     readonly
+                    disabled
                   />
                 </div>
               </div>

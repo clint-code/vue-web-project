@@ -17,7 +17,7 @@
 
         <div class="flex justify-content-between custom-gray-border-bottom py-2 mb-2">
             <label class="text-xs w-4">Sum Insured</label>
-            <label class="text-xs font-bold text-right w-8">KES {{ quoteDetails.sumInsured }}</label>
+            <label class="text-xs font-bold text-right w-8">KES {{ quoteDetails.transFormedSumInsured }}</label>
         </div>
 
         <div class="flex justify-content-between custom-gray-border-bottom py-2 mb-2">

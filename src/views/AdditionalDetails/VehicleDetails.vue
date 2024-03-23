@@ -176,6 +176,7 @@
       <BottomSummaryMobile
         @showOverlay="displayOverlay"
         :details="store.getters.getQuoteDetails"
+        @reverifyVehicle="reverifyVehicle"
       />
     </div>
   </div>
@@ -592,15 +593,9 @@ const setValuationLocation = () => {
   valuationLocation.value = searchTerm.value;
 };
 
-const setValuationLocationFromModal = (value) => {
-  placesModal.value = false;
-  valuationLocation.value = value;
-  valuationStatus.value = true;
-};
 
 const submit = () => {
   verifyVehicle();
-  router.push("/summary");
 };
 
 const verifyVehicle = () => {
@@ -650,6 +645,7 @@ const postValuation = () => {
         store.commit("setValuationLocation", valuationLocation.value);
         store.commit("setValuationDate", valuationDate.value);
         store.commit("setValuationTime", valuationTime.value.name);
+        store.commit("setValuationStatus", true);
       } else {
         isLoading.value = false;
         showErrorToast("Error", response);
@@ -676,8 +672,9 @@ const getQuoteSummary = () => {
     .getQuoteSummary(data)
     .then((response) => {
       if (response.data.response_code == 200) {
+        store.commit("setQuoteSummary", response.data.data);
         navigate("/summary");
-        console.log("Passed");
+        console.log(response.data.data);
       } else {
         isLoading.value = false;
         showErrorToast("Error", response);
@@ -688,25 +685,40 @@ const getQuoteSummary = () => {
     });
 };
 
-const changeValuationDate = (value) => {
-  valuationDate.value = value;
-  valuationStatus.value = true;
+const navigate = (path) => {
+  router.push(path);
 };
 
-const changeValuationTime = (value) => {
-  valuationTime.value = value;
-  valuationStatus.value = true;
+const reverifyVehicle = () => {
+  if (registrationNumber.value != null) {
+    let data = {};
+
+    data.quoteRef = store.getters.getQuoteRef;
+    data.make = store.getters.getQuoteDetails.make;
+    data.model = store.getters.getQuoteDetails.model;
+    data.registrationNo = registrationNumber.value;
+
+    isLoading.value = true;
+
+    additionalDetailsService
+      .reverifyVehicle(data)
+      .then((response) => {
+        if (response.data.response_code == 200) {
+          isLoading.value = false;
+          showSuccessToast("Success", "Vehicle verified successfully");
+        } else {
+          isLoading.value = false;
+          showErrorToast("Error", response);
+        }
+      })
+      .catch((error) => {
+        isLoading.value = false;
+        showErrorToast("Error", error);
+      });
+  } else {
+    showErrorToast("Error", "Please enter vehicle registration number.");
+  }
 };
 
-const closeDateTimeModal = () => {
-  calendarModal.value = false;
-};
 
-const closeMainModal = () => {
-  modal.value = false;
-};
-
-const closePlacesModal = () => {
-  placesModal.value = false;
-};
 </script>

@@ -1,27 +1,27 @@
-import apim from './apim.js'
+import apim from "./apim.js";
 
 export default {
-    verifyCustomer(data) {
-        return apim().post('/verifyCustomer', data)
-    },
+  verifyCustomer(data) {
+    return apim().post("/verifyCustomer", data);
+  },
 
-    createCustomer(data) {
-        return apim().post('/createCustomer', data)
-    },
+  createCustomer(data) {
+    return apim().post("/createCustomer", data);
+  },
 
-    verifyVehicle(data) {
-        return apim().post('/verifyVehicle', data)
-    },
+  verifyVehicle(data) {
+    return apim().post("/verifyVehicle", data);
+  },
 
-    postValuation(data) {
-        return apim().post('/postValuation', data)
-    },
+  postValuation(data) {
+    return apim().post("/postValuation", data);
+  },
 
-    getQuoteSummary(data) {
-        return apim().post('/getQuoteSummary', data)
-    },
+  getQuoteSummary(data) {
+    return apim().post("/getQuoteSummary", data);
+  },
 
-    reverifyVehicle (data) {
-        return apim().post('/reverifyVehicle', data)
-    }
-}
+  reverifyVehicle(data) {
+    return apim().post("/reverifyVehicle", data);
+  },
+};
