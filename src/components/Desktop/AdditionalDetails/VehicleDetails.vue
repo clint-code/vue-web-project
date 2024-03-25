@@ -4,57 +4,38 @@
       <div class="lg:col-10 relative">
         <div class="overflow-y-scroll" :style="{ height: newSectionHeight }">
           <div class="mt-3">
-            <div
-              @click="navigate('/personal-details')"
-              class="flex justify-content-between align-items-center custom-dark-gray-bg border-round-3xl gap-1 px-3 py-2 custom-w-5"
-            >
+            <div @click="navigate('/personal-details')"
+              class="flex justify-content-between align-items-center custom-dark-gray-bg border-round-3xl gap-1 px-3 py-2 custom-w-5">
               <i class="fas fa-angle-double-left text-white"></i>
-              <label class="text-sm font-bold text-white justify-content-end"
-                >Back</label
-              >
+              <label class="text-sm font-bold text-white justify-content-end">Back</label>
             </div>
           </div>
 
           <div class="mt-3">
-            <div
-              class="relative bg-yellow-500 border-round-2xl px-3 custom-py-10 z-2"
-            >
+            <div class="relative bg-yellow-500 border-round-2xl px-3 custom-py-10 z-2">
               <label class="text-sm font-bold">Vehicle Details</label>
             </div>
 
             <div class="relative z-1 mb-8">
               <div
-                class="custom-light-gray-bg-1 custom-gray-border-2 border-round-bottom-3xl w-full custom-accordion-body-2 py-4 px-3"
-              >
+                class="custom-light-gray-bg-1 custom-gray-border-2 border-round-bottom-3xl w-full custom-accordion-body-2 py-4 px-3">
                 <div class="grid">
                   <div class="col-6">
                     <div class="flex flex-column gap-2">
-                      <label class="text-sm font-medium"
-                        >Vehicle Registration No.</label
-                      >
-                      <InputText
-                        class="text-sm border-round-3xl"
-                        v-model="registrationNumber"
-                        placeholder="Enter Registration"
-                      />
+                      <label class="text-sm font-medium">Vehicle Registration No.</label>
+                      <InputText class="text-sm border-round-3xl" v-model="registrationNumber"
+                        placeholder="Enter Registration" />
                     </div>
                   </div>
 
                   <div class="col-6">
                     <div class="flex flex-column gap-2">
                       <label class="text-sm font-medium">Upload Logbook</label>
-                      <div
-                        class="custom-file-input-container bg-white border-round-3xl"
-                      >
-                        <input
-                          type="file"
-                          id="fileInput"
-                          class="custom-file-input"
-                          @change="uploadFile($event)"
-                        />
+                      <div class="custom-file-input-container bg-white border-round-3xl">
+                        <input type="file" id="fileInput" class="custom-file-input" @change="uploadFile($event)" />
                         <label class="text-sm custom-input-color">{{
-                          uploadTxt
-                        }}</label>
+          uploadTxt
+        }}</label>
                         <i class="fas fa-upload text-sm custom-gray"></i>
                       </div>
                     </div>
@@ -64,40 +45,22 @@
                 <div class="grid mt-1">
                   <div class="col-6">
                     <div class="flex flex-column gap-2">
-                      <label class="text-sm font-medium"
-                        >Choose Security Device</label
-                      >
-                      <MultiSelect
-                        v-model="selectedSecurityDevices"
-                        display="chip"
-                        :options="securityDevices"
-                        optionLabel="name"
-                        placeholder="Select Security Device"
-                        class="w-full text-sm border-round-3xl"
-                      />
+                      <label class="text-sm font-medium">Choose Security Device</label>
+                      <MultiSelect v-model="selectedSecurityDevices" display="chip" :options="securityDevices"
+                        optionLabel="name" placeholder="Select Security Device"
+                        class="w-full text-sm border-round-3xl" />
                     </div>
                   </div>
 
                   <div class="col-6">
                     <div class="flex flex-column gap-2">
-                      <label class="text-sm font-medium"
-                        >Choose Policy Start Date</label
-                      >
+                      <label class="text-sm font-medium">Choose Policy Start Date</label>
 
-                      <Calendar
-                        placeholder="Choose Date"
-                        dateFormat="dd/mm/yy"
-                        v-model="coverStartDate"
-                        :minDate="minDate"
-                        class="w-full custom-rounded-calendar custom-small-dropdown-1"
-                        showIcon
-                        iconDisplay="input"
-                      >
+                      <Calendar placeholder="Choose Date" dateFormat="dd/mm/yy" v-model="coverStartDate"
+                        :minDate="minDate" class="w-full custom-rounded-calendar custom-small-dropdown-1" showIcon
+                        iconDisplay="input">
                         <template #inputicon="{ clickCallback }">
-                          <i
-                            class="fas fa-calendar-days text-black-alpha-90 text-sm"
-                            @click="clickCallback"
-                          ></i>
+                          <i class="fas fa-calendar-days text-black-alpha-90 text-sm" @click="clickCallback"></i>
                         </template>
                       </Calendar>
                     </div>
@@ -106,49 +69,38 @@
 
                 <template v-if="store.getters.getValuationStatus">
                   <div class="relative mb-4 mt-2">
-                    <div
-                      class="w-full custom-gray-bg custom-gray-border-3 border-1 border-round-top-3xl p-3"
-                    >
+                    <div class="w-full custom-gray-bg custom-gray-border-3 border-1 border-round-top-3xl p-3">
                       <div class="flex justify-content-between">
                         <label class="font-bold text-xs w-6">Location</label>
                         <label class="font-bold text-xs text-right w-6">{{
-                          store.getters.getValuationLocation
-                        }}</label>
+          store.getters.getValuationLocation
+        }}</label>
                       </div>
 
                       <div class="flex justify-content-between mt-2">
                         <label class="font-bold text-xs w-6">Date</label>
-                        <template
-                          v-if="store.getters.getValuationDate != 'Choose date'"
-                        >
+                        <template v-if="store.getters.getValuationDate != 'Choose date'">
                           <label class="font-bold text-xs text-right w-6">{{
-                            store.getters.getValuationDate
-                          }}</label>
+          store.getters.getValuationDate
+        }}</label>
                         </template>
                       </div>
 
                       <div class="flex justify-content-between mt-2 mb-3">
                         <label class="font-bold text-xs w-6">Time</label>
-                        <template
-                          v-if="store.getters.getValuationTime != 'Choose time'"
-                        >
+                        <template v-if="store.getters.getValuationTime != 'Choose time'">
                           <label class="font-bold text-xs text-right w-6">{{
-                            store.getters.getValuationTime
-                          }}</label>
+          store.getters.getValuationTime
+        }}</label>
                         </template>
                       </div>
                     </div>
 
                     <div
                       class="w-full border-round-2xl custom-dark-gray-border border-1 custom-dark-gray-bg px-3 py-2 mt-2 custom-accordion-body-1"
-                      @click="showValuationModal()"
-                    >
-                      <div
-                        class="flex justify-content-between align-items-center"
-                      >
-                        <label class="font-bold text-sm text-white"
-                          >Update Valuation Details</label
-                        >
+                      @click="showValuationModal()">
+                      <div class="flex justify-content-between align-items-center">
+                        <label class="font-bold text-sm text-white">Update Valuation Details</label>
                         <i class="fas fa-circle-arrow-right text-white"></i>
                       </div>
                     </div>
@@ -158,28 +110,19 @@
                 <template v-else>
                   <div
                     class="w-full border-round-2xl custom-dark-gray-border border-1 custom-dark-gray-bg px-3 py-2 mt-2"
-                    @click="showValuationModal()"
-                  >
-                    <div
-                      class="flex justify-content-between align-items-center"
-                    >
-                      <label class="font-bold text-sm text-white"
-                        >Book Valuation Now</label
-                      >
+                    @click="showValuationModal()">
+                    <div class="flex justify-content-between align-items-center">
+                      <label class="font-bold text-sm text-white">Book Valuation Now</label>
                       <i class="fas fa-circle-arrow-right text-white"></i>
                     </div>
                   </div>
                 </template>
 
-                <div
-                  class="w-full border-round-2xl bg-yellow-500 border-1 border-yellow-500 px-3 py-2 mt-3"
-                  @click="submit()"
-                >
+                <div class="w-full border-round-2xl bg-yellow-500 border-1 border-yellow-500 px-3 py-2 mt-3"
+                  @click="submit()">
                   <div class="flex justify-content-between align-items-center">
                     <label class="font-bold text-sm">View Summary</label>
-                    <i
-                      class="fas fa-circle-arrow-right text-black-alpha-90"
-                    ></i>
+                    <i class="fas fa-circle-arrow-right text-black-alpha-90"></i>
                   </div>
                 </div>
               </div>
@@ -188,11 +131,8 @@
         </div>
 
         <div class="bottom-0 left-0 w-full absolute">
-          <BottomSummaryDesktop
-            @showOverlay="displayOverlay"
-            @calculatedCardHeight="resetHeight"
-            @reverifyVehicle="reverifyVehicle"
-          />
+          <BottomSummaryDesktop @showOverlay="displayOverlay" @calculatedCardHeight="resetHeight"
+            @reverifyVehicle="reverifyVehicle" />
         </div>
       </div>
 
@@ -202,63 +142,29 @@
     </div>
   </div>
 
-  <Dialog
-    v-model:visible="modal"
-    modal
-    :closable="false"
-    :showHeader="false"
-    :showFooter="false"
-    class="custom-dialog"
-  >
+  <Dialog v-model:visible="modal" modal :closable="false" :showHeader="false" :showFooter="false" class="custom-dialog">
     <div class="custom-desktop-view">
-      <MainDialogModal
-        @showValuationDateTimeModal="showCalendarModal"
-        @showGooglePlacesModal="showPlacesModal"
-        @closeMainModal="closeMainModal"
-      />
+      <MainDialogModal @showValuationDateTimeModal="showCalendarModal" @showGooglePlacesModal="showPlacesModal"
+        @closeMainModal="closeMainModal" />
     </div>
   </Dialog>
 
-  <Dialog
-    v-model:visible="calendarModal"
-    modal
-    :closable="false"
-    :showHeader="false"
-    :showFooter="false"
-    class="custom-dialog"
-  >
+  <Dialog v-model:visible="calendarModal" modal :closable="false" :showHeader="false" :showFooter="false"
+    class="custom-dialog">
     <div class="custom-desktop-view">
-      <DateTimeModal
-        @showGooglePlacesModal="showPlacesModal"
-        @closeDateTimeModal="closeDateTimeModal"
-      />
+      <DateTimeModal @showGooglePlacesModal="showPlacesModal" @closeDateTimeModal="closeDateTimeModal" />
     </div>
   </Dialog>
 
-  <Dialog
-    v-model:visible="placesModal"
-    modal
-    :closable="false"
-    :showHeader="false"
-    :showFooter="false"
-    class="custom-dialog"
-  >
+  <Dialog v-model:visible="placesModal" modal :closable="false" :showHeader="false" :showFooter="false"
+    class="custom-dialog">
     <div class="custom-desktop-view">
-      <PlacesModal
-        @showValuationDateTimeModal="showCalendarModal"
-        @setValuationLocation="setValuationLocationFromModal"
-        @closePlacesModal="closePlacesModal"
-      />
+      <PlacesModal @showValuationDateTimeModal="showCalendarModal" @setValuationLocation="setValuationLocationFromModal"
+        @closePlacesModal="closePlacesModal" />
     </div>
   </Dialog>
 
-  <loading
-    v-model:active="isLoading"
-    :is-full-page="fullPage"
-    color="#FFC402"
-    loader="dots"
-    :opacity="opacity"
-  />
+  <loading v-model:active="isLoading" :is-full-page="fullPage" color="#FFC402" loader="dots" :opacity="opacity" />
   <Toast />
 
   <div :class="overlay"></div>
@@ -268,6 +174,7 @@
 import { ref, onMounted, defineProps } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
+import { devices } from "@/util/securityDevices.js";
 
 import Steps from "@/components/Steps.vue";
 import BottomSummaryDesktop from "@/components/Desktop/BottomSummary/BottomSummary.vue";
@@ -311,14 +218,7 @@ const registrationNumber = ref(null);
 const coverStartDate = ref(null);
 
 const selectedSecurityDevices = ref(null);
-const securityDevices = ref([
-  {
-    name: "Immobilizer",
-  },
-  {
-    name: "Gear Lock",
-  },
-]);
+const securityDevices = devices;
 const uploadTxt = ref("Upload");
 const overlay = ref(null);
 
@@ -514,34 +414,38 @@ const navigate = (path) => {
   router.push(path);
 };
 
-const reverifyVehicle = () => {
-  if (registrationNumber.value != null) {
-    let data = {};
+const reverifyVehicle = (value) => {
+  let data = {};
 
-    data.quoteRef = store.getters.getQuoteRef;
-    data.make = store.getters.getQuoteDetails.make;
-    data.model = store.getters.getQuoteDetails.model;
-    data.registrationNo = registrationNumber.value;
+  data.quoteRef = store.getters.getQuoteRef;
+  data.make = value.make;
+  data.model = value.model;
 
-    isLoading.value = true;
+  isLoading.value = true;
 
-    additionalDetailsService
-      .reverifyVehicle(data)
-      .then((response) => {
-        if (response.data.response_code == 200) {
-          isLoading.value = false;
-          showSuccessToast("Success", "Vehicle verified successfully");
-        } else {
-          isLoading.value = false;
-          showErrorToast("Error", response);
-        }
-      })
-      .catch((error) => {
+  additionalDetailsService
+    .updateQuote(data)
+    .then((response) => {
+      if (response.data.response_code == 200) {
         isLoading.value = false;
-        showErrorToast("Error", error);
-      });
-  } else {
-    showErrorToast("Error", "Please enter vehicle registration number.");
-  }
+
+        let quoteDetails = store.getters.getQuoteDetails;
+        quoteDetails.make = value.make;
+        quoteDetails.model = value.model;
+
+        store.commit("setQuoteDetails", quoteDetails);
+
+        showSuccessToast("Success", "Quote updated successfully");
+      }
+
+      else {
+        isLoading.value = false;
+        showErrorToast("Error", response);
+      }
+    })
+    .catch((error) => {
+      isLoading.value = false;
+      showErrorToast("Error", error);
+    });
 };
 </script>

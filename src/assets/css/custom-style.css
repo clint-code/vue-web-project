@@ -546,3 +546,7 @@ body {
 .custom-button-minus-18 {
     bottom: -18px;
 }
+
+.p-dropdown .p-inputtext:enabled:focus {
+    box-shadow: none !important;
+}  

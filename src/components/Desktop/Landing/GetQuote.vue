@@ -9,175 +9,99 @@
 
     <div class="mt-4">
       <div class="flex flex-wrap gap-3 mt-2">
-        <div
-          class="flex align-items-center"
-          v-for="insuranceClass in insuranceClasses"
-          :key="insuranceClass.name"
-        >
-          <RadioButton
-            v-model="selectedInsuranceClass"
-            :value="insuranceClass.value"
-          />
+        <div class="flex align-items-center" v-for="insuranceClass in insuranceClasses" :key="insuranceClass.name">
+          <RadioButton v-model="selectedInsuranceClass" :value="insuranceClass.value" />
           <label for="ingredient1" class="ml-1 text-xs font-bold">{{
-            insuranceClass.name
-          }}</label>
+          insuranceClass.name
+        }}</label>
         </div>
       </div>
     </div>
 
     <div class="mt-4">
       <div class="flex flex-wrap gap-3 mt-2">
-        <div
-          class="flex align-items-center"
-          v-for="insuranceType in insuranceTypes"
-          :key="insuranceType.name"
-        >
-          <RadioButton
-            v-model="selectedInsuranceType"
-            :value="insuranceType.name"
-          />
+        <div class="flex align-items-center" v-for="insuranceType in insuranceTypes" :key="insuranceType.name">
+          <RadioButton v-model="selectedInsuranceType" :value="insuranceType.name" />
           <label for="ingredient1" class="ml-1 text-xs font-bold">{{
-            insuranceType.name
-          }}</label>
+          insuranceType.name
+        }}</label>
         </div>
       </div>
     </div>
 
     <div class="grid mt-3">
       <div class="col-3">
-        <Dropdown
-          v-model="selectedCoverDuration"
-          :options="coverDurations"
-          optionLabel="name"
-          optionValue="value"
+        <Dropdown v-model="selectedCoverDuration" :options="coverDurations" optionLabel="name" optionValue="value"
           placeholder="Cover Duration"
-          class="w-full border-round-3xl custom-yellow-dropdown custom-dark-gray-border custom-border-1-5 custom-small-dropdown-1"
-        />
+          class="w-full border-round-3xl custom-yellow-dropdown custom-dark-gray-border custom-border-1-5 custom-small-dropdown-1" />
       </div>
 
       <div class="col-3">
-        <Dropdown
-          v-model="selectedMake"
-          :options="makes"
-          filter
-          :loading="makesLoader"
-          optionLabel="vehicle_name"
-          placeholder="Make E.g BMW"
-          filterPlaceholder="Search make"
-          @filter="searchVehicleMakes"
+        <Dropdown v-model="selectedMake" :options="makes" editable optionLabel="vehicle_name"
+          placeholder="Make E.g BMW" filterPlaceholder="Search make" @input="searchVehicleMakes"
           @change="changeVehicleMake"
-          class="w-full border-round-3xl custom-yellow-dropdown custom-dark-gray-border custom-border-1-5 custom-small-dropdown-1"
-        />
+          class="w-full border-round-3xl custom-yellow-dropdown custom-dark-gray-border custom-border-1-5 custom-small-dropdown-1" />
       </div>
 
       <div class="col-3">
-        <Dropdown
-          v-model="selectedModel"
-          :options="models"
-          filter
-          :loading="modelsLoader"
-          optionLabel="vehicle_model"
-          placeholder="Model E.g X3"
-          filterPlaceholder="Search model"
-          @filter="searchVehicleModels"
+        <Dropdown v-model="selectedModel" :options="models" editable optionLabel="vehicle_model"
+          placeholder="Model E.g X3" filterPlaceholder="Search model" @input="searchVehicleModels"
           @change="changeVehicleModel"
-          class="w-full border-round-3xl custom-yellow-dropdown custom-dark-gray-border custom-border-1-5 custom-small-dropdown-1"
-        />
+          class="w-full border-round-3xl custom-yellow-dropdown custom-dark-gray-border custom-border-1-5 custom-small-dropdown-1" />
       </div>
 
       <div class="col-3">
         <InputGroup class="custom-amount-input-1">
-          <InputGroupAddon
-            class="border-round-3xl custom-dark-gray-border custom-border-1-5 p-1"
-          >
+          <InputGroupAddon class="border-round-3xl custom-dark-gray-border custom-border-1-5 p-1">
             <div class="bg-yellow-500 border-round-2xl flex">
-              <label class="text-sm font-bold text-black-alpha-90 p-2 py-1"
-                >KES</label
-              >
+              <label class="text-sm font-bold text-black-alpha-90 p-2 py-1">KES</label>
             </div>
           </InputGroupAddon>
-          <InputText
-            class="border-round-3xl custom-dark-gray-border custom-border-1-5 text-sm"
-            v-model="estimatedValue"
-            placeholder="Estimate value"
-          />
+          <InputText class="border-round-3xl custom-dark-gray-border custom-border-1-5 text-sm" v-model="estimatedValue"
+            placeholder="Estimate value" />
         </InputGroup>
       </div>
 
       <div class="col-3">
-        <Calendar
-          v-model="yearOfManufacture"
-          placeholder="Year of Manufacture"
-          view="year"
-          dateFormat="yy"
-          class="w-full custom-sm-rd-calendar"
-          :maxDate="maxDate"
-          showIcon
-          iconDisplay="input"
-        >
+        <Calendar v-model="yearOfManufacture" placeholder="Year of Manufacture" view="year" dateFormat="yy"
+          class="w-full custom-sm-rd-calendar" :maxDate="maxDate" showIcon iconDisplay="input">
           <template #inputicon="{ clickCallback }">
-            <i
-              class="fas fa-calendar-days text-yellow-500"
-              @click="clickCallback"
-            ></i>
+            <i class="fas fa-calendar-days text-yellow-500" @click="clickCallback"></i>
           </template>
         </Calendar>
       </div>
 
       <template v-if="selectedInsuranceClass != 'PRIVATE'">
         <div class="col-3">
-          <Dropdown
-            v-model="selectedPersonCovered"
-            :options="personsCovered"
-            optionLabel="name"
-            optionValue="name"
+          <Dropdown v-model="selectedPersonCovered" :options="personsCovered" optionLabel="name" optionValue="name"
             placeholder="Person Covered"
-            class="w-full border-round-3xl custom-yellow-dropdown custom-dark-gray-border custom-border-1-5 custom-small-dropdown-1"
-          />
+            class="w-full border-round-3xl custom-yellow-dropdown custom-dark-gray-border custom-border-1-5 custom-small-dropdown-1" />
         </div>
 
         <div class="col-3">
-          <Dropdown
-            v-model="selectedPassengers"
-            :options="passengers"
-            optionLabel="name"
-            optionValue="value"
+          <Dropdown v-model="selectedPassengers" :options="passengers" optionLabel="name" optionValue="value"
             placeholder="No. of passengers"
-            class="w-full border-round-3xl custom-yellow-dropdown custom-dark-gray-border custom-border-1-5 custom-small-dropdown-1"
-          />
+            class="w-full border-round-3xl custom-yellow-dropdown custom-dark-gray-border custom-border-1-5 custom-small-dropdown-1" />
         </div>
 
         <div class="col-3">
-          <Dropdown
-            v-model="selectedVehicleTonnage"
-            :options="vehicleTonnage"
-            optionLabel="name"
-            optionValue="value"
+          <Dropdown v-model="selectedVehicleTonnage" :options="vehicleTonnage" optionLabel="name" optionValue="value"
             placeholder="Vehicle Tonnage"
-            class="w-full border-round-3xl custom-yellow-dropdown custom-dark-gray-border custom-border-1-5 custom-small-dropdown-1"
-          />
+            class="w-full border-round-3xl custom-yellow-dropdown custom-dark-gray-border custom-border-1-5 custom-small-dropdown-1" />
         </div>
 
         <template v-if="selectedInsuranceClass == 'COMMERCIAL'">
           <div class="col-3">
-            <Dropdown
-              v-model="selectedVehicleUse"
-              :options="vehicleUses"
-              optionLabel="name"
-              optionValue="name"
+            <Dropdown v-model="selectedVehicleUse" :options="vehicleUses" optionLabel="name" optionValue="name"
               placeholder="Vehicle Use"
-              class="w-full border-round-3xl custom-yellow-dropdown custom-dark-gray-border custom-border-1-5 custom-small-dropdown-1"
-            />
+              class="w-full border-round-3xl custom-yellow-dropdown custom-dark-gray-border custom-border-1-5 custom-small-dropdown-1" />
           </div>
         </template>
       </template>
 
       <div class="col-3">
-        <div
-          v-ripple
-          class="p-ripple w-full border-round-3xl bg-yellow-500 border-1 border-yellow-500 p-2"
-          @click="getQuote()"
-        >
+        <div v-ripple class="p-ripple w-full border-round-3xl bg-yellow-500 border-1 border-yellow-500 p-2"
+          @click="getQuote()">
           <div class="flex justify-content-between align-items-center">
             <label class="font-bold text-sm">Get Quote</label>
             <i class="fas fa-circle-arrow-right"></i>
@@ -186,13 +110,7 @@
       </div>
     </div>
   </div>
-  <loading
-    v-model:active="isLoading"
-    :is-full-page="fullPage"
-    color="#FFC402"
-    loader="dots"
-    :opacity="opacity"
-  />
+  <loading v-model:active="isLoading" :is-full-page="fullPage" color="#FFC402" loader="dots" :opacity="opacity" />
   <Toast />
 </template>
 
@@ -208,7 +126,9 @@ const { showSuccessToast, showErrorToast } = useToastMessages();
 import { useStore } from "vuex";
 const store = useStore();
 
-const emits = defineEmits();
+const emits = defineEmits([
+  "getQuote",
+]);
 
 const props = defineProps({
   productId: Number,
@@ -260,6 +180,8 @@ const insuranceTypes = ref([
 ]);
 
 const isLoading = ref(false);
+const fullPage = ref(true);
+const opacity = ref(0.7);
 
 const selectedMake = ref(null);
 const makes = ref([]);
@@ -330,8 +252,8 @@ const changeVehicleMake = (value) => {
 };
 
 const searchVehicleMakes = debounce(async (searchTerm) => {
-  if (searchTerm.value != "") {
-    await getMakes(searchTerm.value);
+  if (searchTerm.target.value != "") {
+    await getMakes(searchTerm.target.value);
   }
 }, 1000);
 
@@ -351,7 +273,6 @@ const getMakes = async (searchTerm) => {
 
       if (response.data.response_code == 200) {
         makes.value = response.data.data;
-        console.log(response.data.data);
       } else {
         isLoading.value = false;
         showErrorToast("Error", response.data);
@@ -379,8 +300,8 @@ const searchVehicleModels = debounce(async (searchTerm) => {
   if (makeId.value == null) {
     showErrorToast("Error", "Vehicle make not selected.");
   } else {
-    if (searchTerm.value != "") {
-      await getModels(searchTerm.value);
+    if (searchTerm.target.value != "") {
+      await getModels(searchTerm.target.value);
     }
   }
 }, 1000);

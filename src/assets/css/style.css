@@ -118,7 +118,7 @@
 .p-inputtext:enabled:focus {
     box-shadow: 0 0 0 0.2rem rgba(255, 196, 2, 0.5);
     border-color: #8B8B8B;
-    border-radius: 12px;
+    /* border-radius: 12px; */
 }
 
 .custom-yellow-dropdown .p-inputtext:enabled:focus {

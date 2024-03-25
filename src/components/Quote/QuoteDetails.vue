@@ -93,9 +93,9 @@
             </template> 
         </div>
 
-        <div class="flex justify-content-between custom-gray-border-bottom py-2 mb-2">
+        <div class="flex justify-content-between py-2">
             <label class="text-xs w-4">Installment Period</label>
-            <label class="text-xs font-bold text-right w-8">10 Months</label>
+            <label class="text-xs font-bold text-right w-8">{{ quoteDetails.LipaPolePolePeriod }} Month(s)</label>
         </div>
     </template>
 </template>

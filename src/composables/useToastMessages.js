@@ -5,7 +5,7 @@ export default function useToastMessages() {
 
   const showSuccessToast = (summary, detail) => {
     toast.add({
-      severity: "Success",
+      severity: "success",
       summary,
       detail,
       life: 3000,
@@ -18,25 +18,33 @@ export default function useToastMessages() {
     if (typeof error === "string") {
       content = error;
       showError(summary, content);
-    } else {
+    } 
+
+    else {
       if (error.errors) {
         error.errors.forEach((error) => {
           content = error.message + "- " + error.field;
           showError(summary, content);
         });
-      } else if (error.response) {
+      } 
+      
+      else if (error.response) {
         if (error.response.data) {
           if (error.response.data.errors) {
             error.response.data.errors.forEach((error) => {
               content = error.message;
               showError(summary, content);
             });
-          } else if (error.response.data.message) {
+          } 
+          
+          else if (error.response.data.message) {
             content = error.response.data.message;
             showError(summary, content);
           }
         }
-      } else if (error.data) {
+      } 
+      
+      else if (error.data) {
         if (error.data.data) {
           showError(error.data.message, error.data.data.errorMessage);
         }

@@ -1,11 +1,8 @@
 <template>
-  <div
-    class="custom-desktop-view custom-width-80"
-    :class="{
-      'mt-3': props.insuranceClass == 'PRIVATE',
-      'mt-7': props.insuranceClass != 'PRIVATE',
-    }"
-  >
+  <div class="custom-desktop-view custom-width-80" :class="{
+    'mt-3': props.insuranceClass == 'PRIVATE',
+    'mt-7': props.insuranceClass != 'PRIVATE',
+  }">
     <div class="py-4" :style="{ 'margin-bottom': marginBottom }">
       <div class="flex align-items-center">
         <i class="fas fa-message-smile text-yellow-500 text-4xl my-1"></i>
@@ -13,10 +10,8 @@
         <div class="flex flex-column mx-3">
           <h3 class="my-1">Your estimate quote is ready</h3>
           <div class="custom-bottom-border"></div>
-          <label class="text-sm mt-2"
-            >Choose your preferred quote and make payment to receive your
-            Digital Certificate of Insurance.</label
-          >
+          <label class="text-sm mt-2">Choose your preferred quote and make payment to receive your
+            Digital Certificate of Insurance.</label>
         </div>
       </div>
 
@@ -29,36 +24,26 @@
 
                 <div
                   class="border-round-2xl bg-yellow-500 border-yellow-500 text-black-alpha-90 font-bold px-2 py-1 text-xs"
-                  size="small"
-                  @click="buyQuote(quote)"
-                >
+                  size="small" @click="buyQuote(quote)">
                   Buy Now
                 </div>
               </div>
               <hr class="custom-gray" />
 
               <div class="flex justify-content-between">
-                <label class="font-bold text-sm text-left w-7"
-                  >Lipa in Full</label
-                >
+                <label class="font-bold text-sm text-left w-7">Lipa in Full</label>
 
                 <template v-if="quote.LipaFullAmount != null">
-                  <label class="font-bold text-right w-5"
-                    >KES {{ quote.LipaFullAmount.toLocaleString() }}</label
-                  >
+                  <label class="font-bold text-right w-5">KES {{ quote.LipaFullAmount.toLocaleString() }}</label>
                 </template>
               </div>
               <hr class="custom-gray" />
 
               <div class="flex justify-content-between">
-                <label class="font-bold text-sm text-left w-6"
-                  >Lipa Pole Pole Deposit</label
-                >
+                <label class="font-bold text-sm text-left w-6">Lipa Pole Pole Deposit</label>
 
                 <template v-if="quote.LipaPolePoleDeposit != null">
-                  <label class="font-bold text-right w-6"
-                    >KES {{ quote.LipaPolePoleDeposit.toLocaleString() }}</label
-                  >
+                  <label class="font-bold text-right w-6">KES {{ quote.LipaPolePoleDeposit.toLocaleString() }}</label>
                 </template>
               </div>
 
@@ -68,36 +53,22 @@
                 </label>
 
                 <template v-if="quote.LipaPolePoleInstallment != null">
-                  <label class="font-bold text-xs text-right w-6"
-                    >KES {{ quote.LipaPolePoleDeposit.toLocaleString() }}
+                  <label class="font-bold text-xs text-right w-6">KES {{ quote.LipaPolePoleDeposit.toLocaleString() }}
                   </label>
                 </template>
               </div>
 
-              <div
-                class="flex justify-content-center mt-4"
-                @click="showQuote(index, quote)"
-              >
-                <div
-                  class="custom-overlap border-round-2xl"
-                  :class="{
-                    'custom-light-gray-bg': !quote.active,
-                    'bg-yellow-500': quote.active,
-                  }"
-                  id="benefitsButton"
-                  :style="{ bottom: buttonBottom }"
-                >
+              <div class="flex justify-content-center mt-4" @click="showQuote(index, quote)">
+                <div class="custom-overlap border-round-2xl" 
+                :class="{ 'custom-light-gray-bg': !quote.active, 'bg-yellow-500': quote.active, }" 
+                id="benefitsButton" :style="{ bottom: buttonBottom }">
                   <div class="flex justify-content-center py-2">
                     <span class="text-sm font-bold">
                       {{ quote.buttonText }}
                     </span>
                   </div>
 
-                  <div
-                    class="custom-caret-info"
-                    :style="{ bottom: buttonBottom }"
-                    v-if="quote.active"
-                  >
+                  <div class="custom-caret-info" :style="{ bottom: buttonBottom }" v-if="quote.active">
                     <i class="fas fa-caret-down text-yellow-500 text-3xl"></i>
                   </div>
                 </div>
@@ -105,29 +76,21 @@
             </div>
 
             <div class="custom-full-width" v-if="quote.active">
-              <div
-                class="custom-light-gray-bg border-round-2xl custom-shadow mt-4"
-              >
+              <div class="custom-light-gray-bg border-round-2xl custom-shadow mt-4">
                 <div class="p-4">
                   <div class="flex justify-content-between">
                     <label class="text-xs font-medium">Base Premium</label>
                     <template v-if="quote.BasicPremium != null">
-                      <label class="text-xs text-right font-bold"
-                        >KES {{ quote.BasicPremium.toLocaleString() }}</label
-                      >
+                      <label class="text-xs text-right font-bold">KES {{ quote.BasicPremium.toLocaleString() }}</label>
                     </template>
                   </div>
 
-                  <template
-                    v-if="quote.addedBenefits && quote.addedBenefits.length"
-                  >
+                  <template v-if="quote.addedBenefits && quote.addedBenefits.length">
                     <div v-for="(benefit, index) in quote.addedBenefits">
                       <div class="flex justify-content-between mt-2">
                         <label class="text-xs">{{ benefit.name }}</label>
                         <template v-if="benefit.amount != null">
-                          <label class="text-xs text-right font-bold"
-                            >KES {{ benefit.amount.toLocaleString() }}</label
-                          >
+                          <label class="text-xs text-right font-bold">KES {{ benefit.amount.toLocaleString() }}</label>
                         </template>
                       </div>
                     </div>
@@ -138,9 +101,7 @@
                       <div class="flex justify-content-between mt-2">
                         <label class="text-xs">{{ tax.name }}</label>
                         <template v-if="tax.amount != null">
-                          <label class="text-xs text-right font-bold"
-                            >KES {{ tax.amount.toLocaleString() }}</label
-                          >
+                          <label class="text-xs text-right font-bold">KES {{ tax.amount.toLocaleString() }}</label>
                         </template>
                       </div>
                     </div>
@@ -152,9 +113,7 @@
                     <TabPanel class="py-0">
                       <template #header>
                         <div class="flex align-items-center gap-3">
-                          <span class="font-bold white-space-nowrap text-sm"
-                            >Add Benefits</span
-                          >
+                          <span class="font-bold white-space-nowrap text-sm">Add Benefits</span>
                           <i class="fas fa-layer-plus text-sm"></i>
                         </div>
                       </template>
@@ -162,87 +121,58 @@
                       <div class="py-2">
                         <template v-if="formattedBenefits != null">
                           <div v-for="(benefit, index) in formattedBenefits">
-                            <div
-                              class="flex justify-content-between align-items-center custom-gray-border-bottom py-2"
-                            >
+                            <div class="flex justify-content-between align-items-center custom-gray-border-bottom py-2">
                               <div class="flex align-items-center">
-                                <Checkbox
-                                  v-model="benefit.active"
-                                  :binary="true"
-                                  variant="filled"
-                                  @change="changeBenefit(benefit, index)"
-                                />
+                                <Checkbox v-model="benefit.active" :binary="true" variant="filled"
+                                  @change="changeBenefit(benefit, index)" />
+
                                 <label class="text-xs ml-2">
                                   {{ benefit.name }}
-                                  <template
-                                    v-if="
-                                      benefit.limitInput &&
-                                      benefit.minimumLimit != null
-                                    "
-                                  >
-                                    <span class="text-xs"
-                                      >(Free upto
-                                      {{
-                                        benefit.minimumLimit.toLocaleString()
-                                      }})</span
-                                    >
+                                  <template v-if="benefit.limitInput && benefit.minimumLimit != null">
+                                    <span class="text-xs">(Free upto {{ benefit.minimumLimit.toLocaleString() }})</span>
                                   </template>
                                 </label>
                               </div>
 
-                              <template
-                                v-if="benefit.limitInput && benefit.active"
-                              >
+                              <template v-if="benefit.limitInput && benefit.active">
                                 <div class="w-4">
                                   <InputGroup class="border-round-2xl">
                                     <InputGroupAddon
-                                      class="border-round-left-2xl bg-white border-left-2 border-left-2 border-y-2 custom-dark-gray-border"
-                                    >
+                                      class="border-round-left-2xl bg-white border-left-2 border-left-2 border-y-2 custom-dark-gray-border">
                                       <span class="text-xs font-bold">KES</span>
                                     </InputGroupAddon>
-                                    <InputText
-                                      class="border-y-2 border-x-none custom-dark-gray-border"
-                                      v-model="benefit.benefitValue"
-                                      placeholder="Estimate value"
-                                      size="small"
-                                    />
+                                    <InputText class="border-y-2 border-x-none custom-dark-gray-border"
+                                      v-model="benefit.benefitValue" 
+                                      :placeholder="benefit.minimumLimit.toLocaleString() + ' - ' + benefit.maximumLimit.toLocaleString()" size="small" />
 
                                     <InputGroupAddon
                                       class="border-round-right-2xl custom-box-shadow border-none custom-dark-gray-bg-1"
-                                      @click="changeBenefitWithLimit(benefit)"
-                                    >
-                                      <span
-                                        class="text-white text-xs font-semibold"
-                                        >ADD</span
-                                      >
+                                      @click="changeBenefitWithLimit(benefit)">
+                                      <span class="text-white text-xs font-semibold">ADD</span>
                                     </InputGroupAddon>
                                   </InputGroup>
                                 </div>
+                              </template>
+
+                              <template v-else-if="benefit.amount != null && !benefit.limitInput">
+                                <label class="text-xs text-right">KES {{ benefit.amount.toLocaleString() }}</label>
                               </template>
                             </div>
                           </div>
                         </template>
                       </div>
 
-                      <div
-                        class="w-full border-round-2xl bg-yellow-500 border-1 border-yellow-500 px-3 py-2 mt-4"
-                        @click="buyQuote(quote)"
-                      >
-                        <div
-                          class="flex justify-content-between align-items-center"
-                        >
+                      <div class="w-full border-round-2xl bg-yellow-500 border-1 border-yellow-500 px-3 py-2 mt-4"
+                        @click="buyQuote(quote)">
+                        <div class="flex justify-content-between align-items-center">
                           <label class="font-bold">Buy Now</label>
 
                           <template v-if="quote.LipaFullAmount != null">
-                            <label class="font-bold"
-                              >KES
-                              {{ quote.LipaFullAmount.toLocaleString() }}</label
-                            >
+                            <label class="font-bold">KES
+                              {{ quote.LipaFullAmount.toLocaleString() }}</label>
                           </template>
 
-                          <i
-                            class="fas fa-circle-arrow-right text-black-alpha-90"
-                          ></i>
+                          <i class="fas fa-circle-arrow-right text-black-alpha-90"></i>
                         </div>
                       </div>
                     </TabPanel>
@@ -250,47 +180,33 @@
                     <TabPanel>
                       <template #header>
                         <div class="flex align-items-center gap-3">
-                          <span class="font-bold white-space-nowrap text-sm"
-                            >Cover Details</span
-                          >
+                          <span class="font-bold white-space-nowrap text-sm">Cover Details</span>
                           <i class="fas fa-square-info"></i>
                         </div>
                       </template>
 
                       <template v-if="quote.coverDetails.length">
                         <div v-for="(cover, index) in quote.coverDetails">
-                          <div
-                            class="flex justify-content-between custom-gray-border-bottom py-2 px-1 mb-2"
-                          >
+                          <div class="flex justify-content-between custom-gray-border-bottom py-2 px-1 mb-2">
                             <label class="text-xs">{{ cover.name }}</label>
                             <template v-if="cover.price != null">
-                              <label class="text-xs"
-                                >KES {{ cover.price.toLocaleString() }}</label
-                              >
+                              <label class="text-xs">KES {{ cover.price.toLocaleString() }}</label>
                             </template>
                           </div>
                         </div>
                       </template>
 
-                      <div
-                        class="w-full border-round-2xl bg-yellow-500 border-1 border-yellow-500 px-3 py-2 px-1 mt-4"
-                        @click="buyQuote(quote)"
-                      >
-                        <div
-                          class="flex justify-content-between align-items-center"
-                        >
+                      <div class="w-full border-round-2xl bg-yellow-500 border-1 border-yellow-500 px-3 py-2 px-1 mt-4"
+                        @click="buyQuote(quote)">
+                        <div class="flex justify-content-between align-items-center">
                           <label class="font-bold">Buy Now</label>
 
                           <template v-if="quote.LipaFullAmount != null">
-                            <label class="font-bold text-right"
-                              >KES
-                              {{ quote.LipaFullAmount.toLocaleString() }}</label
-                            >
+                            <label class="font-bold text-right">KES
+                              {{ quote.LipaFullAmount.toLocaleString() }}</label>
                           </template>
 
-                          <i
-                            class="fas fa-circle-arrow-right text-black-alpha-90"
-                          ></i>
+                          <i class="fas fa-circle-arrow-right text-black-alpha-90"></i>
                         </div>
                       </div>
                     </TabPanel>
@@ -304,13 +220,7 @@
     </div>
   </div>
 
-  <loading
-    v-model:active="isLoading"
-    :is-full-page="fullPage"
-    color="#FFC402"
-    loader="dots"
-    :opacity="opacity"
-  />
+  <loading v-model:active="isLoading" :is-full-page="fullPage" color="#FFC402" loader="dots" :opacity="opacity" />
   <Toast />
 </template>
 
@@ -454,15 +364,15 @@ const changeBenefitWithLimit = (benefit) => {
     showErrorToast(
       "Error",
       "Benefit value should be greater than " +
-        benefit.minimumLimit.toLocaleString() +
-        " but less than " +
-        benefit.maximumLimit.toLocaleString()
+      benefit.minimumLimit.toLocaleString() +
+      " but less than " +
+      benefit.maximumLimit.toLocaleString()
     );
   }
 };
 
 const addOrRemoveBenefit = (data) => {
-    console.log(data);
+  console.log(data);
   isLoading.value = true;
 
   quoteService

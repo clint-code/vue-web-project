@@ -21,7 +21,7 @@ export default {
     return apim().post("/getQuoteSummary", data);
   },
 
-  reverifyVehicle(data) {
-    return apim().post("/reverifyVehicle", data);
+  updateQuote(data) {
+    return apim().post("/updateQuote", data);
   },
 };
