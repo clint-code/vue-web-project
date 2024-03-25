@@ -1,0 +1,164 @@
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #FFC402;
+    border-radius: 5px;
+  }
+
+.p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+    background-color: #FFC402 !important;
+}
+
+.p-tabview .p-tabview-nav .p-tabview-nav-link {
+    background-color: #4A4A4A !important;
+}
+
+.p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+    color: black !important;
+}
+
+.p-tabview .p-tabview-nav .p-tabview-nav-link {
+    color: white !important;
+}
+
+.p-tabview-nav {
+    display: flex;
+    justify-content: center;
+    color: black;
+    padding-bottom: 1px;
+    border-bottom: #999999 2px solid;
+}
+
+.custom-desktop-tab .p-tabview-nav {
+    display: flex;
+    justify-content: left;
+    color: black;
+    padding-bottom: 1px;
+    border-bottom: #999999 2px solid;
+}
+
+.custom-desktop-tab .p-tabview-panels {
+    padding-top: 0px;
+}
+
+.custom-desktop-tab .p-tabview-nav li {
+    margin-left: 20px;
+}
+
+.p-tabview-nav li {
+    margin: 0 10px;
+}
+
+.p-tabview-nav-link {
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+    padding: 10px 20px;
+}
+
+.p-tabview-panels {
+    background-color: transparent;
+}
+
+.p-checkbox .p-checkbox-box {
+    border-radius: 50%;    
+    border: #03184B 2px solid !important;
+}
+
+.p-checkbox.p-highlight .p-checkbox-box {
+    background: #FFC402 !important;
+    box-shadow: inset 0 0 0 3px #E8E9E9;
+}
+
+.p-checkbox .p-checkbox-box .p-checkbox-icon {
+    display: none;
+}
+
+.p-progressbar {
+    background-color: #DEE1EB;
+    border-radius: 12px;
+}
+
+.p-progressbar .p-progressbar-value {
+    background-color: #FFC402;
+    border-radius: 12px;
+}
+
+.p-dialog-header {
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.p-dialog .p-dialog-content:last-of-type {
+    border-radius: 20px;
+}
+
+.p-datepicker table td.p-datepicker-today > span {
+    background-color: white;
+}
+
+.p-datepicker:not(.p-disabled) table td span:not(.p-highlight):not(.p-disabled):hover {
+    background-color: rgb(255, 196, 2);
+    color: #8B8B8B;
+    font-weight: bold;
+}
+
+.p-datepicker table td > span.p-highlight {
+    background-color: rgb(255, 196, 2);
+    color: #8B8B8B;
+    font-weight: bold;
+}
+
+.p-datepicker table td > span:focus {
+    box-shadow: 0 0 0 0.2rem rgba(255, 196, 2, 0.5);
+}
+
+.p-inputtext:enabled:focus {
+    box-shadow: 0 0 0 0.2rem rgba(255, 196, 2, 0.5);
+    border-color: #8B8B8B;
+    /* border-radius: 12px; */
+}
+
+.custom-yellow-dropdown .p-inputtext:enabled:focus {
+    box-shadow: none;
+}
+
+.p-listbox {
+    border: none;
+    background-color: transparent;
+}
+
+.p-listbox .p-listbox-list .p-listbox-item {
+    border-bottom: #C4C4C4 1px solid;
+    padding-bottom: 8px;
+}
+
+.p-dropdown:not(.p-disabled).p-focus {
+    box-shadow: 0 0 0 0.2rem rgba(255, 196, 2, 0.5);
+    border-color: #8B8B8B;
+}
+
+.p-radiobutton .p-radiobutton-box {
+    border-radius: 50%;    
+    border: #03184B 2px solid !important;
+}
+
+.p-radiobutton.p-highlight .p-radiobutton-box {
+    background: #FFC402 !important;
+    box-shadow: inset 0 0 0 3px #FFFF;
+}
+
+.p-radiobutton .p-radiobutton-box .p-radiobutton-icon {
+    display: none;
+}
+
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight.p-focus {
+    background-color: #FFC402;
+}
+
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
+    background-color: #FFC402;
+    color: #4A4A4A;
+}
