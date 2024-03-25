@@ -219,12 +219,10 @@ const coverStartDate = ref(null);
 
 const selectedSecurityDevices = ref(null);
 const securityDevices = devices;
-const uploadTxt = ref("Upload");
 const overlay = ref(null);
 
 const modal = ref(false);
 const calendarModal = ref(false);
-const timeModal = ref(false);
 const placesModal = ref(false);
 
 const searchTerm = ref(null);
@@ -232,6 +230,8 @@ const bottomCardHeight = ref(null);
 const newSectionHeight = ref(null);
 
 const minDate = ref(new Date());
+
+const uploadTxt = ref("Upload");
 
 onMounted(() => {
   //
@@ -252,16 +252,6 @@ const displayOverlay = (value) => {
   } else {
     overlay.value = null;
   }
-};
-
-const changeValuationDate = (value) => {
-  valuationDate.value = value;
-  valuationStatus.value = true;
-};
-
-const changeValuationTime = (value) => {
-  valuationTime.value = value;
-  valuationStatus.value = true;
 };
 
 const closeDateTimeModal = () => {
@@ -286,42 +276,10 @@ const showCalendarModal = () => {
   calendarModal.value = true;
 };
 
-const setValuationDate = () => {
-  modal.value = true;
-  calendarModal.value = false;
-};
-
-const showTimeModal = () => {
-  modal.value = false;
-  timeModal.value = true;
-};
-
-const setValuationTime = () => {
-  modal.value = true;
-  timeModal.value = false;
-};
-
-const closeModal = () => {
-  if (
-    valuationDate.value != "Choose a Date" &&
-    valuationTime.value != null &&
-    valuationLocation.value != null
-  ) {
-    modal.value = false;
-    valuationStatus.value = true;
-  }
-};
-
 const showPlacesModal = () => {
   modal.value = false;
   calendarModal.value = false;
   placesModal.value = true;
-};
-
-const setValuationLocation = () => {
-  modal.value = true;
-  placesModal.value = false;
-  valuationLocation.value = searchTerm.value;
 };
 
 const setValuationLocationFromModal = (value) => {
@@ -413,6 +371,34 @@ const getQuoteSummary = () => {
 const navigate = (path) => {
   router.push(path);
 };
+
+const uploadFile = (event) => {
+  isLoading.value = true;
+  let originalFile = event.target.files[0]
+  
+  let formData = new FormData();
+  formData.append('file', originalFile)
+  formData.append("docType", "LOGBOOK");
+  formData.append("requestRef", quoteRef);
+  formData.append("fileRef", registrationNumber.value);
+
+  fileUploadService.fileUpload(formData)
+    .then((response) => {
+      isLoading.value = false;
+
+      if (response.data.code == 200) {
+        uploadTxt.value = "Uploaded"
+        showSuccessToast("Success", "File uploaded successfully")
+      }
+      else {
+        showErrorToast("Error", response);
+      }
+    })
+    .catch((error) => {
+      isLoading.value = false;
+      showErrorToast("Error", error);
+    })
+}
 
 const reverifyVehicle = (value) => {
   let data = {};

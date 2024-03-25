@@ -160,6 +160,7 @@ import { ids } from "@/util/identificationDocuments.js";
 import Steps from "@/components/Steps.vue";
 
 import additionalDetailsService from "@/services/additionalDetailsService.js";
+import fileUploadService from "@/services/fileUploadService.js";
 
 import useToastMessages from "@/composables/useToastMessages";
 import usePhoneNumberFormatter from "@/composables/usePhoneNumberFormatter";
@@ -176,7 +177,7 @@ const level = ref(1);
 
 const selectedIdenficationDocument = ref("NationalID");
 const identificationDocuments = ids;
-const uploadTxt = ref("Upload");
+
 const marginBottom = ref(null);
 const overlay = ref(null);
 
@@ -199,6 +200,8 @@ const maxDate = ref(new Date());
 const isLoading = ref(false);
 const fullPage = ref(true);
 const opacity = ref(0.7);
+
+const uploadTxt = ref("Upload");
 
 onMounted(() => {
   const today = new Date();
@@ -248,8 +251,6 @@ const verifyCustomer = () => {
         }
       }
       else {
-
-        isLoading.value = false;
         showErrorToast("Error", response);
       }
     })
@@ -258,12 +259,40 @@ const verifyCustomer = () => {
 
       if (error.response) {
         showErrorToast("Error", error.response);
-      }
+      } 
       else {
         showErrorToast("Error", error.response);
       }
 
     });
+}
+
+const uploadFile = (event) => {
+  isLoading.value = true;
+  let originalFile = event.target.files[0]
+  
+  let formData = new FormData();
+  formData.append('file', originalFile)
+  formData.append("docType", "NATIONAL ID");
+  formData.append("requestRef", quoteRef);
+  formData.append("fileRef", nationalId.value);
+
+  fileUploadService.fileUpload(formData)
+    .then((response) => {
+      isLoading.value = false;
+
+      if (response.data.code == 200) {
+        uploadTxt.value = "Uploaded"
+        showSuccessToast("Success", "File uploaded successfully")
+      }
+      else {
+        showErrorToast("Error", response);
+      }
+    })
+    .catch((error) => {
+      isLoading.value = false;
+      showErrorToast("Error", error);
+    })
 }
 
 const submit = () => {
@@ -292,19 +321,17 @@ const submit = () => {
   additionalDetailsService
     .createCustomer(data)
     .then((response) => {
-      isLoading.value = false;
-      store.commit("setPersonalDetails", data);
-
       if (response.data.response_code == 200) {
-        navigate("/vehicle-details");
+        uploadFile();
       }
       else {
+        
         isLoading.value = false;
         showErrorToast("Error", response.data);
       }
     })
     .catch((error) => {
-      showErrorToast("Error", error.response.data);
+      showErrorToast("Error", error);
       isLoading.value = false;
     });
 }
