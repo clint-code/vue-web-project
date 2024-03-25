@@ -53,7 +53,7 @@
         </div>
 
         <div v-for="(charge, index) in quoteDetails.taxesAndCharges">
-            <div class="flex justify-content-between custom-gray-border-bottom py-2 mb-2">
+            <div class="flex justify-content-between custom-gray-border-bottom py-2 mb-2" :key="index">
                 <label class="text-xs w-4">{{ charge.name }}</label>
                 <template v-if="quoteDetails.BasicPremium">
                     <label class="text-xs font-bold text-right w-8">KES {{ charge.amount.toLocaleString() }}</label>

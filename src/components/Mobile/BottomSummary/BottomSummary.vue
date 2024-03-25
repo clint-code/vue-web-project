@@ -3,18 +3,11 @@
     <div class="relative p-3 mb-4" v-if="editDetails">
       <div>
         <div class="flex justify-content-end">
-          <i
-            class="fas fa-circle-xmark text-2xl custom-gray"
-            @click="editQuoteDetails"
-          ></i>
+          <i class="fas fa-circle-xmark text-2xl custom-gray" @click="editQuoteDetails"></i>
         </div>
 
         <div class="flex justify-content-between align-items-center py-2">
-          <img
-            :src="selectedQuote.UnderwriterIcon"
-            width="100px"
-            height="auto"
-          />
+          <img :src="selectedQuote.UnderwriterIcon" width="100px" height="auto" />
         </div>
 
         <hr class="custom-gray" />
@@ -26,9 +19,7 @@
           </div>
 
           <template v-if="selectedQuote.LipaFullAmount != null">
-            <label class="font-bold"
-              >KES {{ selectedQuote.LipaFullAmount.toLocaleString() }}</label
-            >
+            <label class="font-bold">KES {{ selectedQuote.LipaFullAmount.toLocaleString() }}</label>
           </template>
         </div>
         <hr class="custom-gray" />
@@ -36,16 +27,12 @@
         <div class="flex justify-content-between">
           <div class="flex flex-column">
             <label class="font-bold text-sm">Lipa Pole Pole Deposit</label>
-            <label class="font-light text-sm mt-1"
-              >Lipa Pole Pole Monthly Installment</label
-            >
+            <label class="font-light text-sm mt-1">Lipa Pole Pole Monthly Installment</label>
           </div>
 
           <template v-if="selectedQuote.LipaPolePoleDeposit != null">
-            <label class="font-bold"
-              >KES
-              {{ selectedQuote.LipaPolePoleDeposit.toLocaleString() }}</label
-            >
+            <label class="font-bold">KES
+              {{ selectedQuote.LipaPolePoleDeposit.toLocaleString() }}</label>
           </template>
         </div>
       </div>
@@ -55,31 +42,17 @@
       <label class="text-sm font-bold">Fill in the details below:</label>
       <div class="grid mt-1">
         <div class="col-6">
-          <Dropdown
-            v-model="selectedMake"
-            :options="makes"
-            filter
-            optionLabel="vehicle_name"
-            placeholder="Make E.g BMW"
-            filterPlaceholder="Search make"
-            @filter="searchVehicleMakes"
+          <Dropdown v-model="selectedMake" :options="makes" editable optionLabel="vehicle_name"
+            placeholder="Make E.g BMW" filterPlaceholder="Search make" @input="searchVehicleMakes"
             @change="changeVehicleMake"
-            class="w-full border-round-3xl custom-dark-dropdown custom-small-dropdown shadow-1"
-          />
+            class="w-full border-round-3xl custom-dark-dropdown custom-small-dropdown shadow-1" />
         </div>
 
         <div class="col-6">
-          <Dropdown
-            v-model="selectedModel"
-            :options="models"
-            filter
-            optionLabel="vehicle_model"
-            placeholder="Model E.g X5"
-            filterPlaceholder="Search model"
-            @filter="searchVehicleModels"
+          <Dropdown v-model="selectedModel" :options="models" editable optionLabel="vehicle_model"
+            placeholder="Model E.g X5" filterPlaceholder="Search model" @input="searchVehicleModels"
             @change="changeVehicleModel"
-            class="w-full border-round-3xl custom-dark-dropdown shadow-1 custom-small-dropdown"
-          />
+            class="w-full border-round-3xl custom-dark-dropdown shadow-1 custom-small-dropdown" />
         </div>
       </div>
 
@@ -87,9 +60,7 @@
         <div class="col-6">
           <div
             class="flex justify-content-between align-items-center bg-black-alpha-90 border-round-3xl gap-2 px-3 py-2"
-            @click="updateQuote()"
-            v-if="editDetails"
-          >
+            @click="updateQuote()" v-if="editDetails">
             <label class="text-sm font-bold text-white">Update</label>
             <i class="fas fa-arrow-circle-right text-white"></i>
           </div>
@@ -101,50 +72,36 @@
       <div class="flex justify-content-between align-items-center">
         <label class="font-bold text-yellow-500">Showing quotes for: </label>
 
-        <div
-          class="border-round-2xl bg-yellow-500 border-yellow-500 text-black-alpha-90 font-bold text-xs px-3 py-1"
-          @click="editQuoteDetails()"
-          v-if="!editDetails"
-        >
+        <div class="border-round-2xl bg-yellow-500 border-yellow-500 text-black-alpha-90 font-bold text-xs px-3 py-1"
+          @click="editQuoteDetails()" v-if="!editDetails">
           Edit
         </div>
       </div>
 
       <div class="flex justify-content-between mt-2">
-        <label class="font-bold text-white text-sm"
-          >{{ details.make }} {{ details.model }}</label
-        >
+        <label class="font-bold text-white text-sm">{{ details.make }} {{ details.model }}</label>
 
         <label class="font-bold text-white text-center text-sm">{{
           details.yearOfManufacture
-        }}</label>
+          }}</label>
       </div>
 
       <div class="flex justify-content-between mt-2">
         <label class="font-bold text-white text-sm">Estimate Car Value</label>
 
-        <label class="font-bold text-white text-center text-sm"
-          >KES {{ details.estimatedValue.toLocaleString() }}</label
-        >
+        <label class="font-bold text-white text-center text-sm">KES {{ details.estimatedValue.toLocaleString()
+          }}</label>
       </div>
 
       <div class="flex justify-content-between mt-2">
         <label class="font-bold text-white text-sm">Cover Period</label>
 
-        <label class="font-bold text-white text-center text-sm"
-          >{{ details.coverDuration }} Month(s)</label
-        >
+        <label class="font-bold text-white text-center text-sm">{{ details.coverDuration }} Month(s)</label>
       </div>
     </div>
   </div>
 
-  <loading
-    v-model:active="isLoading"
-    :is-full-page="false"
-    color="#FFC402"
-    loader="dots"
-    :opacity="opacity"
-  />
+  <loading v-model:active="isLoading" :is-full-page="false" color="#FFC402" loader="dots" :opacity="opacity" />
   <Toast />
 </template>
 
@@ -214,15 +171,11 @@ const changeVehicleMake = (value) => {
     makeId.value = null;
     makeName.value = null;
   }
-  let quoteDetails = store.getters.getQuoteDetails;
-  quoteDetails.make = makeName.value;
-
-  store.commit("setQuoteDetails", quoteDetails);
 };
 
 const searchVehicleMakes = debounce(async (searchTerm) => {
-  if (searchTerm.value != "") {
-    await getMakes(searchTerm.value);
+  if (searchTerm.target.value != "") {
+    await getMakes(searchTerm.target.value);
   }
 }, 1000);
 
@@ -283,18 +236,14 @@ const changeVehicleModel = (value) => {
     modelName.value = null;
   }
 
-  let quoteDetails = store.getters.getQuoteDetails;
-  quoteDetails.model = modelName.value;
-
-  store.commit("setQuoteDetails", quoteDetails);
 };
 
 const searchVehicleModels = debounce(async (searchTerm) => {
   if (makeId.value == null) {
     showErrorToast("Error", "Vehicle make not selected.");
   } else {
-    if (searchTerm.value != "") {
-      await getModels(searchTerm.value);
+    if (searchTerm.target.value != "") {
+      await getModels(searchTerm.target.value);
     }
   }
 }, 1000);
@@ -349,6 +298,12 @@ const editQuoteDetails = () => {
 };
 
 const updateQuote = () => {
-  emits("reverifyVehicle");
+  let data = {}
+  data.make = makeName.value
+  data.model = modelName.value
+
+  emits("reverifyVehicle", data);
+  editDetails.value = false
+  emits("showOverlay", false)
 };
 </script>

@@ -550,3 +550,26 @@ body {
 .p-dropdown .p-inputtext:enabled:focus {
     box-shadow: none !important;
 }  
+
+.custom-padding-block {
+    padding-block: 0.75rem;
+}
+ .custom-pd-file-input {
+    padding-block: 1.25rem;
+}
+
+.custom-pd-bg-lightblue {
+    background-color: #D5D9E2;
+}
+
+.custom-pd-bg-border {
+    border-color: #707070;
+}
+
+.custom-pd-calendar .p-calendar .p-inputtext {
+    padding-block: 0.75rem;
+}
+
+.custom-vd-bg-gray {
+    background-color: #DEE1EB;
+}

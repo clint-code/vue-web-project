@@ -43,16 +43,16 @@
 
         <div class="grid mt-2">
           <div class="col-6">
-            <Dropdown v-model="selectedMake" :options="makes" optionLabel="vehicle_name" filter :loading="makesLoader"
-              placeholder="Make E.g BMW" filterPlaceholder="Search make" @filter="searchVehicleMakes"
+            <Dropdown v-model="selectedMake" :options="makes" editable  optionLabel="vehicle_name" 
+              placeholder="Make E.g BMW" filterPlaceholder="Search make" @input="searchVehicleMakes"
               @change="changeVehicleMake"
               class="w-full border-round-3xl custom-dark-dropdown custom-small-dropdown shadow-1" />
           </div>
 
           <div class="col-6">
-            <Dropdown v-model="selectedModel" :options="models" filter :loading="modelsLoader"
+            <Dropdown v-model="selectedModel" :options="models" editable 
               optionLabel="vehicle_model" placeholder="Model E.g X3" filterPlaceholder="Search model"
-              @filter="searchVehicleModels" @change="changeVehicleModel"
+              @input="searchVehicleModels" @change="changeVehicleModel"
               class="w-full border-round-3xl custom-dark-dropdown shadow-1 custom-small-dropdown" />
           </div>
         </div>
@@ -349,8 +349,8 @@ const changeVehicleMake = (value) => {
 };
 
 const searchVehicleMakes = debounce(async (searchTerm) => {
-  if (searchTerm.value != "") {
-    await getMakes(searchTerm.value);
+  if (searchTerm.target.value != "") {
+    await getMakes(searchTerm.target.value);
   }
 }, 1000);
 
@@ -403,8 +403,8 @@ const searchVehicleModels = debounce(async (searchTerm) => {
   if (makeId.value == null) {
     showErrorToast("Error", "Vehicle make not selected.");
   } else {
-    if (searchTerm.value != "") {
-      await getModels(searchTerm.value);
+    if (searchTerm.target.value != "") {
+      await getModels(searchTerm.target.value);
     }
   }
 }, 1000);

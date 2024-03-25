@@ -21,7 +21,7 @@
             <div class="flex justify-content-between">
               <label class="font-bold text-sm text-white w-6">Lipa in Full</label>
               <label class="font-bold text-sm text-white text-right w-6">KES {{
-          quoteSummary.LipaFullAmount.toLocaleString() }}</label>
+                quoteSummary.LipaFullAmount.toLocaleString() }}</label>
             </div>
 
             <div class="flex justify-content-between gap-4">
@@ -59,7 +59,7 @@
             <div class="flex justify-content-between">
               <label class="font-bold text-sm text-white w-6">Lipa in Full</label>
               <label class="font-bold text-sm text-white text-right w-6">KES {{
-          quoteSummary.LipaFullAmount.toLocaleString() }}</label>
+                quoteSummary.LipaFullAmount.toLocaleString() }}</label>
             </div>
 
             <div class="flex justify-content-between gap-4" @click="toggleLipaFullDetails()">
@@ -82,8 +82,10 @@
             v-if="!lipaPolePoleDetails">
             <div class="flex justify-content-between">
               <label class="font-bold text-sm text-white w-6">Lipa Pole Pole</label>
-              <label class="font-bold text-sm text-white text-right w-6">KES
-                {{ quoteSummary.LipaPolePoleDeposit.toLocaleString() }}</label>
+              <template v-if="quoteSummary.LipaPolePoleDeposit">
+                <label class="font-bold text-sm text-white text-right w-6">KES
+                  {{ quoteSummary.LipaPolePoleDeposit.toLocaleString() }}</label>
+              </template>
             </div>
 
             <div class="flex justify-content-between gap-4">
@@ -110,19 +112,21 @@
 
               <div class="flex flex-column mt-4">
                 <label class="font-bold text-sm">Deposit Amount</label>
-                <InputText class="border-round-3xl text-sm mt-2" placeholder="Enter amount above 25,000" />
+                <InputText class="border-round-3xl text-sm mt-2" v-model="deposit"
+                  :placeholder="'Enter amount above ' + quoteSummary.LipaPolePoleDeposit.toLocaleString() " />
               </div>
 
               <div class="flex flex-column mt-4">
                 <label class="font-bold text-sm">Installment Period (Upto 10 Months)</label>
                 <Dropdown v-model="selectedInstallmentPeriod" :options="installmentsArray" placeholder="Choose"
-                  class="border-round-3xl custom-dark-dropdown custom-md-dropdown mt-2" optionLabel="name" />
+                  class="border-round-3xl custom-dark-dropdown custom-md-dropdown mt-2" optionLabel="name"
+                  optionValue="value" />
               </div>
             </div>
 
             <div class="mt-4">
               <div
-                class="flex justify-content-between border-round-2xl custom custom-dark-gray-bg px-3 py-2 align-items-center">
+                class="flex justify-content-between border-round-2xl custom custom-dark-gray-bg px-3 py-2 align-items-center" @click="calculate()">
                 <label class="font-bold text-sm text-white">Continue</label>
                 <i class="fas fa-circle-arrow-right text-black-alpha-90 text-sm text-white"></i>
               </div>
@@ -135,8 +139,8 @@
                 <template v-if="quoteSummary.LipaPolePoleDeposit">
                   <label class="text-sm font-bold text-right w-8">KES
                     {{
-          quoteSummary.LipaPolePoleDeposit.toLocaleString()
-        }}</label>
+                    quoteSummary.LipaPolePoleDeposit.toLocaleString()
+                    }}</label>
                 </template>
                 <i class="fas fa-circle-arrow-right text-black-alpha-90 text-sm text-alpha-90"></i>
               </div>
@@ -148,8 +152,8 @@
             <div class="flex justify-content-between">
               <label class="font-bold text-sm text-white w-6">Lipa Pole Pole</label>
               <label class="font-bold text-sm text-white text-right w-6">KES {{
-            quoteSummary.LipaPolePoleDeposit.toLocaleString()
-          }}</label>
+                quoteSummary.LipaPolePoleDeposit.toLocaleString()
+                }}</label>
             </div>
 
             <div class="flex justify-content-between gap-4">
@@ -190,15 +194,15 @@
               <div class="w-full border-round-3xl bg-yellow-500 px-3 custom-py-10 custom-accordion-1"
                 v-if="!summaryDetails" @click="toggleSummaryDetails()">
                 <div class="flex">
-                  <label class="font-bold text-sm mr-auto">Lipa Full</label>               
+                  <label class="font-bold text-sm mr-auto">Lipa Full</label>
 
                   <template v-if="quoteSummary.LipaFullAmount">
                     <label class="font-bold text-sm mx-auto">KES
                       {{ quoteSummary.LipaFullAmount.toLocaleString() }}
-                    </label>                   
+                    </label>
                   </template>
 
-                  <i class="fas fa-circle-chevron-down ml-auto"></i>                  
+                  <i class="fas fa-circle-chevron-down ml-auto"></i>
                 </div>
               </div>
 
@@ -227,8 +231,8 @@
                     <template v-if="quoteSummary.LipaFullAmount">
                       <label class="font-bold text-sm">KES
                         {{
-          quoteSummary.LipaFullAmount.toLocaleString()
-        }}</label>
+                        quoteSummary.LipaFullAmount.toLocaleString()
+                        }}</label>
                     </template>
                     <i class="fas fa-circle-chevron-up"></i>
                   </div>
@@ -266,7 +270,8 @@
                         <div class="col-6">
                           <div class="flex flex-column mt-4">
                             <label class="font-bold text-sm">Deposit Amount</label>
-                            <InputText class="border-round-3xl text-sm mt-2" v-model="deposit" :placeholder=" 'Enter amount above ' + quoteSummary.LipaPolePoleDeposit.toLocaleString()" />
+                            <InputText class="border-round-3xl text-sm mt-2" v-model="deposit"
+                              :placeholder=" 'Enter amount above ' + quoteSummary.LipaPolePoleDeposit.toLocaleString()" />
                           </div>
                         </div>
 
@@ -283,7 +288,8 @@
                       <div class="grid mt-2">
                         <div class="col-6">
                           <div
-                            class="flex justify-content-between border-round-2xl custom-dark-gray-bg px-3 py-2 align-items-center shadow-1" @click="calculate()">
+                            class="flex justify-content-between border-round-2xl custom-dark-gray-bg px-3 py-2 align-items-center shadow-1"
+                            @click="calculate()">
                             <label class="font-bold text-sm text-white">Continue</label>
                             <i class="fas fa-circle-arrow-right text-black-alpha-90 text-white"></i>
                           </div>
