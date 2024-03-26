@@ -30,7 +30,8 @@
                 <label class="font-bold text-sm p-2">View</label>
               </div>
 
-              <div class="flex justify-content-center w-6 bg-yellow-500 border-round-3xl mt-3" @click="submit()">
+              <div class="flex justify-content-center w-6 bg-yellow-500 border-round-3xl mt-3"
+                @click="submit('LIPA_FULL')">
                 <label class="font-bold text-sm p-2">Pay Now</label>
               </div>
             </div>
@@ -44,7 +45,7 @@
             </div>
 
             <div class="mt-3">
-              <div @click="submit()"
+              <div @click="submit('LIPA_FULL')"
                 class="flex justify-content-between border-round-2xl bg-yellow-500 px-3 py-2 align-items-center">
                 <label class="font-bold text-sm text-alpha-90">Pay Now</label>
                 <label class="font-bold text-sm text-alpha-90">KES {{ quoteSummary.LipaFullAmount.toLocaleString()
@@ -67,7 +68,8 @@
                 <label class="font-bold text-sm p-2">Close</label>
               </div>
 
-              <div class="flex justify-content-center w-6 bg-yellow-500 border-round-3xl mt-3" @click="submit()">
+              <div class="flex justify-content-center w-6 bg-yellow-500 border-round-3xl mt-3"
+                @click="submit('LIPA_FULL')">
                 <label class="font-bold text-sm p-2">Pay Now</label>
               </div>
             </div>
@@ -94,7 +96,8 @@
                 <label class="font-bold text-sm p-2">View</label>
               </div>
 
-              <div class="flex justify-content-center w-6 bg-yellow-500 border-round-3xl mt-3" @click="submit()">
+              <div class="flex justify-content-center w-6 bg-yellow-500 border-round-3xl mt-3"
+                @click="submit('LIPA_POLE_POLE')">
                 <label class="font-bold text-sm p-2">Pay Now</label>
               </div>
             </div>
@@ -126,14 +129,15 @@
 
             <div class="mt-4">
               <div
-                class="flex justify-content-between border-round-2xl custom custom-dark-gray-bg px-3 py-2 align-items-center" @click="calculate()">
+                class="flex justify-content-between border-round-2xl custom custom-dark-gray-bg px-3 py-2 align-items-center"
+                @click="calculate()">
                 <label class="font-bold text-sm text-white">Continue</label>
                 <i class="fas fa-circle-arrow-right text-black-alpha-90 text-sm text-white"></i>
               </div>
             </div>
 
             <div class="mt-3">
-              <div @click="submit()"
+              <div @click="submit('LIPA_POLE_POLE')"
                 class="flex justify-content-between border-round-2xl bg-yellow-500 px-3 py-2 align-items-center">
                 <label class="font-bold text-sm text-alpha-90">Pay Now</label>
                 <template v-if="quoteSummary.LipaPolePoleDeposit">
@@ -162,7 +166,8 @@
                 <label class="font-bold text-sm p-2">Close</label>
               </div>
 
-              <div class="flex justify-content-center w-6 bg-yellow-500 border-round-3xl mt-3" @click="submit()">
+              <div class="flex justify-content-center w-6 bg-yellow-500 border-round-3xl mt-3"
+                @click="submit('LIPA_POLE_POLE')">
                 <label class="font-bold text-sm p-2">Pay Now</label>
               </div>
             </div>

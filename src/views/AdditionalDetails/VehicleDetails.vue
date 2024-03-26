@@ -30,10 +30,10 @@
                 <div class="flex flex-column gap-2">
                   <label class="text-xs">Upload Logbook</label>
                   <div class="custom-file-input-container bg-white border-round-3xl custom-pd-file-input">
-                    <input type="file" id="fileInput" class="custom-file-input " @change="uploadFile($event)" />
+                    <input type="file" id="fileInput" class="custom-file-input " @change="selectFile($event)" />
                     <label class="text-xs custom-input-color">{{
-    uploadTxt
-  }}</label>
+                      uploadTxt
+                      }}</label>
                     <i class="fas fa-upload text-sm custom-gray"></i>
                   </div>
                 </div>
@@ -58,7 +58,7 @@
 
                   <Calendar placeholder="Choose Date" dateFormat="dd/mm/yy"
                     class="w-full custom-rounded-calendar custom-small-dropdown" showIcon iconDisplay="input"
-                    v-model="coverStartDate">
+                    v-model="coverStartDate" :minDate="minDate">
                     <template #inputicon="{ clickCallback }">
                       <i class="fas fa-calendar-days text-black-alpha-90 text-sm" @click="clickCallback"></i>
                     </template>
@@ -72,16 +72,16 @@
                 <div class="flex justify-content-between">
                   <label class="font-bold text-xs w-6">Location</label>
                   <label class="font-bold text-xs text-right w-6">{{
-    valuationLocation
-  }}</label>
+                    valuationLocation
+                    }}</label>
                 </div>
 
                 <div class="flex justify-content-between mt-2">
                   <label class="font-bold text-xs w-6">Date</label>
                   <template v-if="valuationDate != 'Choose date'">
                     <label class="font-bold text-xs text-right w-6">{{
-    format(valuationDate)
-  }}</label>
+                      format(valuationDate)
+                      }}</label>
                   </template>
                 </div>
 
@@ -89,8 +89,8 @@
                   <label class="font-bold text-xs w-6">Time</label>
                   <template v-if="valuationTime != 'Choose time'">
                     <label class="font-bold text-xs text-right w-6">{{
-    valuationTime.name
-  }}</label>
+                      valuationTime.name
+                      }}</label>
                   </template>
                 </div>
               </div>
@@ -319,6 +319,7 @@ import useDateFormatter from "@/composables/useDateFormatter";
 import useArrayToStringFormatter from "@/composables/useArrayToStringFormatter";
 
 import additionalDetailsService from "@/services/additionalDetailsService";
+import fileUploadService from "@/services/fileUploadService.js";
 
 import DesktopVehicleDetails from "@/components/Desktop/AdditionalDetails/VehicleDetails.vue";
 import { useStore } from "vuex";
@@ -423,9 +424,41 @@ const displayOverlay = (value) => {
   }
 };
 
+const selectFile = (event) => {
+  if (registrationNumber.value != null && registrationNumber.value != "") {
+    uploadFile(event)
+  }
+  else {
+    showErrorToast("Error", "Please enter registration number first")
+  }
+}
+
 const uploadFile = (e) => {
-  //uploadTxt.value = e.target.files[0].name
-  uploadTxt.value = "Uploaded";
+  isLoading.value = true
+  let originalFile = event.target.files[0]
+
+  let formData = new FormData()
+  formData.append('file', originalFile)
+  formData.append('docType', "LOGBOOK")
+  formData.append("requestRef", quoteRef)
+  formData.append("fileRef", registrationNumber.value)
+
+  fileUploadService.fileUpload(formData)
+    .then((response) => {
+      isLoading.value = false
+
+      if (response.data.code == 200) {
+        uploadTxt.value = "Uploaded"
+        showSuccessToast("Success", "File uploaded successfully")
+      }
+      else {
+        showErrorToast("Error", response)
+      }
+    })
+    .catch((error) => {
+      isLoading.value = false
+      showErrorToast("Error", error);
+    })
 };
 
 const showValuationModal = () => {

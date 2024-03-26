@@ -47,7 +47,10 @@
                         class="w-full border-round-3xl shadow-1 custom-gray-border bg-white px-3 custom-py-10 custom-accordion-body">
                         <div class="flex justify-content-between">
                             <label class="text-sm font-bold">Total Payable Amount</label>
-                            <label class="text-right text-sm font-bold">KES 120,000</label>
+                            <template v-if="paymentAmount != null">
+                                <label class="text-right text-sm font-bold">KES {{ paymentAmount.toLocaleString()
+                                    }}</label>
+                            </template>
                         </div>
 
                     </div>
@@ -57,7 +60,7 @@
             <div>
                 <div class="flex flex-column mt-4">
                     <label class="font-bold text-sm">Email Address</label>
-                    <InputText class="border-round-3xl mt-2" placeholder="Enter email" />
+                    <InputText class="border-round-3xl mt-2" placeholder="Enter email" v-model="email" />
                 </div>
 
                 <div class="mt-4">
@@ -66,7 +69,8 @@
                         <InputGroupAddon class="bg-yellow-500 border-round-left-3xl">
                             <span class="text-xs font-bold">+254</span>
                         </InputGroupAddon>
-                        <InputText class="border-round-right-3xl" placeholder="Enter Mobile Number" />
+                        <InputText class="border-round-right-3xl" placeholder="Enter Mobile Number"
+                            v-model="phoneNumber" />
                     </InputGroup>
                 </div>
 
@@ -123,8 +127,9 @@
                                         <div class="flex justify-content-between">
                                             <label class="text-sm font-bold">Total Payable Amount</label>
                                             <template v-if="paymentAmount != null">
-                                                <label class="text-right text-sm font-bold">KES {{ paymentAmount.toLocaleString() }}</label>
-                                            </template>                                            
+                                                <label class="text-right text-sm font-bold">KES {{
+                    paymentAmount.toLocaleString() }}</label>
+                                            </template>
                                         </div>
 
                                     </div>
@@ -134,12 +139,14 @@
                             <div class="grid">
                                 <div class="col-6">
                                     <div class="flex flex-column mt-4">
-                                        <label class="font-bold text-sm">Enter Your Mobile Number to Make Payment</label>
+                                        <label class="font-bold text-sm">Enter Your Mobile Number to Make
+                                            Payment</label>
                                         <InputGroup class="mt-2">
                                             <InputGroupAddon class="bg-yellow-500 border-round-left-3xl">
                                                 <span class="text-sm font-bold text-black-alpha-90">+254</span>
                                             </InputGroupAddon>
-                                            <InputText class="border-round-right-3xl" placeholder="Enter Mobile Number" v-model="phoneNumber"/>
+                                            <InputText class="border-round-right-3xl" placeholder="Enter Mobile Number"
+                                                v-model="phoneNumber" />
                                         </InputGroup>
                                     </div>
                                 </div>
@@ -147,7 +154,8 @@
                                 <div class="col-6">
                                     <div class="flex flex-column mt-4">
                                         <label class="font-bold text-sm">Email Address</label>
-                                        <InputText class="border-round-3xl mt-2" placeholder="Enter email" v-model="email"/>
+                                        <InputText class="border-round-3xl mt-2" placeholder="Enter email"
+                                            v-model="email" />
                                     </div>
                                 </div>
                             </div>
@@ -209,7 +217,7 @@ const opacity = ref(0.7);
 const paymentAmount = store.getters.getPaymentPlan.amount
 
 onMounted(() => {
-  //
+    //
 });
 
 const navigate = (path) => {
@@ -227,6 +235,8 @@ const submit = () => {
     data.nationalId = store.getters.getPersonalDetails.nationalId
     data.paymentMethod = "MPESA"
     data.transactionType = "NB"
+
+    console.log(data);
 
     isLoading.value = true
 
