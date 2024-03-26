@@ -59,10 +59,10 @@
               </div>
 
               <div class="col-6 mt-3">
-                <div class="w-full border-round-2xl bg-yellow-500 px-3 py-2 mt-2" @click="verifyCustomer()">
+                <div class="w-full border-round-2xl custom-dark-gray-bg px-3 py-2 mt-2" @click="verifyCustomer()">
                   <div class="flex justify-content-between align-items-center">
-                    <label class="font-bold text-sm">Verify Details</label>
-                    <i class="fas fa-circle-arrow-right text-black-alpha-90"></i>
+                    <label class="font-bold text-sm text-white">Verify Details</label>
+                    <i class="fas fa-circle-arrow-right text-white"></i>
                   </div>
                 </div>
               </div>
@@ -259,7 +259,7 @@ const verifyCustomer = () => {
 
       if (error.response) {
         showErrorToast("Error", error.response);
-      } 
+      }
       else {
         showErrorToast("Error", error.response);
       }
@@ -270,7 +270,7 @@ const verifyCustomer = () => {
 const uploadFile = (event) => {
   isLoading.value = true;
   let originalFile = event.target.files[0]
-  
+
   let formData = new FormData();
   formData.append('file', originalFile)
   formData.append("docType", "NATIONAL ID");
@@ -322,10 +322,9 @@ const submit = () => {
     .createCustomer(data)
     .then((response) => {
       if (response.data.response_code == 200) {
-        uploadFile();
+        navigate("/vehicle-details");
       }
       else {
-        
         isLoading.value = false;
         showErrorToast("Error", response.data);
       }

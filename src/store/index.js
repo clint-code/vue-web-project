@@ -15,6 +15,8 @@ const store = createStore({
     valuationStatus: false,
 
     personalDetails: null,
+
+    paymentPlan: null
   },
 
   mutations: {
@@ -61,6 +63,10 @@ const store = createStore({
     setPersonalDetails(state, value) {
       state.personalDetails = value;
     },
+
+    setPaymentPlan(state, value) {
+      state.paymentPlan = value;
+    },
   },
 
   getters: {
@@ -77,6 +83,8 @@ const store = createStore({
     getValuationStatus: (state) => state.valuationStatus,
 
     getPersonalDetails: (state) => state.personalDetails,
+
+    getPaymentPlan: (state) => state.paymentPlan
   },
 });
 

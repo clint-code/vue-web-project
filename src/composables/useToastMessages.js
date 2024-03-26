@@ -18,17 +18,17 @@ export default function useToastMessages() {
     if (typeof error === "string") {
       content = error;
       showError(summary, content);
-    } 
+    }
 
     else {
-      if (error.errors) {
+      if (error && error.errors) {
         error.errors.forEach((error) => {
           content = error.message + "- " + error.field;
           showError(summary, content);
         });
       } 
       
-      else if (error.response) {
+      else if (error && error.response) {
         if (error.response.data) {
           if (error.response.data.errors) {
             error.response.data.errors.forEach((error) => {
@@ -44,13 +44,14 @@ export default function useToastMessages() {
         }
       } 
       
-      else if (error.data) {
+      else if (error && error.data) {
         if (error.data.data) {
           showError(error.data.message, error.data.data.errorMessage);
         }
       } else {
         showError(summary, "There was an error processing your request.");
       }
+
     }
   };
 

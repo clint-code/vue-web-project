@@ -22,7 +22,7 @@
                                     </div>
 
                                     <div class="flex justify-content-center mt-2">
-                                        <label class="text-xs font-semibold text-center">Motor Car</label>
+                                        <label class="text-xs font-semibold text-center">{{ product.name }}</label>
                                     </div>
 
                                     <div class="flex justify-content-center mt-3">
