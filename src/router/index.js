@@ -2,24 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 import Landing from '../views/Landing.vue'
 
-import GetQuote from '../views/Quote/GetQuote.vue'
-import Quote from '@/views/Quote/Quote.vue'
-import AcceptTerms from '@/views/Quote/AcceptTerms.vue'
-
-import PersonalDetails from '@/views/AdditionalDetails/PersonalDetails.vue'
-import VehicleDetails from '@/views/AdditionalDetails/VehicleDetails.vue'
-
-import Summary from '@/views/Summary/Summary.vue'
-import Payment from '@/views/Summary/Payment.vue'
-import PaymentSummary from '@/views/Summary/PaymentSummary.vue'
-
-import ContactUs from '@/views/ContactUs/ContactUs.vue'
-
-import LipaPolePole from '@/views/LipaPolePole/LipaPolePole.vue'
-
-import MyPolicies from '@/views/MyPolicies/MyPolicies.vue'
-import PolicyDetails from '@/views/MyPolicies/PolicyDetails.vue'
-
 const routes = [
   { 
     path: '/', 
@@ -29,62 +11,86 @@ const routes = [
 
   { 
     path: '/get-quote', 
-    component: GetQuote 
+    component: () => import("../views/Quote/GetQuote.vue") 
   },
 
   { 
     path: '/quote', 
-    component: Quote 
+    component: () => import("../views/Quote/Quote.vue") 
   },
 
   { 
     path: '/accept-terms', 
-    component: AcceptTerms 
+    component: () => import("../views/Quote/AcceptTerms.vue") 
   },
 
   { 
     path: '/personal-details', 
-    component: PersonalDetails 
+    component: () => import("../views/AdditionalDetails/PersonalDetails.vue") 
   },
 
   { 
     path: '/vehicle-details', 
-    component: VehicleDetails 
+    component: () => import("../views/AdditionalDetails/VehicleDetails.vue") 
   },
 
   { 
     path: '/summary', 
-    component: Summary 
+    component: () => import("../views/Summary/Summary.vue") 
   },
 
   { 
     path: '/payment', 
-    component: Payment 
+    component: () => import("../views/Summary/Payment.vue") 
   },
   
   { 
     path: '/payment-summary', 
-    component: PaymentSummary 
+    component: () => import("../views/Summary/PaymentSummary.vue") 
   },
 
 
   {
     path: '/contact-us',
-    component: ContactUs,
+    component: () => import("../views/ContactUs/ContactUs.vue"),
   },
 
   {
     path: '/lipa-pole-pole',
-    component: LipaPolePole
+    component: () => import("../views/LipaPolePole/LipaPolePole.vue")
   },
 
   {
     path: '/my-policies',
-    component: MyPolicies
+    component: () => import("../views/MyPolicies/MyPolicies.vue")
   },
   {
     path: '/policy-details',
-    component: PolicyDetails
+    component: () => import("../views/MyPolicies/PolicyDetails.vue"),
+  },
+  {
+    path: "/my-claims",
+    component: () => import("../views/Claims/MyClaims.vue"),
+  },
+  {
+    path: "/damage",
+    component: () => import("../views/Claims/Damage.vue"),
+  },
+  {
+    path: "/total-theft",
+    component: () => import("../views/Claims/TotalTheft.vue"),
+  },
+  {
+    path: "/theft-recovery",
+    component: () => import("../views/Claims/TheftRecovery.vue"),
+  },
+  {
+    path: "/theft-of-parts",
+    component: () => import("../views/Claims/TheftOfParts.vue")
+  },
+  {
+    path: "/windscreen",
+    component: () => import("../views/Claims/Windscreen.vue")
   }
 ];
 
