@@ -89,10 +89,6 @@
 
         </div>
     </div>
-
-    <div class="custom-desktop-view">
-        
-    </div>
 </template>
 
 <script setup>

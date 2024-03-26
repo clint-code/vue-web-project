@@ -211,7 +211,7 @@
                   <QuoteDetails quoteType="Lipa Full" />
 
                   <div class="mt-3">
-                    <div @click="submit()"
+                    <div @click="submit('LIPA_FULL')"
                       class="flex justify-content-between border-round-2xl bg-yellow-500 px-3 py-2 align-items-center">
                       <label class="font-bold text-sm text-alpha-90">Pay Now</label>
 
@@ -298,14 +298,15 @@
                     </div>
 
                     <div class="mt-3">
-                      <div @click="submit()"
+                      <div @click="submit('LIPA_POLE_POLE')"
                         class="flex justify-content-between border-round-2xl bg-yellow-500 px-3 py-2 align-items-center">
-                        <label class="font-bold text-sm text-alpha-90">Pay Now</label>
+                        <label class="font-bold text-sm text-alpha-90 mr-auto">Pay Now</label>
+
                         <template v-if="quoteSummary.LipaPolePoleDeposit">
-                          <label class="text-xs font-bold text-right w-8">KES
+                          <label class="text-sm font-bold mx-auto">KES
                             {{ quoteSummary.LipaPolePoleDeposit.toLocaleString() }}</label>
                         </template>
-                        <i class="fas fa-circle-arrow-right text-black-alpha-90 text-sm text-alpha-90"></i>
+                        <i class="fas fa-circle-arrow-right text-black-alpha-90 text-alpha-90 ml-auto"></i>
                       </div>
                     </div>
                   </div>
@@ -458,8 +459,19 @@ const calculate = () => {
       }      
     })
     .catch((error) => {
+      console.log(error)
       isLoading.value = false
       showErrorToast(error)
     })
+}
+
+const submit = (value) => {
+  let data = {}
+
+  data.paymentType = value
+  data.amount = 1
+
+  store.commit('setPaymentPlan', data)
+  navigate('/payment')
 }
 </script>

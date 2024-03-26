@@ -63,10 +63,10 @@
                 <div class="mt-4">
                     <label class="font-bold text-sm">Enter Your Mobile Number to Make Payment</label>
                     <InputGroup class="mt-2">
-                        <InputGroupAddon class="bg-yellow-500 border-round-left-2xl">
+                        <InputGroupAddon class="bg-yellow-500 border-round-left-3xl">
                             <span class="text-xs font-bold">+254</span>
                         </InputGroupAddon>
-                        <InputText class="border-round-right-2xl" placeholder="Enter Mobile Number" />
+                        <InputText class="border-round-right-3xl" placeholder="Enter Mobile Number" />
                     </InputGroup>
                 </div>
 
@@ -87,7 +87,7 @@
                 <div class="lg:col-10 relative">
                     <div class="mb-4">
                         <div class="mt-6">
-                            <div
+                            <div @click="navigate('/summary')"
                                 class="flex justify-content-between align-items-center custom-dark-gray-bg border-round-3xl gap-1 px-3 py-2 custom-w-5">
                                 <i class="fas fa-angle-double-left text-white"></i>
                                 <label class="text-sm font-bold text-white justify-content-end">Back</label>
@@ -122,7 +122,9 @@
                                         class="w-full border-round-3xl shadow-1 custom-gray-border bg-white px-3 custom-py-10 custom-accordion-body">
                                         <div class="flex justify-content-between">
                                             <label class="text-sm font-bold">Total Payable Amount</label>
-                                            <label class="text-right text-sm font-bold">KES 120,000</label>
+                                            <template v-if="paymentAmount != null">
+                                                <label class="text-right text-sm font-bold">KES {{ paymentAmount.toLocaleString() }}</label>
+                                            </template>                                            
                                         </div>
 
                                     </div>
@@ -131,13 +133,13 @@
 
                             <div class="grid">
                                 <div class="col-6">
-                                    <div class="mt-4">
+                                    <div class="flex flex-column mt-4">
                                         <label class="font-bold text-sm">Enter Your Mobile Number to Make Payment</label>
                                         <InputGroup class="mt-2">
-                                            <InputGroupAddon class="bg-yellow-500 border-round-left-2xl">
-                                                <span class="text-xs font-bold">+254</span>
+                                            <InputGroupAddon class="bg-yellow-500 border-round-left-3xl">
+                                                <span class="text-sm font-bold text-black-alpha-90">+254</span>
                                             </InputGroupAddon>
-                                            <InputText class="border-round-right-2xl" placeholder="Enter Mobile Number" />
+                                            <InputText class="border-round-right-3xl" placeholder="Enter Mobile Number" v-model="phoneNumber"/>
                                         </InputGroup>
                                     </div>
                                 </div>
@@ -145,17 +147,17 @@
                                 <div class="col-6">
                                     <div class="flex flex-column mt-4">
                                         <label class="font-bold text-sm">Email Address</label>
-                                        <InputText class="border-round-3xl mt-2" placeholder="Enter email" />
+                                        <InputText class="border-round-3xl mt-2" placeholder="Enter email" v-model="email"/>
                                     </div>
                                 </div>
-
                             </div>
+
                             <div>
                                 <div class="mt-3">
                                     <div class="flex justify-content-between border-round-3xl bg-yellow-500 px-3 align-items-center custom-py-10"
                                         @click="submit()">
                                         <label class="font-bold text-sm text-alpha-90">Pay Now</label>
-                                        <i class="fas fa-circle-arrow-right text-black-alpha-90 text-sm text-alpha-90"></i>
+                                        <i class="fas fa-circle-arrow-right text-black-alpha-90 text-alpha-90"></i>
                                     </div>
                                 </div>
                             </div>
@@ -169,23 +171,80 @@
             </div>
         </div>
     </div>
+
+    <loading v-model:active="isLoading" :is-full-page="fullPage" color="#FFC402" loader="dots" :opacity="opacity" />
+    <Toast />
 </template>
 
 <script setup>
+import { ref, onMounted } from 'vue'
+
+import { useStore } from "vuex";
+import { useRouter } from 'vue-router'
+
+import paymentService from "@/services/paymentService.js";
+
+import usePhoneNumberFormatter from "@/composables/usePhoneNumberFormatter";
+import useToastMessages from "@/composables/useToastMessages";
+
 import TopNav from '@/components/TopNav.vue'
-import Footer from '@/components/Footer.vue'
 import Steps from "@/components/Steps.vue"
 
-import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+const { format } = usePhoneNumberFormatter();
+const { showSuccessToast, showErrorToast } = useToastMessages();
 
 const step = ref("Payment")
 const level = ref(4)
 
+const phoneNumber = ref(null)
+const email = ref(null)
+
 const router = useRouter()
+const store = useStore();
+
+const isLoading = ref(false);
+const fullPage = ref(true);
+const opacity = ref(0.7);
+
+const paymentAmount = store.getters.getPaymentPlan.amount
+
+onMounted(() => {
+  //
+});
+
+const navigate = (path) => {
+    router.push(path)
+}
 
 const submit = () => {
-    router.push("/payment-summary")
+    let data = {}
+
+    data.quoteRef = store.getters.getQuoteRef
+    data.certEmail = email.value
+    data.amount = store.getters.getPaymentPlan.amount
+    data.paymentPhone = format(phoneNumber.value)
+    data.paymentType = store.getters.getPaymentPlan.paymentType
+    data.nationalId = store.getters.getPersonalDetails.nationalId
+    data.paymentMethod = "MPESA"
+    data.transactionType = "NB"
+
+    isLoading.value = true
+
+    paymentService.postPayment(data)
+        .then((response) => {
+            isLoading.value = false
+
+            if(response.data.response_code == 200) {
+               showSuccessToast("Payment Sent", "Payment prompt sent successfully.")
+            }
+            else {
+                showErrorToast("Error", response)
+            }
+        })
+        .catch((error) => {
+            isLoading.value = false
+            showErrorToast("Error", error)
+        })
 }
 
 </script>

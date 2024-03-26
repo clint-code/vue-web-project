@@ -32,10 +32,8 @@
                     <div class="flex flex-column gap-2">
                       <label class="text-sm font-medium">Upload Logbook</label>
                       <div class="custom-file-input-container bg-white border-round-3xl">
-                        <input type="file" id="fileInput" class="custom-file-input" @change="uploadFile($event)" />
-                        <label class="text-sm custom-input-color">{{
-          uploadTxt
-        }}</label>
+                        <input type="file" id="fileInput" class="custom-file-input" @change="selectFile($event)" />
+                        <label class="text-sm custom-input-color">{{ uploadTxt }}</label>
                         <i class="fas fa-upload text-sm custom-gray"></i>
                       </div>
                     </div>
@@ -72,26 +70,20 @@
                     <div class="w-full custom-gray-bg custom-gray-border-3 border-1 border-round-top-3xl p-3">
                       <div class="flex justify-content-between">
                         <label class="font-bold text-xs w-6">Location</label>
-                        <label class="font-bold text-xs text-right w-6">{{
-          store.getters.getValuationLocation
-        }}</label>
+                        <label class="font-bold text-xs text-right w-6">{{ store.getters.getValuationLocation }}</label>
                       </div>
 
                       <div class="flex justify-content-between mt-2">
                         <label class="font-bold text-xs w-6">Date</label>
                         <template v-if="store.getters.getValuationDate != 'Choose date'">
-                          <label class="font-bold text-xs text-right w-6">{{
-          store.getters.getValuationDate
-        }}</label>
+                          <label class="font-bold text-xs text-right w-6">{{ store.getters.getValuationDate }}</label>
                         </template>
                       </div>
 
                       <div class="flex justify-content-between mt-2 mb-3">
                         <label class="font-bold text-xs w-6">Time</label>
                         <template v-if="store.getters.getValuationTime != 'Choose time'">
-                          <label class="font-bold text-xs text-right w-6">{{
-          store.getters.getValuationTime
-        }}</label>
+                          <label class="font-bold text-xs text-right w-6">{{ store.getters.getValuationTime }}</label>
                         </template>
                       </div>
                     </div>
@@ -187,6 +179,7 @@ import useDateFormatter from "@/composables/useDateFormatter";
 import useArrayToStringFormatter from "@/composables/useArrayToStringFormatter";
 
 import additionalDetailsService from "@/services/additionalDetailsService";
+import fileUploadService from "@/services/fileUploadService.js";
 
 const props = defineProps({
   sectionHeight: String,
@@ -358,12 +351,14 @@ const getQuoteSummary = () => {
       if (response.data.response_code == 200) {
         store.commit("setQuoteSummary", response.data.data);
         navigate("/summary");
-      } else {
+      } 
+      else {
         isLoading.value = false;
         showErrorToast("Error", response);
       }
     })
     .catch((error) => {
+      isLoading.value = false;
       showErrorToast("Error", error);
     });
 };
@@ -371,6 +366,15 @@ const getQuoteSummary = () => {
 const navigate = (path) => {
   router.push(path);
 };
+
+const selectFile = (event) => {
+  if(registrationNumber.value != null && registrationNumber.value != "") {
+    uploadFile(event)
+  }
+  else {
+    showErrorToast("Error", "Please enter registration number first")
+  }
+}
 
 const uploadFile = (event) => {
   isLoading.value = true;

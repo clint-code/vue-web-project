@@ -13,10 +13,6 @@
          url('/assets/fonts/Roboto-Regular.ttf') format('truetype'),
          url('/assets/fonts/Roboto-Thin.ttf') format('truetype'),
          url('/assets/fonts/Roboto-ThinItalic.ttf') format('truetype');
-  }
-
-* {
-    font-family: Roboto;
 }
 
 body {
