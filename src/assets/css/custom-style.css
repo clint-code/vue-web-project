@@ -551,7 +551,7 @@ body {
     padding-block: 0.75rem;
 }
  .custom-pd-file-input {
-    padding-block: 1.25rem;
+    padding-block: 1rem;
 }
 
 .custom-pd-bg-lightblue {
@@ -572,4 +572,73 @@ body {
 
 .custom-gray-blue-bg {
     background-color: #E0E4E9;
+}
+
+ol {
+  list-style-type: decimal;
+}
+
+.custom-bg-black {
+  background-color: #4a4a4a;
+  color: #ffffff;
+}
+
+.custom-bg-green {
+  background-color: #c5e226;
+}
+
+.custom-border {
+  border: 1px solid #000000;
+}
+
+.custom-claims {
+  display: grid;
+  grid-row-gap: 0.75rem;
+  grid-column-gap: 0.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(7.5rem, 1fr));
+
+}
+
+.custom-claims-status {
+  display: grid;
+  grid-row-gap: 1.25rem;
+  grid-column-gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(7.5rem, 1fr));
+}
+
+.custom-input-padding-1 .p-inputtext {
+    padding: 0.85rem !important;
+}
+
+.custom-placeholder-color .p-inputtext::placeholder {
+    color: black;
+}
+
+.custom-calender-text .p-inputtext {
+    font-size: 0.85rem;
+}
+
+.custom-uploads {
+  display: grid;
+  grid-row-gap: 2rem;
+  grid-column-gap: 0.7rem;
+  grid-template-columns: repeat(auto-fit, minmax(7.5rem, 1fr));
+}
+
+.custom-file-input-container {
+  padding-block: 1.35rem !important;
+  border: 1px solid #000000 !important;
+  border-radius: 1.5rem;
+  padding-inline: 0.5rem !important;
+  padding-block: 1.5rem !important;
+}
+
+.custom-fill {
+  background-color: #4a4a4a;
+}
+
+.custom-absolute-item {
+  position: absolute;
+  top: -10px;
+  right: -10px;
 }

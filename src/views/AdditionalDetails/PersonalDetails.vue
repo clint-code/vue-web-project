@@ -73,7 +73,7 @@
             </div>
           </div>
 
-          <template v-if="true">
+          <template v-if="verificationStatus">
             <div class="grid mt-3 pt-4 border-top-1 border-gray-400">
               <div class="col-6">
                 <div class="flex flex-column gap-2">
@@ -98,8 +98,8 @@
                   <label class="text-sm font-medium">Date of Birth</label>
 
                   <Calendar v-model="dob" placeholder="Choose Date"
-                    class="w-full custom-rounded-calendar custom-small-dropdown custom-pd-calendar" showIcon iconDisplay="input"
-                    :maxDate="maxDate">
+                    class="w-full custom-rounded-calendar custom-small-dropdown custom-pd-calendar" showIcon
+                    iconDisplay="input" :maxDate="maxDate">
                     <template #inputicon="{ clickCallback }">
                       <i class="fas fa-calendar-days text-black-alpha-90 text-sm " @click="clickCallback"></i>
                     </template>
@@ -107,7 +107,7 @@
                 </div>
               </div>
 
-              <template v-if="true">
+              <template v-if="kraPinStatus">
                 <div class="col-6">
                   <div class="flex flex-column gap-2">
                     <label class="text-sm font-medium">KRA PIN</label>
@@ -123,8 +123,8 @@
                   <div class="custom-file-input-container bg-white border-round-3xl custom-pd-file-input">
                     <input type="file" id="fileInput" class="custom-file-input " @change="uploadFile($event)" />
                     <label class="text-sm custom-input-color">{{
-      uploadTxt
-    }}</label>
+                      uploadTxt
+                      }}</label>
                     <i class="fas fa-upload text-sm custom-gray"></i>
                   </div>
                 </div>
@@ -162,6 +162,7 @@ import { useRouter } from "vue-router";
 import { ids } from "@/util/identificationDocuments.js";
 
 import additionalDetailsService from "@/services/additionalDetailsService.js";
+import fileUploadService from "@/services/fileUploadService.js";
 
 import useToastMessages from "@/composables/useToastMessages";
 import usePhoneNumberFormatter from "@/composables/usePhoneNumberFormatter";
@@ -262,9 +263,35 @@ const verifyCustomer = () => {
     });
 };
 
-const uploadFile = (e) => {
-  // uploadTxt.value = e.target.files[0].name
-  uploadTxt.value = "Uploaded";
+const uploadFile = (event) => {
+  isLoading.value = true;
+  let originalFile = event.target.files[0]
+
+  let formData = new FormData();
+  formData.append('file', originalFile)
+  formData.append("docType", "National ID")
+  formData.append("requestRef", quoteRef)
+  formData.append("fileRef", nationalId.value)
+
+  console.log(formData);
+
+  fileUploadService.fileUpload(formData)
+    .then((response) => {
+      isLoading.value = false
+
+      if (response.data.code == 200) {
+        uploadTxt.value = "Uploaded"
+        showSuccessToast("Success", "File uploaded successfully")
+      }
+      else {
+        showErrorToast("Error", response)
+      }
+    })
+    .catch((error) => {
+      isLoading.value = false
+      showErrorToast("Error", error)
+    })
+
 };
 
 const submit = () => {
