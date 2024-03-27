@@ -26,7 +26,7 @@
                                     </div>
 
                                     <div class="flex justify-content-center mt-3">
-                                        <div class="flex justify-content-between align-items-center border-round-2xl gap-2 px-2 py-1"
+                                        <div class="flex justify-content-between  border-round-2xl gap-2 px-2 py-1"
                                             @click="toggleDetails(index, product.category_type, product.id)"
                                             :class="{ 'bg-yellow-500': !product.active, 'bg-white': product.active }">
                                             <label class="font-bold text-xs">Get Quote</label>

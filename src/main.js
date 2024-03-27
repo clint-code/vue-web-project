@@ -46,6 +46,7 @@ import Toast from 'primevue/toast'
 import ToastService from 'primevue/toastservice'
 import Ripple from 'primevue/ripple'
 import StyleClass from 'primevue/styleclass'
+import CustomButton from '@/components/Layout/CustomButton.vue'
 
 const app = createApp(App)
 
@@ -73,6 +74,8 @@ app.component('Listbox', Listbox)
 app.component('Steps', Steps)
 app.component('Textarea', Textarea)
 app.component('Toast', Toast)
+
+app.component('CustomButton', CustomButton)
 
 app.use(store)
 app.use(router)

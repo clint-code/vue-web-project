@@ -32,7 +32,7 @@
                 </div>
 
                 <div class="flex justify-content-end">
-                    <div class="flex align-items-center bg-yellow-500 border-round-3xl gap-2 px-3 py-2" @click="navigate('/my-policies')">
+                    <div class="flex align-items-center bg-yellow-500 border-round-3xl gap-2 px-3 py-2" @click="showMyPolices()">
                         <label class="text-sm font-bold">My Policies</label>
                         <i class="fas fa-user-circle"></i>
                     </div>
@@ -227,11 +227,17 @@
             </div>
         </div>
     </div>
+
+    <template v-if="sidebar">
+        <DesktopAuthSidebar :sidebar="sidebar" />
+    </template>    
 </template>
 
 <script setup>
 import { ref, onMounted, defineProps, defineEmits } from 'vue'
 import { useRouter } from 'vue-router'
+
+import DesktopAuthSidebar from "@/components/Desktop/Auth/AuthSidebar.vue";
 
 const emits = defineEmits()
 const props = defineProps({
@@ -244,6 +250,8 @@ const router = useRouter()
 const menuDetails = ref(false)
 const navbar = ref(null)
 const navbarHeight = ref(0)
+
+const sidebar = ref(false)
 
 onMounted(() => {
     if (navbar.value) {
@@ -267,5 +275,10 @@ const showMenuDetails = () => {
 
 const navigate = (value) => {
     router.push(value)
+}
+
+const showMyPolices = () => {
+    console.log(sidebar.value)
+    sidebar.value = true
 }
 </script>
