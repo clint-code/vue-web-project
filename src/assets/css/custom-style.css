@@ -570,6 +570,10 @@ body {
     background-color: #DEE1EB;
 }
 
+.custom-gray-blue-bg {
+    background-color: #E0E4E9;
+}
+
 ol {
   list-style-type: decimal;
 }
