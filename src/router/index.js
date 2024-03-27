@@ -77,21 +77,45 @@ const routes = [
     component: () => import("../views/Claims/Damage.vue"),
   },
   {
+    path: "/damage-details",
+    component: () => import("../views/Claims/DamageDetails.vue"),
+  },
+  {
     path: "/total-theft",
     component: () => import("../views/Claims/TotalTheft.vue"),
+  },
+  {
+    path: "/total-theft-details",
+    component: () => import("../views/Claims/TotalTheftDetails.vue"),
   },
   {
     path: "/theft-recovery",
     component: () => import("../views/Claims/TheftRecovery.vue"),
   },
   {
+    path: "/theft-recovery-details",
+    component: () => import("../views/Claims/TheftRecoveryDetails.vue"),
+  },
+  {
     path: "/theft-of-parts",
     component: () => import("../views/Claims/TheftOfParts.vue")
   },
   {
+    path: "/theft-of-parts-details",
+    component: () => import("../views/Claims/TheftOfPartsDetails.vue")
+  },
+  {
     path: "/windscreen",
     component: () => import("../views/Claims/Windscreen.vue")
-  }
+  }, 
+  {
+    path: "/windscreen-details",
+    component: () => import("../views/Claims/WindscreenDetails.vue")
+  }, 
+  {
+    path: "/claim-summary",
+    component: () => import("../views/Claims/Summary.vue")
+  },
 ];
 
 const router = createRouter({

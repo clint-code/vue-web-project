@@ -174,7 +174,7 @@
         <template v-if="accepted">
           <div class="py-3 px-3">
             <h6 class="m-0 text-lg font-medium">Choose type of claim</h6>
-            <div class="claims py-4">
+            <div class="custom-claims py-4">
               <div v-for="(claim, index) in claims" :key="index"
                 class="card-claim flex flex-column gap-2 align-items-center justify-content-center py-2 px-1 border-2 border-round-xl"
                 @click="handleClick(index)" :class="{
@@ -187,7 +187,7 @@
       : claim.image.yellow
       " alt="damage" height="40px" width="auto" />
                 </div>
-                <p class="m-0 text-sm text-center font-semibold">
+                <p class="m-0 text-xs text-center font-semibold">
                   {{ claim.label }}
                 </p>
                 <div class="border-round-xl py-1 w-full text-center" :class="{
@@ -213,7 +213,7 @@ import CustomButton from "@/components/shared/CustomButton.vue";
 import Footer from "../../components/Footer.vue";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { submitCl, submittedCls } from "@/util/claims.js"; 
+import { submitCl, submittedCls } from "@/util/claims.js";
 
 const router = useRouter();
 const page = "My Claims";
