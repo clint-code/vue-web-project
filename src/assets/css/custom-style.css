@@ -359,6 +359,18 @@ body {
     height: 2rem
 }
 
+.custom-file-input-container-logbook {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;
+    color: black;
+    cursor: pointer;
+    border: 1px solid #ced4da;
+    padding-block: 0.85rem;
+    padding-inline: 0.5rem;
+}
+
 .custom-px-12 {
     padding-left: 12px;
     padding-right: 12px;
@@ -550,6 +562,15 @@ body {
 .custom-padding-block {
     padding-block: 0.75rem;
 }
+
+.custom-padding-block-2 {
+    padding-block: 0.85rem;
+}
+
+.custom-calendar-vehicle .p-inputtext {
+    padding-block: 0.95rem;
+}
+
  .custom-pd-file-input {
     padding-block: 1rem;
 }
