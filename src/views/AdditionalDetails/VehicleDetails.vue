@@ -29,11 +29,11 @@
               <div class="col-6">
                 <div class="flex flex-column gap-2">
                   <label class="text-xs">Upload Logbook</label>
-                  <div class="custom-file-input-container bg-white border-round-3xl custom-pd-file-input">
+                  <div class="custom-file-input-container-logbook bg-white border-round-3xl ">
                     <input type="file" id="fileInput" class="custom-file-input " @change="selectFile($event)" />
                     <label class="text-xs custom-input-color">{{
-                      uploadTxt
-                      }}</label>
+    uploadTxt
+  }}</label>
                     <i class="fas fa-upload text-sm custom-gray"></i>
                   </div>
                 </div>
@@ -46,7 +46,7 @@
                   <label class="text-xs font-medium">Choose Security Device</label>
                   <MultiSelect v-model="selectedSecurityDevices" display="chip" :options="securityDevices"
                     optionLabel="name" placeholder="Select Security Device"
-                    class="w-full md:w-20rem text-xs border-round-3xl py-1" />
+                    class="w-full md:w-20rem text-xs border-round-3xl py-2" />
                 </div>
               </div>
             </div>
@@ -57,8 +57,8 @@
                   <label class="text-xs">Choose Policy Start Date</label>
 
                   <Calendar placeholder="Choose Date" dateFormat="dd/mm/yy"
-                    class="w-full custom-rounded-calendar custom-small-dropdown" showIcon iconDisplay="input"
-                    v-model="coverStartDate" :minDate="minDate">
+                    class="w-full custom-rounded-calendar custom-small-dropdown custom-calendar-vehicle" showIcon
+                    iconDisplay="input" v-model="coverStartDate" :minDate="minDate">
                     <template #inputicon="{ clickCallback }">
                       <i class="fas fa-calendar-days text-black-alpha-90 text-sm" @click="clickCallback"></i>
                     </template>
@@ -72,16 +72,16 @@
                 <div class="flex justify-content-between">
                   <label class="font-bold text-xs w-6">Location</label>
                   <label class="font-bold text-xs text-right w-6">{{
-                    valuationLocation
-                    }}</label>
+    valuationLocation
+  }}</label>
                 </div>
 
                 <div class="flex justify-content-between mt-2">
                   <label class="font-bold text-xs w-6">Date</label>
                   <template v-if="valuationDate != 'Choose date'">
                     <label class="font-bold text-xs text-right w-6">{{
-                      format(valuationDate)
-                      }}</label>
+    format(valuationDate)
+  }}</label>
                   </template>
                 </div>
 
@@ -89,8 +89,8 @@
                   <label class="font-bold text-xs w-6">Time</label>
                   <template v-if="valuationTime != 'Choose time'">
                     <label class="font-bold text-xs text-right w-6">{{
-                      valuationTime.name
-                      }}</label>
+    valuationTime.name
+  }}</label>
                   </template>
                 </div>
               </div>
@@ -105,7 +105,8 @@
               </div>
             </div>
 
-            <div class="w-full border-round-3xl custom-dark-gray-border border-1 custom-dark-gray-bg px-3 py-3 mt-2"
+            <div
+              class="w-full border-round-3xl custom-dark-gray-border border-1 custom-dark-gray-bg px-3 custom-padding-block mt-2"
               @click="showValuationModal()" v-if="!valuationStatus">
               <div class="flex justify-content-between align-items-center">
                 <label class="font-bold text-xs text-white">Book Valuation Now</label>
