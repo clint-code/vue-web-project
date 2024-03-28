@@ -287,7 +287,7 @@
     </div>
 
     <template v-if="sidebar">
-        <DesktopAuthSidebar :sidebar="sidebar" />
+        <DesktopAuthSidebar :sidebar="sidebar" @closeSidebar="closeSidebar" />
     </template>    
 </template>
 
@@ -336,7 +336,10 @@ const navigate = (value) => {
 }
 
 const showMyPolices = () => {
-    console.log(sidebar.value)
     sidebar.value = true
+}
+
+const closeSidebar = (value) => {
+    sidebar.value = value
 }
 </script>
