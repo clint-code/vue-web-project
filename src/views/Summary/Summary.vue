@@ -131,7 +131,7 @@
               <div
                 class="flex justify-content-between border-round-2xl custom custom-dark-gray-bg px-3 py-2 align-items-center"
                 @click="calculate()">
-                <label class="font-bold text-sm text-white">Continue</label>
+                <label class="font-bold text-sm text-white">Calculate</label>
                 <i class="fas fa-circle-arrow-right text-black-alpha-90 text-sm text-white"></i>
               </div>
             </div>
@@ -295,7 +295,7 @@
                           <div
                             class="flex justify-content-between border-round-2xl custom-dark-gray-bg px-3 py-2 align-items-center shadow-1"
                             @click="calculate()">
-                            <label class="font-bold text-sm text-white">Continue</label>
+                            <label class="font-bold text-sm text-white">Calculate</label>
                             <i class="fas fa-circle-arrow-right text-black-alpha-90 text-white"></i>
                           </div>
                         </div>

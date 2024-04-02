@@ -1,13 +1,5 @@
 export const installments = [
     {
-        name: "1 Month",
-        value: 1
-    },
-    {
-        name: "2 Months",
-        value: 2
-    },
-    {
         name: "3 Months",
         value: 3
     },

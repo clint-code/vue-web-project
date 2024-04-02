@@ -110,6 +110,10 @@
 import { ref, onMounted } from 'vue'
 import TopNav from '@/components/TopNav.vue'
 
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
 const page = "Policy Details"
 const customButtonBottom = ref(null)
 
@@ -123,5 +127,9 @@ const adjustButtonBottom = () => {
     var halvedButtonHeight = buttonHeight / 2
 
     customButtonBottom.value = '-' + halvedButtonHeight + 'px'
+}
+
+const navigate = (path) => {
+    router.push(path)
 }
 </script>

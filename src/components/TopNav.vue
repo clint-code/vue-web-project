@@ -2,9 +2,9 @@
     <div ref="navbar">
         <div class="custom-desktop-view custom-gray-border-bottom-1">
             <div class="flex justify-content-betweeen align-items-center gap-4 custom-width-80">
-                <img class="py-2" src="@/assets/img/logo.png" height="60px" width="auto">
+                <img class="custom-py-12" src="@/assets/img/logo.png" height="60px" width="auto">
 
-                <div class="flex justify-content-betweeen gap-4 mx-auto">
+                <div class="flex justify-content-between gap-4 mx-auto">
                     <div class="custom-bottom-border-1 pb-1" @click="navigate('/')">
                         <label class="font-bold text-sm">Home</label>
                     </div>

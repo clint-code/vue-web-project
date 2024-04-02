@@ -13,28 +13,35 @@
         </div>
     </div>
 
-    <div class="flex align-items-center mt-3">
-        <Checkbox v-model="terms" :binary="true" variant="filled" />
-        <label class="text-xs font-medium ml-1">
-            By continuing, you agree to our Terms & Conditions
-        </label>
-    </div>
+    <div class="flex justify-content-between align-items-center mt-4">
+        <div class="flex align-items-center">
+            <Checkbox v-model="terms" :binary="true" variant="filled" />
+            <label class="text-xs font-medium ml-1">
+                Remember me
+            </label>
+        </div>
+        <div>
+            <label class="text-xs font-medium underline">
+                Forgot password?
+            </label>
+        </div>
+    </div>    
 
     <div class="mt-3">
         <div
             class="flex justify-content-between align-items-center bg-yellow-500 border-round-3xl shadow-1 gap-2 px-3 custom-py-10">
-            <label class="font-bold text-black-alpha-90">Register</label>
+            <label class="font-bold text-black-alpha-90">Login</label>
             <i class="fas fa-circle-arrow-right text-black-alpha-90 text-lg"></i>
         </div>
     </div>
 
     <div class="mt-3">
         <p class="font-medium text-sm text-black-alpha-90 mb-2">
-            Already have an account?
+            Don’t have an account?
         </p>
         <div
             class="flex justify-content-between align-items-center custom-gray-bg-2 border-round-3xl shadow-1 gap-2 px-3 custom-py-10">
-            <label class="font-bold text-white">Login</label>
+            <label class="font-bold text-white">Register</label>
             <i class="fas fa-circle-arrow-right text-white text-lg"></i>
         </div>
     </div>

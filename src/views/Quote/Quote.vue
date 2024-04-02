@@ -118,24 +118,21 @@
                   </template>
 
                   <div v-for="(benefit, index) in formattedBenefits">
-                    <div :class="{
-      'flex-column': benefit.limitInput && benefit.active,
-      'align-items-center': !benefit.limitInput || !benefit.active
-    }" class="flex justify-content-between  custom-gray-border-bottom py-2">
+                    <div :class="{ 'flex-column': benefit.limitInput, 'align-items-center': !benefit.limitInput }" 
+                      class="flex justify-content-between custom-gray-border-bottom py-2">
                       <div class="flex align-items-center">
                         <Checkbox v-model="benefit.active" :binary="true" variant="filled"
                           @change="changeBenefit(benefit, index)" />
                         <label class="text-xs ml-2">
                           {{ benefit.name }}
-                          <template v-if="benefit.limitInput && benefit.minimumLimit != null
-      ">
+                          <template v-if="benefit.limitInput && benefit.minimumLimit != null">
                             <span class="text-xs">(Free upto
                               {{ benefit.minimumLimit.toLocaleString() }})</span>
                           </template>
                         </label>
-                      </div>
+                      </div>  
 
-                      <template v-if="benefit.limitInput && benefit.active">
+                      <template v-if="benefit.limitInput">
                         <div class="mt-2">
                           <InputGroup class="border-round-2xl">
                             <InputGroupAddon

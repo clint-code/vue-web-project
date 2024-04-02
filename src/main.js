@@ -45,6 +45,7 @@ import Textarea from 'primevue/textarea'
 import Toast from 'primevue/toast'
 import ToastService from 'primevue/toastservice'
 import Ripple from 'primevue/ripple'
+import ProgressSpinner from 'primevue/progressspinner'
 import StyleClass from 'primevue/styleclass'
 import CustomButton from '@/components/Layout/CustomButton.vue'
 
@@ -74,6 +75,7 @@ app.component('Listbox', Listbox)
 app.component('Steps', Steps)
 app.component('Textarea', Textarea)
 app.component('Toast', Toast)
+app.component('ProgressSpinner', ProgressSpinner)
 
 app.component('CustomButton', CustomButton)
 
