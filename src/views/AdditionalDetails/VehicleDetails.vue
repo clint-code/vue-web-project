@@ -311,25 +311,25 @@
 </template>
 
 <script setup>
-import debounce from "lodash/debounce";
+import { ref, onMounted } from "vue";
+
+import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 
 import TopNav from "@/components/TopNav.vue";
 import BottomSummaryMobile from "@/components/Mobile/BottomSummary/BottomSummary.vue";
+import DesktopVehicleDetails from "@/components/Desktop/AdditionalDetails/DesktopVehicleDetails.vue";
 
 import useDateFormatter from "@/composables/useDateFormatter";
 import useArrayToStringFormatter from "@/composables/useArrayToStringFormatter";
+import useToastMessages from "@/composables/useToastMessages";
+
+import { times } from "@/util/times.js";
+import { devices } from "@/util/securityDevices.js";
+import debounce from "lodash/debounce";
 
 import additionalDetailsService from "@/services/additionalDetailsService";
 import fileUploadService from "@/services/fileUploadService.js";
-
-import DesktopVehicleDetails from "@/components/Desktop/AdditionalDetails/VehicleDetails.vue";
-import { useStore } from "vuex";
-
-import { ref, onMounted } from "vue";
-import { useRouter } from "vue-router";
-import { times } from "@/util/times.js";
-import { devices } from "@/util/securityDevices.js";
-import useToastMessages from "@/composables/useToastMessages";
 
 const { showSuccessToast, showErrorToast } = useToastMessages();
 
@@ -392,7 +392,6 @@ const adjustHeight = (value) => {
 
   sectionHeight.value = difference + "px";
   topNavHeight.value = navbarHeight;
-  console.log("top nav bar height" + topNavHeight.value);
 };
 
 const debouncedSearch = debounce(async (term) => {

@@ -1,5 +1,5 @@
 <template>
-  <div class="mb-6">
+  <div>
     <div class="flex justify-content-end">
       <i class="fas fa-circle-xmark text-2xl" @click="closeModal"></i>
     </div>
@@ -11,7 +11,7 @@
         </h3>
         <div class="custom-bottom-border-1 w-8"></div>
 
-        <i class="fas fa-calendar-days text-7xl text-yellow-500 mt-4"></i>
+        <i class="fas fa-calendar-days text-6xl text-yellow-500 mt-4"></i>
 
         <div class="my-4 w-full">
           <div

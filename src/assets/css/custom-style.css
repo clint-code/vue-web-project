@@ -1,18 +1,18 @@
 @font-face {
     font-family: 'Roboto';
     src: url('/assets/fonts/Roboto-Regular.ttf') format('truetype'),
-         url('/assets/fonts/Roboto-Black.ttf') format('truetype'),
-         url('/assets/fonts/Roboto-BlackItalic.ttf') format('truetype'),
-         url('/assets/fonts/Roboto-Bold.ttf') format('truetype'),
-         url('/assets/fonts/Roboto-BoldItalic.ttf') format('truetype'),
-         url('/assets/fonts/Roboto-Italic.ttf') format('truetype'),
-         url('/assets/fonts/Roboto-Light.ttf') format('truetype'),
-         url('/assets/fonts/Roboto-LightItalic.ttf') format('truetype'),
-         url('/assets/fonts/Roboto-Medium.ttf') format('truetype'),
-         url('/assets/fonts/Roboto-MediumItalic.ttf') format('truetype'),
-         url('/assets/fonts/Roboto-Regular.ttf') format('truetype'),
-         url('/assets/fonts/Roboto-Thin.ttf') format('truetype'),
-         url('/assets/fonts/Roboto-ThinItalic.ttf') format('truetype');
+        url('/assets/fonts/Roboto-Black.ttf') format('truetype'),
+        url('/assets/fonts/Roboto-BlackItalic.ttf') format('truetype'),
+        url('/assets/fonts/Roboto-Bold.ttf') format('truetype'),
+        url('/assets/fonts/Roboto-BoldItalic.ttf') format('truetype'),
+        url('/assets/fonts/Roboto-Italic.ttf') format('truetype'),
+        url('/assets/fonts/Roboto-Light.ttf') format('truetype'),
+        url('/assets/fonts/Roboto-LightItalic.ttf') format('truetype'),
+        url('/assets/fonts/Roboto-Medium.ttf') format('truetype'),
+        url('/assets/fonts/Roboto-MediumItalic.ttf') format('truetype'),
+        url('/assets/fonts/Roboto-Regular.ttf') format('truetype'),
+        url('/assets/fonts/Roboto-Thin.ttf') format('truetype'),
+        url('/assets/fonts/Roboto-ThinItalic.ttf') format('truetype');
 }
 
 body {
@@ -79,6 +79,10 @@ body {
 
 .custom-bottom-border-3 {
     border-bottom: #FFC402 1px solid;
+}
+
+.custom-bottom-border-4 {
+    border-bottom: #FFC402 2px solid;
 }
 
 .custom-gray-city-bg {
@@ -331,6 +335,16 @@ body {
     top: -14px;
 }
 
+.custom-accordion-body-3 {
+    position: absolute;
+    bottom: -14px;
+}
+
+.custom-accordion-body-4 {
+    position: absolute;
+    top: -16px;
+}
+
 .custom-accordion {
     top: -10px;
     position: relative;
@@ -401,7 +415,7 @@ body {
 .custom-shadow-1 {
     box-shadow: 0 3px 30px rgba(0, 0, 0, 0.16);
 }
-  
+
 .custom-border-radius {
     border-radius: 36px;
 }
@@ -424,9 +438,18 @@ body {
     border-bottom: #707070 0.5px dotted;
 }
 
+.custom-dotted-border-1 {
+    border-top: #707070 0.5px dotted;
+}
+
 .custom-py-10 {
     padding-top: 10px;
     padding-bottom: 10px;
+}
+
+.custom-py-12 {
+    padding-top: 12px;
+    padding-bottom: 12px;
 }
 
 .custom-city-bg {
@@ -435,7 +458,7 @@ body {
     height: 100vh;
     background: url("@/assets/img/landing-bg-desktop.png");
     background-size: contain;
-    background-position: center bottom; 
+    background-position: center bottom;
     background-repeat: no-repeat;
     background-color: #F5F5F5;
 }
@@ -446,7 +469,7 @@ body {
     height: 140px;
     background: url("@/assets/img/contact-us.png");
     background-size: cover;
-    background-position: center bottom; 
+    background-position: center bottom;
     background-repeat: no-repeat;
 }
 
@@ -456,7 +479,7 @@ body {
     height: 140px;
     background: url("@/assets/img/lipa-pole-pole.png");
     background-size: cover;
-    background-position: center bottom; 
+    background-position: center bottom;
     background-repeat: no-repeat;
 }
 
@@ -485,7 +508,7 @@ body {
 }
 
 .custom-full-width {
-    width: 70vw; 
+    width: 70vw;
     position: absolute;
     right: 0;
     z-index: 2;
@@ -522,21 +545,21 @@ body {
 }
 
 .overlay-menu {
-      height: 100vh;
-      width: 100vh;
-      z-index: 999;
-      position: fixed;
+    height: 100vh;
+    width: 100vh;
+    z-index: 999;
+    position: fixed;
 }
 
 .custom-full-height-img {
     width: auto;
     height: 100%;
-    object-fit: cover; 
+    object-fit: cover;
 }
 
 .custom-img-container {
     position: relative;
-    height: 300px; 
+    height: 300px;
 }
 
 .custom-img-filter {
@@ -561,7 +584,7 @@ body {
 
 .p-dropdown .p-inputtext:enabled:focus {
     box-shadow: none !important;
-}  
+}
 
 .custom-padding-block {
     padding-block: 0.75rem;
@@ -575,7 +598,7 @@ body {
     padding-block: 0.95rem;
 }
 
- .custom-pd-file-input {
+.custom-pd-file-input {
     padding-block: 1rem;
 }
 
@@ -585,6 +608,10 @@ body {
 
 .custom-pd-bg-border {
     border-color: #707070;
+}
+
+.custom-gray-border-bottom-3 {
+    border-bottom: #707070 1px solid;
 }
 
 .custom-pd-calendar .p-calendar .p-inputtext {
@@ -600,35 +627,35 @@ body {
 }
 
 ol {
-  list-style-type: decimal;
+    list-style-type: decimal;
 }
 
 .custom-bg-black {
-  background-color: #4a4a4a;
-  color: #ffffff;
+    background-color: #4a4a4a;
+    color: #ffffff;
 }
 
 .custom-bg-green {
-  background-color: #c5e226;
+    background-color: #c5e226;
 }
 
 .custom-border {
-  border: 1px solid #000000;
+    border: 1px solid #000000;
 }
 
 .custom-claims {
-  display: grid;
-  grid-row-gap: 0.75rem;
-  grid-column-gap: 0.5rem;
-  grid-template-columns: repeat(auto-fit, minmax(7.5rem, 1fr));
+    display: grid;
+    grid-row-gap: 0.75rem;
+    grid-column-gap: 0.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(7.5rem, 1fr));
 
 }
 
 .custom-claims-status {
-  display: grid;
-  grid-row-gap: 1.25rem;
-  grid-column-gap: 0.75rem;
-  grid-template-columns: repeat(auto-fit, minmax(7.5rem, 1fr));
+    display: grid;
+    grid-row-gap: 1.25rem;
+    grid-column-gap: 0.75rem;
+    grid-template-columns: repeat(auto-fit, minmax(7.5rem, 1fr));
 }
 
 .custom-input-padding-1 .p-inputtext {
@@ -644,26 +671,72 @@ ol {
 }
 
 .custom-uploads {
-  display: grid;
-  grid-row-gap: 2rem;
-  grid-column-gap: 0.7rem;
-  grid-template-columns: repeat(auto-fit, minmax(7.5rem, 1fr));
+    display: grid;
+    grid-row-gap: 2rem;
+    grid-column-gap: 0.7rem;
+    grid-template-columns: repeat(auto-fit, minmax(7.5rem, 1fr));
 }
 
 .custom-file-input-container {
-  padding-block: 1.35rem !important;
-  border: 1px solid #000000 !important;
-  border-radius: 1.5rem;
-  padding-inline: 0.5rem !important;
-  padding-block: 1.5rem !important;
+    padding-block: 1.35rem !important;
+    border: 1px solid #000000 !important;
+    border-radius: 1.5rem;
+    padding-inline: 0.5rem !important;
+    padding-block: 1.5rem !important;
 }
 
 .custom-fill {
-  background-color: #4a4a4a;
+    background-color: #4a4a4a;
 }
 
 .custom-absolute-item {
-  position: absolute;
-  top: -10px;
-  right: -10px;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+}
+
+.custom-round-container {
+    border-radius: 50%;
+}
+
+.semi-circle {
+    width: 100px;
+    height: 50px;
+    background-color: #FFF;
+    border-radius: 100px 100px 0 0;
+}
+
+.semi-circle-1 {
+    width: 100px;
+    height: 50px;
+    background-color: transparent;
+    border-radius: 0 0 100px 100px;
+}
+
+.custom-spacing {
+    letter-spacing: 0.5px;
+}
+
+.custom-bg-image-cc {
+    margin: 0;
+    padding: 0;
+    height: inherit;
+    background: url("@/assets/img/contact-us.png");
+    background-size: cover;
+    background-position: center bottom;
+    background-repeat: no-repeat;
+}
+
+.custom-bg-image-cc-2 {
+    margin: 0;
+    padding: 0;
+    height: inherit;
+    background: url("@/assets/img/customer-cc-2.png");
+    background-size: cover;
+    background-position: center bottom;
+    background-repeat: no-repeat;
+}
+
+.custom-dialog-2 .p-dialog-content {
+    padding: 0px;
 }

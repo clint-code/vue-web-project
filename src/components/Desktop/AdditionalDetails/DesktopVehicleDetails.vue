@@ -1,9 +1,9 @@
 <template>
-  <div class="custom-width-80">
+  <div class="custom-width-80 pt-3">
     <div class="grid">
       <div class="lg:col-10 relative">
-        <div class="overflow-y-scroll" :style="{ height: newSectionHeight }">
-          <div class="mt-3">
+        <div :style="{ height: newSectionHeight }">
+          <div>
             <div @click="navigate('/personal-details')"
               class="flex justify-content-between align-items-center custom-dark-gray-bg border-round-3xl gap-1 px-3 py-2 custom-w-5">
               <i class="fas fa-angle-double-left text-white"></i>
@@ -12,14 +12,15 @@
           </div>
 
           <div class="mt-3">
-            <div class="relative bg-yellow-500 border-round-2xl px-3 custom-py-10 z-2">
+            <div class="relative bg-yellow-500 border-round-3xl px-3 custom-py-10 z-2">
               <label class="text-sm font-bold">Vehicle Details</label>
             </div>
 
-            <div class="relative z-1 mb-8">
-              <div
-                class="custom-light-gray-bg-1 custom-gray-border-2 border-round-bottom-3xl w-full custom-accordion-body-2 py-4 px-3">
-                <div class="grid">
+            <div class="relative z-1">
+              <div style="height: 350px;"
+                class="custom-light-gray-bg-1 custom-gray-border-2 border-round-bottom-3xl w-full 
+                  mx-auto custom-accordion-body-4 py-3 px-3 overflow-y-scroll">
+                <div class="grid mt-2">
                   <div class="col-6">
                     <div class="flex flex-column gap-2">
                       <label class="text-sm font-medium">Vehicle Registration No.</label>
@@ -89,7 +90,7 @@
                     </div>
 
                     <div
-                      class="w-full border-round-2xl custom-dark-gray-border border-1 custom-dark-gray-bg px-3 py-2 mt-2 custom-accordion-body-1"
+                      class="w-full border-round-2xl custom-dark-gray-border border-1 custom-dark-gray-bg px-3 py-2 custom-accordion-body-3"
                       @click="showValuationModal()">
                       <div class="flex justify-content-between align-items-center">
                         <label class="font-bold text-sm text-white">Update Valuation Details</label>
@@ -123,7 +124,7 @@
         </div>
 
         <div class="bottom-0 left-0 w-full absolute">
-          <BottomSummaryDesktop @showOverlay="displayOverlay" @calculatedCardHeight="resetHeight"
+          <BottomSummary @showOverlay="displayOverlay" @calculatedCardHeight="resetHeight"
             @reverifyVehicle="reverifyVehicle" />
         </div>
       </div>
@@ -169,7 +170,7 @@ import { useStore } from "vuex";
 import { devices } from "@/util/securityDevices.js";
 
 import Steps from "@/components/Steps.vue";
-import BottomSummaryDesktop from "@/components/Desktop/BottomSummary/BottomSummary.vue";
+import BottomSummary from "@/components/Desktop/Layout/BottomSummary.vue";
 import MainDialogModal from "@/components/Desktop/Valuation/MainDialog.vue";
 import DateTimeModal from "@/components/Desktop/Valuation/DateTime.vue";
 import PlacesModal from "@/components/Desktop/Valuation/Places.vue";
@@ -231,12 +232,15 @@ onMounted(() => {
 });
 
 const resetHeight = (value) => {
+  
   bottomCardHeight.value = value;
 
   var viewportHeightInPixels = window.innerHeight;
   var difference = viewportHeightInPixels - props.topNavHeight;
 
-  newSectionHeight.value = difference + "px";
+  newSectionHeight.value = (difference - 24) + "px";
+
+  console.log(props.topNavHeight)
 };
 
 const displayOverlay = (value) => {
@@ -351,7 +355,7 @@ const getQuoteSummary = () => {
       if (response.data.response_code == 200) {
         store.commit("setQuoteSummary", response.data.data);
         navigate("/summary");
-      } 
+      }
       else {
         isLoading.value = false;
         showErrorToast("Error", response);
@@ -368,7 +372,7 @@ const navigate = (path) => {
 };
 
 const selectFile = (event) => {
-  if(registrationNumber.value != null && registrationNumber.value != "") {
+  if (registrationNumber.value != null && registrationNumber.value != "") {
     uploadFile(event)
   }
   else {
@@ -379,7 +383,7 @@ const selectFile = (event) => {
 const uploadFile = (event) => {
   isLoading.value = true;
   let originalFile = event.target.files[0]
-  
+
   let formData = new FormData();
   formData.append('file', originalFile)
   formData.append("docType", "LOGBOOK");

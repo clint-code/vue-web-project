@@ -1,5 +1,5 @@
 <template>
-    <div class="mb-6">
+    <div>
         <div class="flex justify-content-end">
             <i class="fas fa-circle-xmark text-2xl" @click="closeModal"></i>
         </div>

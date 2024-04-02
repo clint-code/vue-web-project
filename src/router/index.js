@@ -69,6 +69,10 @@ const routes = [
     component: () => import("../views/MyPolicies/PolicyDetails.vue"),
   },
   {
+    path: "/submit-claim",
+    component: () => import("@/views/Claims/SubmitClaim.vue"),
+  },
+  {
     path: "/my-claims",
     component: () => import("../views/Claims/MyClaims.vue"),
   },

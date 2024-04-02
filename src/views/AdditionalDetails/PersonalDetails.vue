@@ -171,7 +171,7 @@
 
 <script setup>
 import TopNav from "@/components/TopNav.vue";
-import DesktopPersonalDetails from "@/components/Desktop/AdditionalDetails/PersonalDetails.vue";
+import DesktopPersonalDetails from "@/components/Desktop/AdditionalDetails/DesktopPersonalDetails.vue";
 
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";

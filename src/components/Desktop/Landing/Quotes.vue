@@ -48,12 +48,12 @@
               </div>
 
               <div class="flex justify-content-between mt-1">
-                <label class="font-light text-xs text-left w-6">
+                <label class="text-sm text-left w-6">
                   Monthly Installment
                 </label>
 
                 <template v-if="quote.LipaPolePoleInstallment != null">
-                  <label class="font-bold text-xs text-right w-6">KES {{ quote.LipaPolePoleDeposit.toLocaleString() }}
+                  <label class="text-sm text-right w-6">KES {{ quote.LipaPolePoleDeposit.toLocaleString() }}
                   </label>
                 </template>
               </div>

@@ -11,14 +11,14 @@
       </div>
 
       <div class="pb-4 pr-4" :style="{ 'margin-bottom': marginBottom }">
-        <div class="relative bg-yellow-500 border-round-2xl px-3 custom-py-10 mt-3 z-2">
+        <div class="relative bg-yellow-500 border-round-3xl px-3 custom-py-10 mt-3 z-2">
           <label class="text-sm font-bold">Your Personal Details</label>
         </div>
 
         <div class="relative z-1">
           <div
-            class="w-full custom-light-gray-bg-1 custom-gray-border-2 border-round-bottom-3xl custom-accordion-body-2 py-4 px-3">
-            <div class="grid">
+            class="w-full custom-light-gray-bg-1 custom-gray-border-2 border-round-bottom-3xl custom-accordion-body-4 py-3 px-3">
+            <div class="grid mt-2">
               <div class="col-6">
                 <div class="flex flex-column gap-2">
                   <label class="text-sm font-medium">Enter Name (As appears on your ID)</label>
@@ -36,7 +36,7 @@
               </div>
             </div>
 
-            <div class="grid align-items-center mt-1">
+            <div class="grid align-items-center mt-1 pb-4">
               <div class="col-6">
                 <div class="flex flex-column gap-2">
                   <template v-if="selectedIdenficationDocument == 'NationalID'">
@@ -59,7 +59,7 @@
               </div>
 
               <div class="col-6 mt-3">
-                <div class="w-full border-round-2xl custom-dark-gray-bg px-3 py-2 mt-2" @click="verifyCustomer()">
+                <div class="w-full border-round-3xl custom-dark-gray-bg px-3 custom-py-10 mt-2" @click="verifyCustomer()">
                   <div class="flex justify-content-between align-items-center">
                     <label class="font-bold text-sm text-white">Verify Details</label>
                     <i class="fas fa-circle-arrow-right text-white"></i>
@@ -69,7 +69,7 @@
             </div>
 
             <template v-if="verificationStatus">
-              <div class="grid mt-1">
+              <div class="grid mt-1 custom-dotted-border-1">
                 <div class="col-6">
                   <div class="flex flex-column gap-2">
                     <label class="text-sm font-medium">Phone Number</label>

@@ -90,7 +90,7 @@
             <div class="grid">
                 <div class="lg:col-10 relative">
                     <div class="mb-4">
-                        <div class="mt-6">
+                        <div class="mt-3">
                             <div @click="navigate('/summary')"
                                 class="flex justify-content-between align-items-center custom-dark-gray-bg border-round-3xl gap-1 px-3 py-2 custom-w-5">
                                 <i class="fas fa-angle-double-left text-white"></i>
@@ -180,6 +180,23 @@
         </div>
     </div>
 
+    <Dialog v-model:visible="paymentModal" modal :closable="false" :showHeader="false" :showFooter="false"
+        class="custom-dialog-2">
+        <div class="custom-desktop-view">
+            <template v-if="paymentStatus == 'IN-PROGRESS'">
+                <DesktopPaymentPendingModal />
+            </template>
+
+            <template v-else-if="paymentStatus == 'SUCCESS'">
+                <DesktopPaymentSuccessModal />
+            </template>
+
+            <template v-else-if="paymentStatus == 'FAILED'">
+                <DesktopPaymentErrorModal />
+            </template>
+        </div>
+    </Dialog>
+
     <loading v-model:active="isLoading" :is-full-page="fullPage" color="#FFC402" loader="dots" :opacity="opacity" />
     <Toast />
 </template>
@@ -197,6 +214,10 @@ import useToastMessages from "@/composables/useToastMessages";
 
 import TopNav from '@/components/TopNav.vue'
 import Steps from "@/components/Steps.vue"
+import DesktopPaymentPendingModal from '@/components/Desktop/Payment/DesktopPaymentPendingModal.vue'
+import DesktopPaymentSuccessModal from '@/components/Desktop/Payment/DesktopPaymentSuccessModal.vue'
+import DesktopPaymentErrorModal from '@/components/Desktop/Payment/DesktopPaymentErrorModal.vue'
+
 
 const { format } = usePhoneNumberFormatter();
 const { showSuccessToast, showErrorToast } = useToastMessages();
@@ -214,7 +235,10 @@ const isLoading = ref(false);
 const fullPage = ref(true);
 const opacity = ref(0.7);
 
-const paymentAmount = store.getters.getPaymentPlan.amount
+// const paymentAmount = store.getters.getPaymentPlan.amount
+const paymentAmount = ref("1")
+const paymentStatus = ref(null)
+const paymentModal = ref(false)
 
 onMounted(() => {
     //
@@ -244,8 +268,10 @@ const submit = () => {
         .then((response) => {
             isLoading.value = false
 
-            if(response.data.response_code == 200) {
-               showSuccessToast("Payment Sent", "Payment prompt sent successfully.")
+            if (response.data.response_code == 200) {
+                payment.value = 'IN-PROGRESS'
+                paymentModal.value = false
+                showSuccessToast("Payment Sent", "Payment prompt sent successfully.")
             }
             else {
                 showErrorToast("Error", response)
@@ -255,6 +281,10 @@ const submit = () => {
             isLoading.value = false
             showErrorToast("Error", error)
         })
+}
+
+const checkPaymentStatus = () => {
+
 }
 
 </script>

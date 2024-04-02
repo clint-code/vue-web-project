@@ -1,12 +1,12 @@
 <template>
-    <div class="mb-6">
+    <div>
         <div class="flex justify-content-end">
             <i class="fas fa-circle-xmark text-2xl" @click="closeModal"></i>
         </div>
 
         <div class="w-9 mx-auto border-round-3xl shadow-2 px-4 mt-2">
             <div class="flex flex-column align-items-center">
-                <div class="flex justify-content-between custom-dark-gray-bg custom-border-radius px-4 h-3rem align-items-center gap-3 my-4"
+                <div class="flex justify-content-between custom-dark-gray-bg custom-border-radius px-4 h-3rem align-items-center gap-3 mt-4"
                     @click="showValuationDateTimeModal()">
                     <i class="fas fa-circle-chevron-left text-xl text-white"></i>
                     <label class="font-bold text-white">Update date and time</label>
