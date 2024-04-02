@@ -104,10 +104,10 @@
                     <label class="text-sm font-medium">Date of Birth</label>
 
                     <Calendar v-model="dob" placeholder="Choose Date"
-                      class="w-full custom-rounded-calendar custom-small-dropdown custom-pd-calendar" showIcon
-                      iconDisplay="input" :maxDate="maxDate">
+                      class="w-full custom-rounded-calendar custom-small-dropdown custom-pd-calendar custom-input-padding-1"
+                      showIcon iconDisplay="input" :maxDate="maxDate">
                       <template #inputicon="{ clickCallback }">
-                        <i class="fas fa-calendar-days text-black-alpha-90 text-sm " @click="clickCallback"></i>
+                        <i class="fas fa-calendar-days text-black-alpha-90 text-xs " @click="clickCallback"></i>
                       </template>
                     </Calendar>
                   </div>
@@ -126,11 +126,11 @@
                 <div class="col-6">
                   <div class="flex flex-column gap-2">
                     <label class="text-sm font-medium">Upload Copy ID</label>
-                    <div class="custom-file-input-container bg-white border-round-3xl custom-pd-file-input">
+                    <div class="custom-file-input-container-logbook bg-white border-round-3xl ">
                       <input type="file" id="fileInput" class="custom-file-input " @change="uploadFile($event)" />
                       <label class="text-sm custom-input-color">{{
-      uploadTxt
-    }}</label>
+                        uploadTxt
+                        }}</label>
                       <i class="fas fa-upload text-sm custom-gray"></i>
                     </div>
                   </div>
@@ -206,7 +206,7 @@ const nationalId = ref(null);
 const passport = ref(null);
 const alienId = ref(null);
 
-const kraPin = ref(null);
+const kraPIN = ref(null);
 const kraPinStatus = ref(false);
 const verificationStatus = ref(false);
 
@@ -242,7 +242,7 @@ const verifyCustomer = () => {
   data.quoteRef = quoteRef;
 
   isLoading.value = true;
-  kraPin.value = null
+  kraPIN.value = null
 
   additionalDetailsService
     .verifyCustomer(data)
@@ -260,7 +260,7 @@ const verifyCustomer = () => {
           if (response.data.data.kraPin == "" || response.data.data.kraPin == null) {
             kraPinStatus.value = true
           } else {
-            kraPinStatus.value = response.data.data.kraPin
+            kraPIN.value = response.data.data.kraPin
           }
         }
       }
