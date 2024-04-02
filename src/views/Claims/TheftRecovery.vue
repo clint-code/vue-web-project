@@ -270,7 +270,7 @@
 
           <!-- File uploads -->
           <div class="pb-4">
-            <div class="custom-file-input-container mt-3" id="uploadAbstract">
+            <div class="custom-file-input-container-2 mt-3" id="uploadAbstract">
               <div class="flex align-items-center gap-2">
                 <i class="fas fa-user-police py-2 px-2 bg-yellow-500 border-round-3xl"></i>
                 <label class="font-light text-gray-800">Upload Police Abstract</label>
@@ -288,7 +288,7 @@
               </div>
             </div>
 
-            <div class="custom-file-input-container mt-3" id="uploadDL">
+            <div class="custom-file-input-container-2 mt-3" id="uploadDL">
               <div class="flex align-items-center gap-2">
                 <i class="fas fa-id-card py-2 px-2 bg-yellow-500 border-round-3xl"></i>
                 <label class="font-light text-gray-800">Upload Driver’s License</label>
@@ -306,7 +306,7 @@
               </div>
             </div>
 
-            <div class="custom-file-input-container mt-3" id="uploadReceipt-1">
+            <div class="custom-file-input-container-2 mt-3" id="uploadReceipt-1">
               <div class="flex align-items-center gap-2">
                 <i class="fas fa-receipt py-2 px-2 bg-yellow-500 border-round-3xl"></i>
                 <label class="font-light text-gray-800">Upload Receipt</label>
@@ -324,7 +324,7 @@
               </div>
             </div>
 
-            <div class="custom-file-input-container mt-3 custom-fill" id="addReceipt">
+            <div class="custom-file-input-container-2 mt-3 custom-fill" id="addReceipt">
               <div class="flex align-items-center gap-2">
                 <i class="fas fa-receipt py-2 px-2 bg-white border-round-3xl"></i>
                 <label for="addReceipt" class="text-white">Add Receipt</label>

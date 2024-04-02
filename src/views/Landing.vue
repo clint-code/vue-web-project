@@ -5,8 +5,8 @@
         <div class="custom-parent-container">
             <div class="custom-desktop-view">
                 <template v-if="products != null">
-                    <Products :products="products" :sectionHeight="sectionHeight"/>
-                </template>                
+                    <Products :products="products" :sectionHeight="sectionHeight" />
+                </template>
             </div>
 
             <div class="custom-mobile-view">
@@ -14,7 +14,7 @@
             </div>
         </div>
 
-        <loading v-model:active="isLoading" :is-full-page="fullPage" color="#FFC402" loader="dots" :opacity="opacity"/>
+        <loading v-model:active="isLoading" :is-full-page="fullPage" color="#FFC402" loader="dots" :opacity="opacity" />
     </div>
 </template>
 
