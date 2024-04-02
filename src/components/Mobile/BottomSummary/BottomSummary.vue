@@ -82,8 +82,8 @@
         <label class="font-bold text-white text-sm">{{ details.make }} {{ details.model }}</label>
 
         <label class="font-bold text-white text-center text-sm">{{
-          details.yearOfManufacture
-          }}</label>
+      details.yearOfManufacture
+    }}</label>
       </div>
 
       <div class="flex justify-content-between mt-2">
