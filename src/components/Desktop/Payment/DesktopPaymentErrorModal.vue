@@ -10,8 +10,7 @@
                     <label class="font-bold text-center text-lg">Unsuccessful</label>
 
                     <label class="font-medium text-center text-sm custom-spacing mt-4">
-                        Dear Victor, there was an error processing your payment.
-                        Please try again or use our Paybill Number.
+                       {{ props.errorMessage }}
                     </label>
                 </div>
             </div>
@@ -102,7 +101,7 @@
 
             <div class="flex justify-content-center mt-4">
                 <div class="flex justify-content-end">
-                    <div class="flex align-items-center bg-yellow-500 border-round-3xl gap-2 px-3 custom-py-10 gap-8" @click="showMyPolices()">
+                    <div class="flex align-items-center bg-yellow-500 border-round-3xl gap-2 px-3 custom-py-10 gap-8" @click="closeErrorModal()">
                         <label class="text-sm font-bold">Done</label>
                         <i class="fas fa-arrow-circle-right text-2xl"></i>
                     </div>
@@ -144,10 +143,22 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, defineEmits } from 'vue'
 
 const isLoading = ref(true);
 const fullPage = ref(false);
 const opacity = ref(0);
+
+const props = defineProps({
+    errorMessage: String
+})
+
+const emits = defineEmits([
+    "closeErrorModal"
+])
+
+const closeErrorModal = () => {
+    emits("closeErrorModal")
+}
 
 </script>
