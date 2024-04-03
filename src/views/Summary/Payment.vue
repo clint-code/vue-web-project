@@ -192,7 +192,7 @@
             </template>
 
             <template v-else-if="paymentStatus == 'FAILED'">
-                <DesktopPaymentErrorModal />
+                <DesktopPaymentErrorModal :errorMessage="errorMessage" @closeErrorModal=closeErrorModal />
             </template>
         </div>
     </Dialog>
@@ -240,13 +240,14 @@ const paymentAmount = ref("1")
 const paymentStatus = ref(null)
 const paymentModal = ref(false)
 
+const interval = ref(null)
+const count = ref(0)
+
+const errorMessage = ref(null)
+
 onMounted(() => {
     //
 });
-
-const navigate = (path) => {
-    router.push(path)
-}
 
 const submit = () => {
     let data = {}
@@ -260,18 +261,22 @@ const submit = () => {
     data.paymentMethod = "MPESA"
     data.transactionType = "NB"
 
-    console.log(data);
-
     isLoading.value = true
 
     paymentService.postPayment(data)
         .then((response) => {
             isLoading.value = false
+            paymentStatus.value = 'IN-PROGRESS'
+            paymentModal.value = true
+
+            clearInterval(interval.value)
+            count.value = 0
 
             if (response.data.response_code == 200) {
-                payment.value = 'IN-PROGRESS'
-                paymentModal.value = false
-                showSuccessToast("Payment Sent", "Payment prompt sent successfully.")
+                interval.value = setInterval(
+                    () => checkPaymentStatus(),
+                    5000
+                )
             }
             else {
                 showErrorToast("Error", response)
@@ -284,7 +289,61 @@ const submit = () => {
 }
 
 const checkPaymentStatus = () => {
+    let data = {}
 
+    count.value += 1;
+
+    data.quoteRef = store.getters.getQuoteRef
+
+    paymentService.checkPaymentStatus(data)
+        .then((response) => {
+            if (response.data.response_code == 200) {
+                clearInterval(interval.value)
+
+                paymentStatus.value = "SUCCESS"
+            }
+            else {
+
+            }
+        })
+        .catch((error) => {
+            let errorBody = error.response.data
+
+            if (errorBody.data.status) {
+                if (errorBody.data.status == 'IN-PROGRESS') {
+                    if (count.value > 20) {
+                        clearInterval(interval.value)
+
+                        errorMessage.value = "Max retries. Payment status not updated."
+                        paymentStatus.value = "FAILED"
+
+                        //navigate('/payment-summary')
+                    }
+                }
+                else if (errorBody.data.status == 'FAILED') {
+                    clearInterval(interval.value)
+
+                    errorMessage.value = response.data.errorMessage
+                    paymentStatus.value = "FAILED"
+                }
+            }
+            else {
+                errorMessage.value = errorBody.message
+                paymentStatus.value = "FAILED"
+            }
+        })
+}
+
+const closeErrorModal = () => {
+    paymentStatus.value = null
+    paymentModal.value = false
+
+    clearInterval(interval.value)
+    count.value = 0
+}
+
+const navigate = (path) => {
+    router.push(path)
 }
 
 </script>

@@ -12,7 +12,9 @@
 
             <div>
                 <p class="text-xs">
-                    Thank you Victor Gachangi, your payment has been received
+                    Thank you
+                    <span class="font-medium">{{ store.getters.getPersonalDetails.customerName }}</span>
+                    , your payment has been received
                     and we thank you for choosing InsureMe as your partner
                     and welcome you to the family.
                 </p>
@@ -47,31 +49,33 @@
                 </div>
             </div>
 
-            <div class="mt-4">
-                <div class="w-full border-round-3xl bg-yellow-500 px-3 custom-py-10 custom-accordion" v-if="!paymentPlan"
-                    @click="togglePaymentPlan()">
-                    <div class="flex justify-content-between">
-                        <label class="font-bold text-sm ">Your Monthly Payment Plan</label>
-                        <i class="fas fa-circle-chevron-down"></i>
-                    </div>
-                </div>
-
-                <div class="relative" v-if="paymentPlan">
-                    <div class="w-full custom-light-gray-bg-1 border-round-bottom-3xl p-3 z-1">
-                        <div class="mt-3">
-                            <PaymentPlan quoteState="New Policy" />
-                        </div>
-                    </div>
-
-                    <div class="w-full border-round-3xl bg-yellow-500 px-3 custom-py-10 custom-accordion-body z-0"
-                        @click="togglePaymentPlan()">
+            <template v-if="store.getters.getPaymentPlan.paymentType = 'LIPA_POLE_POLE'">
+                <div class="mt-4">
+                    <div class="w-full border-round-3xl bg-yellow-500 px-3 custom-py-10 custom-accordion"
+                        v-if="!paymentPlan" @click="togglePaymentPlan()">
                         <div class="flex justify-content-between">
                             <label class="font-bold text-sm ">Your Monthly Payment Plan</label>
-                            <i class="fas fa-circle-chevron-up"></i>
+                            <i class="fas fa-circle-chevron-down"></i>
+                        </div>
+                    </div>
+
+                    <div class="relative" v-if="paymentPlan">
+                        <div class="w-full custom-light-gray-bg-1 border-round-bottom-3xl p-3 z-1">
+                            <div class="mt-3">
+                                <PaymentPlan quoteState="New Policy" />
+                            </div>
+                        </div>
+
+                        <div class="w-full border-round-3xl bg-yellow-500 px-3 custom-py-10 custom-accordion-body z-0"
+                            @click="togglePaymentPlan()">
+                            <div class="flex justify-content-between">
+                                <label class="font-bold text-sm ">Your Monthly Payment Plan</label>
+                                <i class="fas fa-circle-chevron-up"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </template>
 
             <div>
                 <p class="font-bold">
@@ -92,12 +96,17 @@
 </template>
 
 <script setup>
+import { ref, onMounted } from 'vue'
+import { useRouter } from "vue-router";
+import { useStore } from "vuex";
+
 import TopNav from '@/components/TopNav.vue'
 import Footer from '@/components/Footer.vue'
 import QuoteDetails from '@/components/Quote/QuoteDetails.vue'
 import PaymentPlan from '@/components/Quote/PaymentPlan.vue'
 
-import { ref, onMounted } from 'vue'
+const router = useRouter();
+const store = useStore();
 
 const transactionDetails = ref(true)
 const paymentPlan = ref(false)
