@@ -1,0 +1,48 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: insureme-customer-frontend
+  name: insureme-customer-frontend-deployment
+  namespace: NAMESPACE
+spec:
+  selector:
+    matchLabels:
+      app: insureme-customer-frontend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: insureme-customer-frontend
+    spec:
+      containers:
+        - name: insureme-customer-frontend
+          image: ImageName
+          ports:
+            - containerPort: 80
+          imagePullPolicy: IfNotPresent
+      dnsConfig:
+        nameservers:
+          - 10.38.83.215
+          - 8.8.8.8
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: insureme-customer-frontend-service
+  namespace: NAMESPACE
+  labels:
+    run: insureme-customer-frontend-service
+spec:
+  type: NodePort
+  ports:
+    - name: insureme-customer-frontend-port
+      nodePort: 31172
+      port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: insureme-customer-frontend
