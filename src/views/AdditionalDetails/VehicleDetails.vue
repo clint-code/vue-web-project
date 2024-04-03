@@ -1,7 +1,7 @@
 <template>
   <TopNav back="/get-quote" variation="white-yellow-icons" @calculatedHeight="adjustHeight" />
 
-  <div class="custom-mobile-view">
+  <div class="custom-mobile-view overflow-x-hidden h-screen w-screen">
     <div class="px-3 pt-4" :style="{ height: sectionHeight }">
       <div class="flex justify-content-between">
         <label class="font-bold text-sm">Motor Car Insurance</label>

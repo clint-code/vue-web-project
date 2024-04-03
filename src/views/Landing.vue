@@ -10,7 +10,7 @@
             </div>
 
             <div class="custom-mobile-view">
-                <MobileLanding :products="products" :sectionHeight="sectionHeight" v-if="products != null"/>              
+                <MobileLanding :products="products" :sectionHeight="sectionHeight" v-if="products != null" />
             </div>
         </div>
 
