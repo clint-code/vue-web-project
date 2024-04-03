@@ -1,29 +1,21 @@
-#Builds application
-#1.use node 18 as the base
-FROM node:18 as build-stage
-#2. define the working directory
-WORKDIR /build
-#3. copy the source code
-COPY . .
-#4.Instal dependencies
+FROM node:latest as builder
+WORKDIR /usr/src/app
+ENV PATH /usr/src/node_modules/.bin:$PATH
+
+COPY package.json ./
+
 RUN npm install
-#5.build the application
+
+COPY . ./
+
+FROM builder as dev
+CMD ["npm", "run", "dev"]
+
+FROM builder as prod-builder
 RUN npm run build
- 
-#copies the static dist files and Node server files
-#1.use node 18 as the base
-FROM node:18 as production-stage
-#2.define working directory
-WORKDIR /app
-#3. copy the package and serve files
-COPY package.json main.js ./
-#4.copy the static files
-COPY --from=build-stage /build/dist/ dist/
-#5. install dependencies
-RUN npm install --omit=dev
-#6. Build
-RUN rm -rf build
-#7. expose port 
-EXPOSE 3032
-#8. run application
-CMD [ "node", "main.js" ]
+
+FROM nginx:latest as prod
+
+COPY --from=prod-builder /usr/src/app/dist /usr/share/nginx/html
+
+CMD ["nginx", "-g", "daemon off;"]
