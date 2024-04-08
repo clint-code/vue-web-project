@@ -9,43 +9,69 @@
 
     <div class="mt-4">
       <div class="flex flex-wrap gap-3 mt-2">
-        <div class="flex align-items-center" v-for="insuranceClass in insuranceClasses" :key="insuranceClass.name">
-          <RadioButton v-model="selectedInsuranceClass" :value="insuranceClass.value" />
-          <label for="ingredient1" class="ml-1 text-xs font-bold">{{
-          insuranceClass.name
-        }}</label>
+        <div 
+          class="flex align-items-center" 
+          v-for="insuranceClass in insuranceClasses" 
+          :key="insuranceClass.name">
+          <RadioButton 
+            v-model="selectedInsuranceClass" 
+            :value="insuranceClass.value" />
+          <label for="ingredient1" class="ml-1 text-xs font-bold">
+            {{insuranceClass.name}}
+          </label>
         </div>
       </div>
     </div>
 
     <div class="mt-4">
       <div class="flex flex-wrap gap-3 mt-2">
-        <div class="flex align-items-center" v-for="insuranceType in insuranceTypes" :key="insuranceType.name">
-          <RadioButton v-model="selectedInsuranceType" :value="insuranceType.name" />
-          <label for="ingredient1" class="ml-1 text-xs font-bold">{{
-          insuranceType.name
-        }}</label>
+        <div 
+          class="flex align-items-center" 
+          v-for="insuranceType in insuranceTypes" 
+          :key="insuranceType.name">
+          <RadioButton 
+            v-model="selectedInsuranceType" 
+            :value="insuranceType.name" />
+          <label for="ingredient1" class="ml-1 text-xs font-bold">
+            {{insuranceType.name}}
+          </label>
         </div>
       </div>
     </div>
 
     <div class="grid mt-3">
       <div class="col-3">
-        <Dropdown v-model="selectedCoverDuration" :options="coverDurations" optionLabel="name" optionValue="value"
+        <Dropdown 
+          v-model="selectedCoverDuration" 
+          :options="coverDurations" 
+          optionLabel="name" 
+          optionValue="value"
           placeholder="Cover Duration"
           class="w-full border-round-3xl custom-yellow-dropdown custom-dark-gray-border custom-border-1-5 custom-small-dropdown-1" />
       </div>
 
       <div class="col-3">
-        <Dropdown v-model="selectedMake" :options="makes" editable optionLabel="vehicle_name"
-          placeholder="Make E.g BMW" filterPlaceholder="Search make" @input="searchVehicleMakes"
+        <Dropdown 
+          v-model="selectedMake" 
+          :options="makes" 
+          editable 
+          optionLabel="vehicle_name"
+          placeholder="Make E.g BMW" 
+          filterPlaceholder="Search make" 
+          @input="searchVehicleMakes"
           @change="changeVehicleMake"
           class="w-full border-round-3xl custom-yellow-dropdown custom-dark-gray-border custom-border-1-5 custom-small-dropdown-1" />
       </div>
 
       <div class="col-3">
-        <Dropdown v-model="selectedModel" :options="models" editable optionLabel="vehicle_model"
-          placeholder="Model E.g X3" filterPlaceholder="Search model" @input="searchVehicleModels"
+        <Dropdown 
+          v-model="selectedModel" 
+          :options="models" 
+          editable 
+          optionLabel="vehicle_model"
+          placeholder="Model E.g X3" 
+          filterPlaceholder="Search model" 
+          @input="searchVehicleModels"
           @change="changeVehicleModel"
           class="w-full border-round-3xl custom-yellow-dropdown custom-dark-gray-border custom-border-1-5 custom-small-dropdown-1" />
       </div>
@@ -273,11 +299,15 @@ const getMakes = async (searchTerm) => {
 
       if (response.data.response_code == 200) {
         makes.value = response.data.data;
+        console.log("Makes:", makes.value);
+
       } else {
         isLoading.value = false;
         showErrorToast("Error", response.data);
       }
+
     })
+
     .catch((error) => {
       showErrorToast("Error", error.response.data);
       isLoading.value = false;
@@ -322,6 +352,8 @@ const getModels = async (searchTerm) => {
 
       if (response.data.response_code == 200) {
         models.value = response.data.data;
+        console.log("Models:", models.value);
+        
       } else {
         isLoading.value = false;
         showErrorToast("Error", response.data);

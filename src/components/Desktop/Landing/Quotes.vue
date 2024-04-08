@@ -20,11 +20,15 @@
           <div class="lg:col-4 mb-4" v-for="(quote, index) in quotes">
             <div class="custom-card border-round-2xl relative p-3" :key="index">
               <div class="flex justify-content-between align-items-center">
-                <img :src="quote.UnderwriterIcon" height="20px" width="auto" />
+                <img 
+                  :src="quote.UnderwriterIcon" 
+                  height="20px" 
+                  width="auto" />
 
                 <div
                   class="border-round-2xl bg-yellow-500 border-yellow-500 text-black-alpha-90 font-bold px-2 py-1 text-xs"
-                  size="small" @click="buyQuote(quote)">
+                  size="small" 
+                  @click="buyQuote(quote)">
                   Buy Now
                 </div>
               </div>
@@ -36,6 +40,7 @@
                 <template v-if="quote.LipaFullAmount != null">
                   <label class="font-bold text-right w-5">KES {{ quote.LipaFullAmount.toLocaleString() }}</label>
                 </template>
+                
               </div>
               <hr class="custom-gray" />
 
@@ -53,7 +58,8 @@
                 </label>
 
                 <template v-if="quote.LipaPolePoleInstallment != null">
-                  <label class="text-sm text-right w-6">KES {{ quote.LipaPolePoleDeposit.toLocaleString() }}
+                  <label class="text-sm text-right w-6">
+                    KES {{ quote.LipaPolePoleDeposit.toLocaleString() }}
                   </label>
                 </template>
               </div>
@@ -62,6 +68,7 @@
                 <div class="custom-overlap border-round-2xl" 
                 :class="{ 'custom-light-gray-bg': !quote.active, 'bg-yellow-500': quote.active, }" 
                 id="benefitsButton" :style="{ bottom: buttonBottom }">
+                  
                   <div class="flex justify-content-center py-2">
                     <span class="text-sm font-bold">
                       {{ quote.buttonText }}
@@ -71,13 +78,17 @@
                   <div class="custom-caret-info" :style="{ bottom: buttonBottom }" v-if="quote.active">
                     <i class="fas fa-caret-down text-yellow-500 text-3xl"></i>
                   </div>
+
                 </div>
+
               </div>
+
             </div>
 
             <div class="custom-full-width" v-if="quote.active">
               <div class="custom-light-gray-bg border-round-2xl custom-shadow mt-4">
                 <div class="p-4">
+
                   <div class="flex justify-content-between">
                     <label class="text-xs font-medium">Base Premium</label>
                     <template v-if="quote.BasicPremium != null">
@@ -86,6 +97,7 @@
                   </div>
 
                   <template v-if="quote.addedBenefits && quote.addedBenefits.length">
+                    
                     <div v-for="(benefit, index) in quote.addedBenefits">
                       <div class="flex justify-content-between mt-2">
                         <label class="text-xs">{{ benefit.name }}</label>
@@ -94,6 +106,7 @@
                         </template>
                       </div>
                     </div>
+
                   </template>
 
                   <template v-if="quote.taxesAndCharges.length">
@@ -106,6 +119,7 @@
                       </div>
                     </div>
                   </template>
+
                 </div>
 
                 <div>
@@ -123,7 +137,10 @@
                           <div v-for="(benefit, index) in formattedBenefits">
                             <div class="flex justify-content-between align-items-center custom-gray-border-bottom py-2">
                               <div class="flex align-items-center">
-                                <Checkbox v-model="benefit.active" :binary="true" variant="filled"
+                                <Checkbox 
+                                  v-model="benefit.active" 
+                                  :binary="true" 
+                                  variant="filled"
                                   @change="changeBenefit(benefit, index)" />
 
                                 <label class="text-xs ml-2">
@@ -141,14 +158,19 @@
                                       class="border-round-left-2xl bg-white border-left-2 border-left-2 border-y-2 custom-dark-gray-border">
                                       <span class="text-xs font-bold">KES</span>
                                     </InputGroupAddon>
-                                    <InputText class="border-y-2 border-x-none custom-dark-gray-border"
+                                    
+                                    <InputText 
+                                      class="border-y-2 border-x-none custom-dark-gray-border"
                                       v-model="benefit.benefitValue" 
-                                      :placeholder="benefit.minimumLimit.toLocaleString() + ' - ' + benefit.maximumLimit.toLocaleString()" size="small" />
+                                      :placeholder="benefit.minimumLimit.toLocaleString() + ' - ' + benefit.maximumLimit.toLocaleString()" 
+                                      size="small" />
 
                                     <InputGroupAddon
                                       class="border-round-right-2xl custom-box-shadow border-none custom-dark-gray-bg-1"
                                       @click="changeBenefitWithLimit(benefit)">
+
                                       <span class="text-white text-xs font-semibold">ADD</span>
+
                                     </InputGroupAddon>
                                   </InputGroup>
                                 </div>
@@ -272,6 +294,9 @@ onMounted(() => {
 });
 
 const showQuote = (index, quote) => {
+  
+  console.log("Index:",index, "Quote:", quote);
+
   if (quote.active) {
     quote.active = false;
     quote.buttonText = "View Benefits";
@@ -333,6 +358,9 @@ const formatBenefits = (additionalBenefits) => {
 };
 
 const changeBenefit = (benefit, index) => {
+  
+  console.log("Benefit:", benefit, index);
+
   if (!benefit.limitInput || !benefit.active) {
     let status = benefit.active ? "add" : "remove";
 
@@ -344,14 +372,17 @@ const changeBenefit = (benefit, index) => {
     data.limitAmount = benefit.amount;
 
     addOrRemoveBenefit(data);
+    console.log("Benefit added:", data);
   }
 };
 
 const changeBenefitWithLimit = (benefit) => {
+  
   if (
     benefit.benefitValue > benefit.minimumLimit &&
     benefit.benefitValue < benefit.maximumLimit
   ) {
+
     let data = {};
     data.quoteRef = props.quoteRef;
     data.action = "add";
@@ -359,7 +390,10 @@ const changeBenefitWithLimit = (benefit) => {
     data.underWriter = activeQuote.value.underwriterName;
     data.limitAmount = benefit.benefitValue;
 
+    console.log("Changing benefit with limit:", data);
+
     addOrRemoveBenefit(data);
+    
   } else {
     showErrorToast(
       "Error",
@@ -381,7 +415,8 @@ const addOrRemoveBenefit = (data) => {
       let newQuote = response.data.data;
       newQuote.active = true;
       newQuote.buttonText = "Close";
-
+      console.log("New quote:", newQuote);
+      
       quotes.value[activeQuoteIndex.value] = newQuote;
       isLoading.value = false;
     })

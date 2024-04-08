@@ -252,6 +252,7 @@ const formatProducts = () => {
 }
 
 const toggleDetails = (index, value, id) => {
+    console.log(index, value, id);
     formattedProducts.value[index].active = true
     selectedProductId.value = id
 
