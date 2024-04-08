@@ -200,6 +200,7 @@
                     </TabPanel>
 
                     <TabPanel>
+
                       <template #header>
                         <div class="flex align-items-center gap-3">
                           <span class="font-bold white-space-nowrap text-sm">Cover Details</span>
@@ -220,15 +221,19 @@
 
                       <div class="w-full border-round-2xl bg-yellow-500 border-1 border-yellow-500 px-3 py-2 px-1 mt-4"
                         @click="buyQuote(quote)">
+
                         <div class="flex justify-content-between align-items-center">
+                          
                           <label class="font-bold">Buy Now</label>
 
                           <template v-if="quote.LipaFullAmount != null">
                             <label class="font-bold text-right">KES
-                              {{ quote.LipaFullAmount.toLocaleString() }}</label>
+                              {{ quote.LipaFullAmount.toLocaleString() }}
+                            </label>
                           </template>
 
                           <i class="fas fa-circle-arrow-right text-black-alpha-90"></i>
+                          
                         </div>
                       </div>
                     </TabPanel>
@@ -344,15 +349,20 @@ const formatBenefits = (additionalBenefits) => {
         }
 
         formattedBenefitsArray.push(formattedBenefit);
+
       });
 
       formattedBenefits.value = formattedBenefitsArray;
+
     } else {
+      
       formattedBenefits.value = additionalBenefits.map((benefit) => ({
         ...benefit,
         active: false,
         benefitValue: null,
-      }));
+          }
+        )
+      );
     }
   }
 };
@@ -416,7 +426,7 @@ const addOrRemoveBenefit = (data) => {
       newQuote.active = true;
       newQuote.buttonText = "Close";
       console.log("New quote:", newQuote);
-      
+
       quotes.value[activeQuoteIndex.value] = newQuote;
       isLoading.value = false;
     })

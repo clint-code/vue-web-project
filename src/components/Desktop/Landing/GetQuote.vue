@@ -89,8 +89,15 @@
       </div>
 
       <div class="col-3">
-        <Calendar v-model="yearOfManufacture" placeholder="Year of Manufacture" view="year" dateFormat="yy"
-          class="w-full custom-sm-rd-calendar" :maxDate="maxDate" showIcon iconDisplay="input">
+        <Calendar 
+          v-model="yearOfManufacture" 
+          placeholder="Year of Manufacture" 
+          view="year" 
+          dateFormat="yy"
+          class="w-full custom-sm-rd-calendar" 
+          :maxDate="maxDate" 
+          showIcon 
+          iconDisplay="input">
           <template #inputicon="{ clickCallback }">
             <i class="fas fa-calendar-days text-yellow-500" @click="clickCallback"></i>
           </template>
@@ -136,7 +143,12 @@
       </div>
     </div>
   </div>
-  <loading v-model:active="isLoading" :is-full-page="fullPage" color="#FFC402" loader="dots" :opacity="opacity" />
+  <loading 
+    v-model:active="isLoading" 
+    :is-full-page="fullPage" 
+    color="#FFC402" 
+    loader="dots" 
+    :opacity="opacity" />
   <Toast />
 </template>
 
@@ -353,7 +365,7 @@ const getModels = async (searchTerm) => {
       if (response.data.response_code == 200) {
         models.value = response.data.data;
         console.log("Models:", models.value);
-        
+
       } else {
         isLoading.value = false;
         showErrorToast("Error", response.data);
@@ -391,6 +403,7 @@ const getQuote = () => {
 
   store.commit("setQuoteDetails", data);
   emits("getQuote", data);
+
 };
 </script>
 
