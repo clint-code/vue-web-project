@@ -1,23 +1,42 @@
 <template>
+
     <div class="relative">
+
         <div class="custom-city-bg" :style="{ height: sectionHeight }" id="section">
+
             <div class="custom-width-80">
+
                 <div class="flex flex-column">
+
                     <div class="flex flex-column">
+
                         <h2 class="font-bold mt-4 mb-2">Instant Insurance, <span class="bg-yellow-500 px-1">anywhere,
-                                anytime!</span></h2>
+                                anytime!</span>
+                        </h2>
 
                         <label>Get your insurance now and pay in installments with our <span class="font-bold">Lipa
-                                Pole Pole</span> financing option.</label>
+                                Pole Pole</span> financing option.
+                        </label>
+
                     </div>
 
                     <div class="grid mt-4" v-if="formattedProducts != null">
-                        <div v-ripple class="p-ripple col-2" v-for="(product, index) in formattedProducts">
+
+                        <div 
+                            v-ripple 
+                            class="p-ripple col-2" 
+                            v-for="(product, index) in formattedProducts">
+
                             <div class="border-round-2xl py-3"
                                 :class="{ 'bg-yellow-500': product.active, 'bg-white': !product.active }">
+
                                 <div>
+
                                     <div class="flex justify-content-center">
-                                        <img :src="product.icon" width="40rem" height="auto"
+                                        <img 
+                                            :src="product.icon" 
+                                            width="40rem" 
+                                            height="auto"
                                             :class="{ 'custom-img-filter': product.active }">
                                     </div>
 
@@ -26,27 +45,38 @@
                                     </div>
 
                                     <div class="flex justify-content-center mt-3">
-                                        <div class="flex justify-content-between  border-round-2xl gap-2 px-2 py-1"
+                                        
+                                        <div class="flex justify-content-between border-round-2xl gap-2 px-2 py-1"
                                             @click="toggleDetails(index, product.category_type, product.id)"
                                             :class="{ 'bg-yellow-500': !product.active, 'bg-white': product.active }">
+                                            
                                             <label class="font-bold text-xs">Get Quote</label>
+
                                             <i class="fas fa-circle-arrow-right text-black-alpha-90"></i>
+
                                         </div>
+
                                     </div>
 
                                     <!-- <div id="caret" class="custom-caret-info custom-caret-bottom" v-if="motorCarActive">
                                         <i class="fas fa-caret-down custom-light-gray text-yellow-500 custom-caret-size"></i>
                                     </div> -->
                                 </div>
+
                             </div>
+
                         </div>
+                        
                     </div>
 
                     <template v-if="motorCarActive && selectedProductId != null">
                         <GetQuote :productId="selectedProductId" @getQuote="getQuote" />
                     </template>
+
                 </div>
+
             </div>
+            
         </div>
 
         <template v-if="!showQuotes">
@@ -249,10 +279,12 @@ const formatProducts = () => {
             ...product, 
             active: false 
         }))
+        
 }
 
 const toggleDetails = (index, value, id) => {
-    console.log(index, value, id);
+    console.log("On click:",index, value, id);
+
     formattedProducts.value[index].active = true
     selectedProductId.value = id
 
@@ -265,6 +297,9 @@ const toggleDetails = (index, value, id) => {
     }
 
     if (value == "CAR") {
+
+        //console.log("Motor car status:",motorCarActive);
+
         if (motorCarActive.value) {
             motorCarActive.value = false
         }

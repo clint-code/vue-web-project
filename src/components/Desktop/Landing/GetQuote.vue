@@ -1,46 +1,66 @@
 <template>
+
   <div class="w-full bg-white p-4 border-round-3xl shadow-1">
+
     <div class="flex justify-content-between">
+
       <label class="font-bold text-sm">
         Fill in the details below to compare policies and get the best quotes.
       </label>
       <i class="far fa-times-circle text-2xl text-yellow-500"></i>
+
     </div>
 
     <div class="mt-4">
+
       <div class="flex flex-wrap gap-3 mt-2">
+
         <div 
           class="flex align-items-center" 
           v-for="insuranceClass in insuranceClasses" 
           :key="insuranceClass.name">
+          
           <RadioButton 
             v-model="selectedInsuranceClass" 
             :value="insuranceClass.value" />
+
           <label for="ingredient1" class="ml-1 text-xs font-bold">
             {{insuranceClass.name}}
           </label>
+
         </div>
+
       </div>
+
     </div>
 
     <div class="mt-4">
+
       <div class="flex flex-wrap gap-3 mt-2">
+
         <div 
           class="flex align-items-center" 
           v-for="insuranceType in insuranceTypes" 
           :key="insuranceType.name">
+
           <RadioButton 
             v-model="selectedInsuranceType" 
             :value="insuranceType.name" />
+
           <label for="ingredient1" class="ml-1 text-xs font-bold">
             {{insuranceType.name}}
           </label>
+
         </div>
+
       </div>
+
     </div>
 
     <div class="grid mt-3">
+
       <div class="col-3">
+
         <Dropdown 
           v-model="selectedCoverDuration" 
           :options="coverDurations" 
@@ -48,6 +68,7 @@
           optionValue="value"
           placeholder="Cover Duration"
           class="w-full border-round-3xl custom-yellow-dropdown custom-dark-gray-border custom-border-1-5 custom-small-dropdown-1" />
+
       </div>
 
       <div class="col-3">
@@ -77,18 +98,26 @@
       </div>
 
       <div class="col-3">
+
         <InputGroup class="custom-amount-input-1">
+
           <InputGroupAddon class="border-round-3xl custom-dark-gray-border custom-border-1-5 p-1">
             <div class="bg-yellow-500 border-round-2xl flex">
               <label class="text-sm font-bold text-black-alpha-90 p-2 py-1">KES</label>
             </div>
           </InputGroupAddon>
-          <InputText class="border-round-3xl custom-dark-gray-border custom-border-1-5 text-sm" v-model="estimatedValue"
+          
+          <InputText 
+            class="border-round-3xl custom-dark-gray-border custom-border-1-5 text-sm" 
+            v-model="estimatedValue"
             placeholder="Estimate value" />
+
         </InputGroup>
+
       </div>
 
       <div class="col-3">
+        
         <Calendar 
           v-model="yearOfManufacture" 
           placeholder="Year of Manufacture" 
@@ -98,10 +127,13 @@
           :maxDate="maxDate" 
           showIcon 
           iconDisplay="input">
+
           <template #inputicon="{ clickCallback }">
             <i class="fas fa-calendar-days text-yellow-500" @click="clickCallback"></i>
           </template>
+
         </Calendar>
+
       </div>
 
       <template v-if="selectedInsuranceClass != 'PRIVATE'">
@@ -162,6 +194,7 @@ import useToastMessages from "@/composables/useToastMessages";
 const { showSuccessToast, showErrorToast } = useToastMessages();
 
 import { useStore } from "vuex";
+
 const store = useStore();
 
 const emits = defineEmits([
@@ -401,10 +434,13 @@ const getQuote = () => {
     data.customerType = selectedPersonCovered.value;
   }
 
+  console.log("Data on get quote:", data);
+  
   store.commit("setQuoteDetails", data);
   emits("getQuote", data);
 
 };
+
 </script>
 
 <style scoped>

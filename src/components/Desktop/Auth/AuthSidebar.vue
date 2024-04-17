@@ -1,9 +1,19 @@
 <template>
-    <Sidebar v-model:visible="sidebar" no-header position="right" class="custom-gray-blue-bg w-6">
+
+    <Sidebar 
+        v-model:visible="sidebar" 
+        no-header 
+        position="right" 
+        class="custom-gray-blue-bg w-6">
+
         <template #container="{ closeCallback }">
+
             <div class="py-2 px-5">
+
                 <template v-if="isRegistration">
+
                     <div class="flex justify-content-between align-items-center">
+
                         <h3>Registration</h3>
 
                         <div @click="closeSidebar()"
@@ -11,12 +21,15 @@
                             <label class="font-bold text-xs text-white">Close</label>
                             <i class="fas fa-circle-xmark text-white text-sm"></i>
                         </div>
+
                     </div>
 
                     <Registration @showLogin="showLogin"/>
+
                 </template>       
                 
                 <template v-if="isLogin">
+                    
                     <div class="flex justify-content-between align-items-center">
                         <h3>Login</h3>
 
@@ -28,6 +41,7 @@
                     </div>
 
                     <Login />
+
                 </template>
             </div>
         </template>

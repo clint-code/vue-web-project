@@ -1,7 +1,9 @@
 <template>
+
     <div class="mt-2">
         <div class="flex flex-wrap gap-3 mt-2">
-            <div class="flex align-items-center" v-for="accountType in accountTypes">
+            <div class="flex align-items-center" 
+                v-for="accountType in accountTypes">
                 <RadioButton v-model="selectedAccountType" :value="accountType" />
                 <label class="ml-2 font-medium text-sm">{{ accountType }}</label>
             </div>
@@ -51,15 +53,19 @@
     </div>
 
     <div class="mt-3">
+        
         <p class="font-medium text-sm text-black-alpha-90 mb-2">
             Already have an account?
         </p>
+
         <div @click="showLogin()"
             class="flex justify-content-between align-items-center custom-gray-bg-2 border-round-3xl shadow-1 gap-2 px-3 custom-py-10">
             <label class="font-bold text-white">Login</label>
             <i class="fas fa-circle-arrow-right text-white text-lg"></i>
         </div>
+
     </div>
+
 </template>
 
 <script setup>
@@ -70,4 +76,5 @@ const emit = defineEmits(['showLogin'])
 const showLogin = () => {
     emit('showLogin', true)
 }
+
 </script>
