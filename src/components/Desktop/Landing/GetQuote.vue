@@ -137,44 +137,73 @@
       </div>
 
       <template v-if="selectedInsuranceClass != 'PRIVATE'">
+
         <div class="col-3">
-          <Dropdown v-model="selectedPersonCovered" :options="personsCovered" optionLabel="name" optionValue="name"
+          <Dropdown 
+            v-model="selectedPersonCovered" 
+            :options="personsCovered" 
+            optionLabel="name" 
+            optionValue="name"
             placeholder="Person Covered"
             class="w-full border-round-3xl custom-yellow-dropdown custom-dark-gray-border custom-border-1-5 custom-small-dropdown-1" />
         </div>
 
         <div class="col-3">
-          <Dropdown v-model="selectedPassengers" :options="passengers" optionLabel="name" optionValue="value"
+          <Dropdown 
+            v-model="selectedPassengers" 
+            :options="passengers" 
+            optionLabel="name" 
+            optionValue="value"
             placeholder="No. of passengers"
             class="w-full border-round-3xl custom-yellow-dropdown custom-dark-gray-border custom-border-1-5 custom-small-dropdown-1" />
         </div>
 
         <div class="col-3">
-          <Dropdown v-model="selectedVehicleTonnage" :options="vehicleTonnage" optionLabel="name" optionValue="value"
+          <Dropdown 
+            v-model="selectedVehicleTonnage" 
+            :options="vehicleTonnage" 
+            optionLabel="name"
+            optionValue="value"
             placeholder="Vehicle Tonnage"
             class="w-full border-round-3xl custom-yellow-dropdown custom-dark-gray-border custom-border-1-5 custom-small-dropdown-1" />
         </div>
 
         <template v-if="selectedInsuranceClass == 'COMMERCIAL'">
+
           <div class="col-3">
-            <Dropdown v-model="selectedVehicleUse" :options="vehicleUses" optionLabel="name" optionValue="name"
+            <Dropdown 
+              v-model="selectedVehicleUse" 
+              :options="vehicleUses" 
+              optionLabel="name" 
+              optionValue="name"
               placeholder="Vehicle Use"
               class="w-full border-round-3xl custom-yellow-dropdown custom-dark-gray-border custom-border-1-5 custom-small-dropdown-1" />
           </div>
+
         </template>
+
       </template>
 
       <div class="col-3">
-        <div v-ripple class="p-ripple w-full border-round-3xl bg-yellow-500 border-1 border-yellow-500 p-2"
+
+        <div 
+          v-ripple 
+          class="p-ripple w-full border-round-3xl bg-yellow-500 border-1 border-yellow-500 p-2"
           @click="getQuote()">
+
           <div class="flex justify-content-between align-items-center">
             <label class="font-bold text-sm">Get Quote</label>
             <i class="fas fa-circle-arrow-right"></i>
           </div>
+
         </div>
+
       </div>
+
     </div>
+
   </div>
+  
   <loading 
     v-model:active="isLoading" 
     :is-full-page="fullPage" 
@@ -182,6 +211,7 @@
     loader="dots" 
     :opacity="opacity" />
   <Toast />
+  
 </template>
 
 <script setup>
@@ -435,7 +465,13 @@ const getQuote = () => {
   }
 
   console.log("Data on get quote:", data);
-  
+
+  /**
+   * store is used to maintain the current state of the data in this app
+   * this data is stored while the using the app and can't be accessible while
+   * not logged in for privacy reasons. This is different from local storage
+   * which is a persistent state
+   */
   store.commit("setQuoteDetails", data);
   emits("getQuote", data);
 
