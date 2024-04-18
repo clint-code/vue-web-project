@@ -210,6 +210,7 @@
     color="#FFC402" 
     loader="dots" 
     :opacity="opacity" />
+    
   <Toast />
   
 </template>

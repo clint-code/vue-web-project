@@ -1,25 +1,43 @@
 <template>
-  <div class="custom-desktop-view custom-width-80" :class="{
-    'mt-3': props.insuranceClass == 'PRIVATE',
-    'mt-7': props.insuranceClass != 'PRIVATE',
-  }">
+
+  <div 
+    class="custom-desktop-view custom-width-80" 
+    :class="{
+      'mt-3': props.insuranceClass == 'PRIVATE',
+      'mt-7': props.insuranceClass != 'PRIVATE',
+    }">
+
     <div class="py-4" :style="{ 'margin-bottom': marginBottom }">
+
       <div class="flex align-items-center">
+
         <i class="fas fa-message-smile text-yellow-500 text-4xl my-1"></i>
 
         <div class="flex flex-column mx-3">
+
           <h3 class="my-1">Your estimate quote is ready</h3>
           <div class="custom-bottom-border"></div>
-          <label class="text-sm mt-2">Choose your preferred quote and make payment to receive your
-            Digital Certificate of Insurance.</label>
+          <label class="text-sm mt-2">
+            Choose your preferred quote and make payment to receive your
+            Digital Certificate of Insurance.
+          </label>
+
         </div>
+
       </div>
 
       <div class="mt-4">
+
         <div class="grid relative">
-          <div class="lg:col-4 mb-4" v-for="(quote, index) in quotes">
+
+          <div 
+            class="lg:col-4 mb-4" 
+            v-for="(quote, index) in quotes">
+
             <div class="custom-card border-round-2xl relative p-3" :key="index">
+
               <div class="flex justify-content-between align-items-center">
+
                 <img 
                   :src="quote.UnderwriterIcon" 
                   height="20px" 
@@ -31,10 +49,13 @@
                   @click="buyQuote(quote)">
                   Buy Now
                 </div>
+
               </div>
+
               <hr class="custom-gray" />
 
               <div class="flex justify-content-between">
+
                 <label class="font-bold text-sm text-left w-7">Lipa in Full</label>
 
                 <template v-if="quote.LipaFullAmount != null">
@@ -42,17 +63,21 @@
                 </template>
                 
               </div>
+
               <hr class="custom-gray" />
 
               <div class="flex justify-content-between">
+
                 <label class="font-bold text-sm text-left w-6">Lipa Pole Pole Deposit</label>
 
                 <template v-if="quote.LipaPolePoleDeposit != null">
                   <label class="font-bold text-right w-6">KES {{ quote.LipaPolePoleDeposit.toLocaleString() }}</label>
                 </template>
+
               </div>
 
               <div class="flex justify-content-between mt-1">
+
                 <label class="text-sm text-left w-6">
                   Monthly Installment
                 </label>
@@ -62,12 +87,15 @@
                     KES {{ quote.LipaPolePoleDeposit.toLocaleString() }}
                   </label>
                 </template>
+
               </div>
 
               <div class="flex justify-content-center mt-4" @click="showQuote(index, quote)">
-                <div class="custom-overlap border-round-2xl" 
-                :class="{ 'custom-light-gray-bg': !quote.active, 'bg-yellow-500': quote.active, }" 
-                id="benefitsButton" :style="{ bottom: buttonBottom }">
+
+                <div 
+                  class="custom-overlap border-round-2xl" 
+                  :class="{ 'custom-light-gray-bg': !quote.active, 'bg-yellow-500': quote.active, }" 
+                  id="benefitsButton" :style="{ bottom: buttonBottom }">
                   
                   <div class="flex justify-content-center py-2">
                     <span class="text-sm font-bold">
@@ -86,14 +114,21 @@
             </div>
 
             <div class="custom-full-width" v-if="quote.active">
+
               <div class="custom-light-gray-bg border-round-2xl custom-shadow mt-4">
+
                 <div class="p-4">
 
                   <div class="flex justify-content-between">
+
                     <label class="text-xs font-medium">Base Premium</label>
+
                     <template v-if="quote.BasicPremium != null">
-                      <label class="text-xs text-right font-bold">KES {{ quote.BasicPremium.toLocaleString() }}</label>
+                      <label class="text-xs text-right font-bold">
+                        KES {{ quote.BasicPremium.toLocaleString() }}
+                      </label>
                     </template>
+
                   </div>
 
                   <template v-if="quote.addedBenefits && quote.addedBenefits.length">
@@ -110,14 +145,22 @@
                   </template>
 
                   <template v-if="quote.taxesAndCharges.length">
+                    
                     <div v-for="(tax, index) in quote.taxesAndCharges">
+
                       <div class="flex justify-content-between mt-2">
+
                         <label class="text-xs">{{ tax.name }}</label>
                         <template v-if="tax.amount != null">
-                          <label class="text-xs text-right font-bold">KES {{ tax.amount.toLocaleString() }}</label>
+                          <label class="text-xs text-right font-bold">
+                            KES {{ tax.amount.toLocaleString() }}
+                          </label>
                         </template>
+
                       </div>
+
                     </div>
+
                   </template>
 
                 </div>
@@ -133,10 +176,15 @@
                       </template>
 
                       <div class="py-2">
+
                         <template v-if="formattedBenefits != null">
+
                           <div v-for="(benefit, index) in formattedBenefits">
+
                             <div class="flex justify-content-between align-items-center custom-gray-border-bottom py-2">
+
                               <div class="flex align-items-center">
+
                                 <Checkbox 
                                   v-model="benefit.active" 
                                   :binary="true" 
@@ -149,6 +197,7 @@
                                     <span class="text-xs">(Free upto {{ benefit.minimumLimit.toLocaleString() }})</span>
                                   </template>
                                 </label>
+
                               </div>
 
                               <template v-if="benefit.limitInput && benefit.active">
@@ -252,6 +301,7 @@
 </template>
 
 <script setup>
+
 import { ref, toRef, onMounted, defineProps } from "vue";
 import { useRouter } from "vue-router";
 const router = useRouter();
@@ -303,15 +353,19 @@ const showQuote = (index, quote) => {
   console.log("Index:",index, "Quote:", quote);
 
   if (quote.active) {
+
     quote.active = false;
     quote.buttonText = "View Benefits";
     activeQuoteIndex.value = null;
+
   } else {
+
     if (activeQuoteIndex.value != null) {
       props.quotes[activeQuoteIndex.value].active = false;
       props.quotes[activeQuoteIndex.value].buttonText = "View Benefits";
       activeQuoteIndex.value = null;
     }
+
     quote.active = true;
     quote.buttonText = "Close";
     activeQuoteIndex.value = index;
@@ -319,19 +373,24 @@ const showQuote = (index, quote) => {
 
     formatBenefits(quote.AdditionalBenefits);
   }
+
 };
 
 const formatBenefits = (additionalBenefits) => {
+
   formattedBenefits.value = null;
 
   if (additionalBenefits.length) {
+
     if (
       activeQuote.value.addedBenefits &&
       activeQuote.value.addedBenefits.length
     ) {
+
       const formattedBenefitsArray = [];
 
       formattedBenefits.value = additionalBenefits.map((benefit) => {
+        
         const formattedBenefit = benefit;
 
         const index = activeQuote.value.addedBenefits.findIndex(
